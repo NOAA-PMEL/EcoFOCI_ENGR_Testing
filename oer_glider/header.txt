@@ -1,0 +1,3101 @@
+netcdf p4010101 {
+dimensions:
+	trajectory = 1 ;
+	gc_event = 16 ;
+	sg_data_point = 80 ;
+	magnetometer_data_point = 80 ;
+	sat1001_data_point = 80 ;
+	gps_info = 3 ;
+	sat1000_data_point = 80 ;
+	string_22 = 22 ;
+	string_20 = 20 ;
+	string_3 = 3 ;
+	string_19 = 19 ;
+	string_39 = 39 ;
+	string_10 = 10 ;
+	string_58 = 58 ;
+	string_35 = 35 ;
+	string_65 = 65 ;
+	string_11 = 11 ;
+	string_294 = 294 ;
+	string_7 = 7 ;
+	string_31 = 31 ;
+	string_21 = 21 ;
+	string_18 = 18 ;
+	string_68 = 68 ;
+	string_100 = 100 ;
+	string_60 = 60 ;
+	string_154 = 154 ;
+	string_12 = 12 ;
+	string_6 = 6 ;
+	string_8 = 8 ;
+	string_17 = 17 ;
+	string_153 = 153 ;
+	string_70 = 70 ;
+	string_67 = 67 ;
+	string_1 = 1 ;
+	string_16 = 16 ;
+	string_5 = 5 ;
+variables:
+	char log_DEVICES(string_294) ;
+	char log_DEVICE_MAMPS(string_154) ;
+	char log_DEVICE_SECS(string_153) ;
+	char log_SM_GC(string_100) ;
+	double eng_depth(sg_data_point) ;
+		eng_depth:units = "cm" ;
+		eng_depth:positive = "down" ;
+		eng_depth:standard_name = "depth" ;
+		eng_depth:comment = "Measured vertical distance below the surface" ;
+		eng_depth:platform = "glider" ;
+	double ctd_time(sg_data_point) ;
+		ctd_time:units = "seconds since 1970-1-1 00:00:00" ;
+		ctd_time:comment = "Time of CTD sample in GMT epoch format" ;
+		ctd_time:standard_name = "time" ;
+		ctd_time:axis = "T" ;
+		ctd_time:platform = "glider" ;
+	double eng_wlbb2fl_sig470nm(sg_data_point) ;
+		eng_wlbb2fl_sig470nm:comment = "blue scattering as reported by instrument" ;
+		eng_wlbb2fl_sig470nm:_FillValue = NaN ;
+		eng_wlbb2fl_sig470nm:instrument = "wlbb2fl" ;
+		eng_wlbb2fl_sig470nm:platform = "glider" ;
+	char salinity_qc(sg_data_point) ;
+		salinity_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		salinity_qc:comment = "Whether to trust each corrected salinity value" ;
+		salinity_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+		salinity_qc:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		salinity_qc:platform = "glider" ;
+	double density_insitu(sg_data_point) ;
+		density_insitu:units = "g/m^3" ;
+		density_insitu:comment = "Sea water in-situ density based on pressure" ;
+		density_insitu:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		density_insitu:platform = "glider" ;
+	double eng_aa4330_Temp(sg_data_point) ;
+		eng_aa4330_Temp:units = "degrees_Celsius" ;
+		eng_aa4330_Temp:_FillValue = NaN ;
+		eng_aa4330_Temp:instrument = "aa4330" ;
+		eng_aa4330_Temp:comment = "As reported by the instrument" ;
+		eng_aa4330_Temp:platform = "glider" ;
+	double eng_vbdCC(sg_data_point) ;
+		eng_vbdCC:platform = "glider" ;
+	double north_displacement(sg_data_point) ;
+		north_displacement:units = "meters" ;
+		north_displacement:comment = "Northward displacement from hdm" ;
+		north_displacement:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		north_displacement:platform = "glider" ;
+	double pressure(sg_data_point) ;
+		pressure:units = "dbar" ;
+		pressure:comment = "Uncorrected sea-water pressure at pressure sensor" ;
+		pressure:platform = "glider" ;
+	double east_displacement(sg_data_point) ;
+		east_displacement:units = "meters" ;
+		east_displacement:comment = "Eastward displacement from hdm" ;
+		east_displacement:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		east_displacement:platform = "glider" ;
+	double salinity_raw(sg_data_point) ;
+		salinity_raw:units = "1e-3" ;
+		salinity_raw:comment = "Uncorrected salinity derived from temperature_raw and conductivity_raw (PSU)" ;
+		salinity_raw:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		salinity_raw:platform = "glider" ;
+	char temperature_qc(sg_data_point) ;
+		temperature_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		temperature_qc:comment = "Whether to trust each corrected temperature value" ;
+		temperature_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+		temperature_qc:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		temperature_qc:platform = "glider" ;
+	double eng_wlbb2fl_sig695nm(sg_data_point) ;
+		eng_wlbb2fl_sig695nm:comment = "chlorophyll fluorescence as reported by instrument" ;
+		eng_wlbb2fl_sig695nm:_FillValue = NaN ;
+		eng_wlbb2fl_sig695nm:instrument = "wlbb2fl" ;
+		eng_wlbb2fl_sig695nm:platform = "glider" ;
+	double eng_pitchAng(sg_data_point) ;
+		eng_pitchAng:units = "degrees" ;
+		eng_pitchAng:comment = "Vehicle pitch" ;
+		eng_pitchAng:platform = "glider" ;
+	double eng_satu_pitch(sat1001_data_point) ;
+		eng_satu_pitch:comment = "sat1001 pitch scaled by 10.0 offset by 0.0" ;
+		eng_satu_pitch:platform = "glider" ;
+		eng_satu_pitch:instrument = "sat1001" ;
+	double longitude(sg_data_point) ;
+		longitude:comment = "Longitude of the sample based on hdm DAC" ;
+		longitude:_FillValue = NaN ;
+		longitude:platform = "glider" ;
+		longitude:standard_name = "longitude" ;
+		longitude:units = "degrees_east" ;
+		longitude:axis = "X" ;
+	double eng_satd_Temp(sat1000_data_point) ;
+		eng_satd_Temp:comment = "sat1000 Temp scaled by 10.0 offset by 0.0" ;
+		eng_satd_Temp:platform = "glider" ;
+		eng_satd_Temp:instrument = "sat1000" ;
+	double longitude_gsm(sg_data_point) ;
+		longitude_gsm:units = "degrees_east" ;
+		longitude_gsm:_FillValue = NaN ;
+		longitude_gsm:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		longitude_gsm:comment = "Longitude of the sample based on gsm DAC" ;
+		longitude_gsm:platform = "glider" ;
+	double eng_satu_Temp(sat1001_data_point) ;
+		eng_satu_Temp:comment = "sat1001 Temp scaled by 10.0 offset by 0.0" ;
+		eng_satu_Temp:platform = "glider" ;
+		eng_satu_Temp:instrument = "sat1001" ;
+	double eng_wlbb2fl_sig700nm(sg_data_point) ;
+		eng_wlbb2fl_sig700nm:comment = "red scattering as reported by instrument" ;
+		eng_wlbb2fl_sig700nm:_FillValue = NaN ;
+		eng_wlbb2fl_sig700nm:instrument = "wlbb2fl" ;
+		eng_wlbb2fl_sig700nm:platform = "glider" ;
+	double wlbb2fl_sig470nm_adjusted(sg_data_point) ;
+		wlbb2fl_sig470nm_adjusted:units = "meter^-1 steradian^-1" ;
+		wlbb2fl_sig470nm_adjusted:_FillValue = NaN ;
+		wlbb2fl_sig470nm_adjusted:platform = "glider" ;
+		wlbb2fl_sig470nm_adjusted:comment = "total volume blue scattering coefficient using manufacturer-supplied dark counts and scaling factor" ;
+		wlbb2fl_sig470nm_adjusted:instrument = "wlbb2fl" ;
+	double sigma_t(sg_data_point) ;
+		sigma_t:comment = "Sigma based on density" ;
+		sigma_t:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		sigma_t:ref_pressure = "0" ;
+		sigma_t:platform = "glider" ;
+		sigma_t:standard_name = "sea_water_sigma_t" ;
+		sigma_t:units = "g/m^3" ;
+	double vert_speed_gsm(sg_data_point) ;
+		vert_speed_gsm:units = "cm/s" ;
+		vert_speed_gsm:comment = "Vehicle vertical speed based on gsm" ;
+		vert_speed_gsm:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		vert_speed_gsm:platform = "glider" ;
+	double latitude(sg_data_point) ;
+		latitude:comment = "Latitude of the sample based on hdm DAC" ;
+		latitude:_FillValue = NaN ;
+		latitude:platform = "glider" ;
+		latitude:standard_name = "latitude" ;
+		latitude:units = "degrees_north" ;
+		latitude:axis = "Y" ;
+	double ctd_depth(sg_data_point) ;
+		ctd_depth:comment = "CTD thermistor depth corrected for average latitude" ;
+		ctd_depth:positive = "down" ;
+		ctd_depth:platform = "glider" ;
+		ctd_depth:standard_name = "depth" ;
+		ctd_depth:units = "meters" ;
+		ctd_depth:axis = "Z" ;
+	double speed_gsm(sg_data_point) ;
+		speed_gsm:units = "cm/s" ;
+		speed_gsm:comment = "Vehicle speed based on gsm" ;
+		speed_gsm:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		speed_gsm:platform = "glider" ;
+	double eng_satu_roll(sat1001_data_point) ;
+		eng_satu_roll:comment = "sat1001 roll scaled by 10.0 offset by 0.0" ;
+		eng_satu_roll:platform = "glider" ;
+		eng_satu_roll:instrument = "sat1001" ;
+	double salinity(sg_data_point) ;
+		salinity:units = "1e-3" ;
+		salinity:comment = "Salinity corrected for thermal-inertia effects (PSU)" ;
+		salinity:standard_name = "sea_water_salinity" ;
+		salinity:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		salinity:platform = "glider" ;
+	double eng_satd_pitch(sat1000_data_point) ;
+		eng_satd_pitch:comment = "sat1000 pitch scaled by 10.0 offset by 0.0" ;
+		eng_satd_pitch:platform = "glider" ;
+		eng_satd_pitch:instrument = "sat1000" ;
+	double temperature(sg_data_point) ;
+		temperature:units = "degrees_Celsius" ;
+		temperature:comment = "Termperature (in situ) corrected for thermistor first-order lag" ;
+		temperature:standard_name = "sea_water_temperature" ;
+		temperature:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		temperature:platform = "glider" ;
+	double temperature_raw(sg_data_point) ;
+		temperature_raw:units = "degrees_Celsius" ;
+		temperature_raw:comment = "Uncorrected temperature (in situ)" ;
+		temperature_raw:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		temperature_raw:platform = "glider" ;
+	double wlbb2fl_sig700nm_adjusted(sg_data_point) ;
+		wlbb2fl_sig700nm_adjusted:units = "meter^-1 steradian^-1" ;
+		wlbb2fl_sig700nm_adjusted:_FillValue = NaN ;
+		wlbb2fl_sig700nm_adjusted:platform = "glider" ;
+		wlbb2fl_sig700nm_adjusted:comment = "total volume red scattering coefficient using manufacturer-supplied dark counts and scaling factor" ;
+		wlbb2fl_sig700nm_adjusted:instrument = "wlbb2fl" ;
+	double eng_mag_x(magnetometer_data_point) ;
+		eng_mag_x:comment = "magnetometer x" ;
+		eng_mag_x:platform = "glider" ;
+		eng_mag_x:instrument = "magnetometer" ;
+	double eng_aa4330_TCPhase(sg_data_point) ;
+		eng_aa4330_TCPhase:comment = "As reported by the instrument" ;
+		eng_aa4330_TCPhase:_FillValue = NaN ;
+		eng_aa4330_TCPhase:instrument = "aa4330" ;
+		eng_aa4330_TCPhase:platform = "glider" ;
+	double eng_sbect_tempFreq(sg_data_point) ;
+		eng_sbect_tempFreq:comment = "As reported by the instrument" ;
+		eng_sbect_tempFreq:instrument = "sbe41" ;
+		eng_sbect_tempFreq:platform = "glider" ;
+	char conductivity_raw_qc(sg_data_point) ;
+		conductivity_raw_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		conductivity_raw_qc:comment = "Whether to trust each raw conductivity value" ;
+		conductivity_raw_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+		conductivity_raw_qc:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		conductivity_raw_qc:platform = "glider" ;
+	double eng_mag_y(magnetometer_data_point) ;
+		eng_mag_y:comment = "magnetometer y" ;
+		eng_mag_y:platform = "glider" ;
+		eng_mag_y:instrument = "magnetometer" ;
+	double eng_sbect_condFreq(sg_data_point) ;
+		eng_sbect_condFreq:comment = "As reported by the instrument" ;
+		eng_sbect_condFreq:instrument = "sbe41" ;
+		eng_sbect_condFreq:platform = "glider" ;
+	double eng_satd_roll(sat1000_data_point) ;
+		eng_satd_roll:comment = "sat1000 roll scaled by 10.0 offset by 0.0" ;
+		eng_satd_roll:platform = "glider" ;
+		eng_satd_roll:instrument = "sat1000" ;
+	double eng_rec(sg_data_point) ;
+		eng_rec:platform = "glider" ;
+	double north_displacement_gsm(sg_data_point) ;
+		north_displacement_gsm:units = "meters" ;
+		north_displacement_gsm:comment = "Northward displacement from gsm" ;
+		north_displacement_gsm:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		north_displacement_gsm:platform = "glider" ;
+	double eng_rollCtl(sg_data_point) ;
+		eng_rollCtl:platform = "glider" ;
+	double horz_speed_gsm(sg_data_point) ;
+		horz_speed_gsm:units = "cm/s" ;
+		horz_speed_gsm:comment = "Vehicle horizontal speed based on gsm" ;
+		horz_speed_gsm:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		horz_speed_gsm:platform = "glider" ;
+	double aanderaa4330_instrument_dissolved_oxygen(sg_data_point) ;
+		aanderaa4330_instrument_dissolved_oxygen:units = "micromoles/kg" ;
+		aanderaa4330_instrument_dissolved_oxygen:_FillValue = NaN ;
+		aanderaa4330_instrument_dissolved_oxygen:platform = "glider" ;
+		aanderaa4330_instrument_dissolved_oxygen:comment = "Dissolved oxygen concentration reported from optode corrected for salinity" ;
+		aanderaa4330_instrument_dissolved_oxygen:instrument = "aa4330" ;
+	char speed_qc(sg_data_point) ;
+		speed_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		speed_qc:comment = "Whether to trust each hdm speed value" ;
+		speed_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+		speed_qc:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		speed_qc:platform = "glider" ;
+	double dissolved_oxygen_sat(sg_data_point) ;
+		dissolved_oxygen_sat:units = "micromoles/kg" ;
+		dissolved_oxygen_sat:comment = "Calculated saturation value for oxygen given measured presure and corrected temperature, and salinity" ;
+		dissolved_oxygen_sat:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		dissolved_oxygen_sat:platform = "glider" ;
+	double eng_aa4330_O2(sg_data_point) ;
+		eng_aa4330_O2:units = "micromoles/L" ;
+		eng_aa4330_O2:_FillValue = NaN ;
+		eng_aa4330_O2:instrument = "aa4330" ;
+		eng_aa4330_O2:comment = "Dissolved oxygen as reported by the instument, based on on-board calibration data, assuming optode temperature but without depth or salinity correction" ;
+		eng_aa4330_O2:platform = "glider" ;
+	double conductivity_raw(sg_data_point) ;
+		conductivity_raw:units = "S/m" ;
+		conductivity_raw:comment = "Uncorrected conductivity" ;
+		conductivity_raw:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		conductivity_raw:platform = "glider" ;
+	double eng_aa4330_AirSat(sg_data_point) ;
+		eng_aa4330_AirSat:comment = "As reported by the instrument" ;
+		eng_aa4330_AirSat:_FillValue = NaN ;
+		eng_aa4330_AirSat:instrument = "aa4330" ;
+		eng_aa4330_AirSat:platform = "glider" ;
+	double eng_pitchCtl(sg_data_point) ;
+		eng_pitchCtl:platform = "glider" ;
+	double conductivity(sg_data_point) ;
+		conductivity:units = "S/m" ;
+		conductivity:comment = "Conductivity corrected for anomalies" ;
+		conductivity:standard_name = "sea_water_electrical_conductivity" ;
+		conductivity:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		conductivity:platform = "glider" ;
+	double latitude_gsm(sg_data_point) ;
+		latitude_gsm:units = "degrees_north" ;
+		latitude_gsm:_FillValue = NaN ;
+		latitude_gsm:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		latitude_gsm:comment = "Latitude of the sample based on gsm DAC" ;
+		latitude_gsm:platform = "glider" ;
+	double theta(sg_data_point) ;
+		theta:units = "degrees_Celsius" ;
+		theta:comment = "Potential temperature based on corrected salinity" ;
+		theta:standard_name = "sea_water_potential_temperature" ;
+		theta:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		theta:platform = "glider" ;
+	double eng_elaps_t_0000(sg_data_point) ;
+		eng_elaps_t_0000:units = "seconds" ;
+		eng_elaps_t_0000:comment = "Elapsed seconds since start of mission" ;
+		eng_elaps_t_0000:standard_name = "time" ;
+		eng_elaps_t_0000:platform = "glider" ;
+	double buoyancy(sg_data_point) ;
+		buoyancy:units = "g" ;
+		buoyancy:comment = "Buoyancy of vehicle, corrected for compression effects" ;
+		buoyancy:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		buoyancy:platform = "glider" ;
+	double east_displacement_gsm(sg_data_point) ;
+		east_displacement_gsm:units = "meters" ;
+		east_displacement_gsm:comment = "Eastward displacement from gsm" ;
+		east_displacement_gsm:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		east_displacement_gsm:platform = "glider" ;
+	double eng_rollAng(sg_data_point) ;
+		eng_rollAng:units = "degrees" ;
+		eng_rollAng:comment = "Vehicle roll" ;
+		eng_rollAng:platform = "glider" ;
+	double sound_velocity(sg_data_point) ;
+		sound_velocity:units = "m/s" ;
+		sound_velocity:comment = "Sound velocity" ;
+		sound_velocity:standard_name = "speed_of_sound_in_sea_water" ;
+		sound_velocity:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		sound_velocity:platform = "glider" ;
+	double eng_satd_Timer(sat1000_data_point) ;
+		eng_satd_Timer:comment = "sat1000 Timer scaled by 1000.0 offset by 0.0" ;
+		eng_satd_Timer:platform = "glider" ;
+		eng_satd_Timer:instrument = "sat1000" ;
+	double eng_aa4330_CalPhase(sg_data_point) ;
+		eng_aa4330_CalPhase:comment = "As reported by the instrument" ;
+		eng_aa4330_CalPhase:_FillValue = NaN ;
+		eng_aa4330_CalPhase:instrument = "aa4330" ;
+		eng_aa4330_CalPhase:platform = "glider" ;
+	double sigma_theta(sg_data_point) ;
+		sigma_theta:units = "g/m^3" ;
+		sigma_theta:platform = "glider" ;
+		sigma_theta:standard_name = "sea_water_sigma_theta" ;
+		sigma_theta:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		sigma_theta:ref_pressure = "0" ;
+	char salinity_raw_qc(sg_data_point) ;
+		salinity_raw_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		salinity_raw_qc:comment = "Whether to trust each raw salinity value" ;
+		salinity_raw_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+		salinity_raw_qc:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		salinity_raw_qc:platform = "glider" ;
+	char aanderaa4330_dissolved_oxygen_qc(sg_data_point) ;
+		aanderaa4330_dissolved_oxygen_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		aanderaa4330_dissolved_oxygen_qc:comment = "Whether to trust each optode dissolved oxygen value" ;
+		aanderaa4330_dissolved_oxygen_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+		aanderaa4330_dissolved_oxygen_qc:platform = "glider" ;
+		aanderaa4330_dissolved_oxygen_qc:instrument = "aa4330" ;
+	char temperature_raw_qc(sg_data_point) ;
+		temperature_raw_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		temperature_raw_qc:comment = "Whether to trust each raw temperature value" ;
+		temperature_raw_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+		temperature_raw_qc:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		temperature_raw_qc:platform = "glider" ;
+	double speed(sg_data_point) ;
+		speed:units = "cm/s" ;
+		speed:comment = "Vehicle speed based on hdm" ;
+		speed:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		speed:platform = "glider" ;
+	double wlbb2fl_results_time(sg_data_point) ;
+		wlbb2fl_results_time:units = "seconds since 1970-1-1 00:00:00" ;
+		wlbb2fl_results_time:comment = "wlbb2fl result time in GMT epoch format" ;
+		wlbb2fl_results_time:standard_name = "time" ;
+		wlbb2fl_results_time:platform = "glider" ;
+		wlbb2fl_results_time:instrument = "wlbb2fl" ;
+	double density(sg_data_point) ;
+		density:comment = "Sea water potential density" ;
+		density:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		density:ref_pressure = "0" ;
+		density:platform = "glider" ;
+		density:standard_name = "sea_water_density" ;
+		density:units = "g/m^3" ;
+	double eng_mag_z(magnetometer_data_point) ;
+		eng_mag_z:comment = "magnetometer z" ;
+		eng_mag_z:platform = "glider" ;
+		eng_mag_z:instrument = "magnetometer" ;
+	double eng_GC_phase(sg_data_point) ;
+		eng_GC_phase:flag_meanings = "pitch vbd active_roll passive_roll roll_back passive" ;
+		eng_GC_phase:platform = "glider" ;
+		eng_GC_phase:flag_values = 1, 2, 3, 4, 5, 6 ;
+	double eng_wlbb2fl_temp(sg_data_point) ;
+		eng_wlbb2fl_temp:comment = "temperature as reported by instrument" ;
+		eng_wlbb2fl_temp:_FillValue = NaN ;
+		eng_wlbb2fl_temp:instrument = "wlbb2fl" ;
+		eng_wlbb2fl_temp:platform = "glider" ;
+	double wlbb2fl_sig695nm_adjusted(sg_data_point) ;
+		wlbb2fl_sig695nm_adjusted:units = "micrograms/liter" ;
+		wlbb2fl_sig695nm_adjusted:_FillValue = NaN ;
+		wlbb2fl_sig695nm_adjusted:platform = "glider" ;
+		wlbb2fl_sig695nm_adjusted:comment = "chlorophyll-a concentration using manufacturer-supplied dark counts and scaling factor based on phytoplankton monoculture" ;
+		wlbb2fl_sig695nm_adjusted:instrument = "wlbb2fl" ;
+	double glide_angle(sg_data_point) ;
+		glide_angle:units = "cm/s" ;
+		glide_angle:comment = "Glide angle based on hdm" ;
+		glide_angle:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		glide_angle:platform = "glider" ;
+	double aanderaa4330_results_time(sg_data_point) ;
+		aanderaa4330_results_time:units = "seconds since 1970-1-1 00:00:00" ;
+		aanderaa4330_results_time:comment = "time for Aanderaa 4330 in GMT epoch format" ;
+		aanderaa4330_results_time:standard_name = "time" ;
+		aanderaa4330_results_time:platform = "glider" ;
+		aanderaa4330_results_time:instrument = "aa4330" ;
+	double eng_head(sg_data_point) ;
+		eng_head:units = "degrees" ;
+		eng_head:comment = "Vehicle heading (magnetic)" ;
+		eng_head:platform = "glider" ;
+	double glide_angle_gsm(sg_data_point) ;
+		glide_angle_gsm:units = "cm/s" ;
+		glide_angle_gsm:comment = "Glide angle based on gsm" ;
+		glide_angle_gsm:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		glide_angle_gsm:platform = "glider" ;
+	double eng_elaps_t(sg_data_point) ;
+		eng_elaps_t:units = "seconds" ;
+		eng_elaps_t:comment = "Elapsed seconds since start of dive" ;
+		eng_elaps_t:standard_name = "time" ;
+		eng_elaps_t:platform = "glider" ;
+	char conductivity_qc(sg_data_point) ;
+		conductivity_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		conductivity_qc:comment = "Whether to trust each corrected conductivity value" ;
+		conductivity_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+		conductivity_qc:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		conductivity_qc:platform = "glider" ;
+	double vert_speed(sg_data_point) ;
+		vert_speed:units = "cm/s" ;
+		vert_speed:comment = "Vehicle vertical speed based on hdm" ;
+		vert_speed:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		vert_speed:platform = "glider" ;
+	double eng_satu_PARuV(sat1001_data_point) ;
+		eng_satu_PARuV:comment = "sat1001 PARuV scaled by 1000.0 offset by 0.0" ;
+		eng_satu_PARuV:platform = "glider" ;
+		eng_satu_PARuV:instrument = "sat1001" ;
+	double aanderaa4330_dissolved_oxygen(sg_data_point) ;
+		aanderaa4330_dissolved_oxygen:comment = "Dissolved oxygen concentration, calculated from optode tcphase corrected for salininty and depth" ;
+		aanderaa4330_dissolved_oxygen:_FillValue = NaN ;
+		aanderaa4330_dissolved_oxygen:instrument = "aa4330" ;
+		aanderaa4330_dissolved_oxygen:platform = "glider" ;
+		aanderaa4330_dissolved_oxygen:standard_name = "mole_concentration_of_dissolved_molecular_oxygen_in_sea_water" ;
+		aanderaa4330_dissolved_oxygen:units = "micromoles/kg" ;
+	double ctd_pressure(sg_data_point) ;
+		ctd_pressure:units = "dbar" ;
+		ctd_pressure:comment = "Pressure at CTD thermistor" ;
+		ctd_pressure:standard_name = "sea_water_pressure" ;
+		ctd_pressure:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		ctd_pressure:platform = "glider" ;
+	double eng_satd_PARuV(sat1000_data_point) ;
+		eng_satd_PARuV:comment = "sat1000 PARuV scaled by 1000.0 offset by 0.0" ;
+		eng_satd_PARuV:platform = "glider" ;
+		eng_satd_PARuV:instrument = "sat1000" ;
+	double eng_satu_Timer(sat1001_data_point) ;
+		eng_satu_Timer:comment = "sat1001 Timer scaled by 1000.0 offset by 0.0" ;
+		eng_satu_Timer:platform = "glider" ;
+		eng_satu_Timer:instrument = "sat1001" ;
+	double depth(sg_data_point) ;
+		depth:comment = "Depth below the surface, corrected for average latitude" ;
+		depth:positive = "down" ;
+		depth:platform = "glider" ;
+		depth:standard_name = "depth" ;
+		depth:units = "meters" ;
+		depth:axis = "Z" ;
+	double time(sg_data_point) ;
+		time:units = "seconds since 1970-1-1 00:00:00" ;
+		time:comment = "Time of the sample in GMT epoch format" ;
+		time:standard_name = "time" ;
+		time:axis = "T" ;
+		time:platform = "glider" ;
+	double horz_speed(sg_data_point) ;
+		horz_speed:units = "cm/s" ;
+		horz_speed:comment = "Vehicle horizontal speed based on hdm" ;
+		horz_speed:coordinates = "ctd_time longitude latitude ctd_depth" ;
+		horz_speed:platform = "glider" ;
+	char log_GPS1(string_70) ;
+		log_GPS1:comment = "String reported in logfile for GPS1 fix (first surface position before dive)" ;
+	char log_GPS2(string_70) ;
+		log_GPS2:comment = "String reported in logfile for GPS2 fix (last surface position before dive)" ;
+	char log_SENSOR_SECS(string_68) ;
+	char log_GPS(string_67) ;
+		log_GPS:comment = "String reported in logfile for GPS fix (first surface position after dive)" ;
+	char log_SENSOR_MAMPS(string_65) ;
+	char log_SENSORS(string_65) ;
+	char log_KALMAN_X(string_60) ;
+	char log_KALMAN_Y(string_58) ;
+	char sg_cal_calibcomm_wetlabs(string_39) ;
+	char log_MHEAD_RNG_PITCHd_Wd(string_35) ;
+	char log_SM_CCo(string_31) ;
+	char log_ERRORS(string_31) ;
+	char log_IRIDIUM_FIX(string_31) ;
+	char sg_cal_calibcomm(string_22) ;
+	char log_CFSIZE(string_21) ;
+	char sg_cal_comm_oxy_type(string_20) ;
+	char log_TGT_LATLONG(string_19) ;
+	char sg_cal_calibcomm_optode(string_19) ;
+	char log_KALMAN_CONTROL(string_18) ;
+	char log_TT8_MAMPS(string_17) ;
+	double gc_vbd_ad(gc_event) ;
+		gc_vbd_ad:units = "1" ;
+	double gc_roll_i(gc_event) ;
+		gc_roll_i:units = "A" ;
+	double gc_pitch_ctl(gc_event) ;
+		gc_pitch_ctl:units = "cm" ;
+	double gc_pitch_ad(gc_event) ;
+		gc_pitch_ad:units = "1" ;
+	double gc_pitch_i(gc_event) ;
+		gc_pitch_i:units = "A" ;
+	double gc_vbd_pot2_ad_start(gc_event) ;
+		gc_vbd_pot2_ad_start:units = "1" ;
+	double gc_vbd_i(gc_event) ;
+		gc_vbd_i:units = "A" ;
+	double gc_vbd_pot2_ad(gc_event) ;
+		gc_vbd_pot2_ad:units = "1" ;
+	double gc_pitch_ad_start(gc_event) ;
+		gc_pitch_ad_start:units = "1" ;
+	double gc_vbd_pot1_ad_start(gc_event) ;
+		gc_vbd_pot1_ad_start:units = "1" ;
+	double gc_ob_vertv(gc_event) ;
+		gc_ob_vertv:units = "cm/s" ;
+	int gc_roll_retries(gc_event) ;
+		gc_roll_retries:units = "1" ;
+	double gc_vbd_ctl(gc_event) ;
+		gc_vbd_ctl:units = "cm" ;
+	double gc_st_secs(gc_event) ;
+		gc_st_secs:units = "seconds since 1970-1-1 00:00:00" ;
+		gc_st_secs:comment = "Start of GC time in GMT epoch format" ;
+	double gc_pitch_secs(gc_event) ;
+		gc_pitch_secs:units = "seconds" ;
+		gc_pitch_secs:comment = "Elapsed seconds since start of this pitch change" ;
+	double gc_pitch_volts(gc_event) ;
+		gc_pitch_volts:units = "V" ;
+	double gc_int_press(gc_event) ;
+		gc_int_press:units = "psia" ;
+		gc_int_press:comment = "Internal pressure" ;
+	double gc_roll_volts(gc_event) ;
+		gc_roll_volts:units = "V" ;
+	double gc_roll_ad_start(gc_event) ;
+		gc_roll_ad_start:units = "1" ;
+	double gc_end_secs(gc_event) ;
+		gc_end_secs:units = "seconds  since 1970-1-1 00:00:00" ;
+		gc_end_secs:comment = "End of GC time in GMT epoch format" ;
+	double gc_depth(gc_event) ;
+		gc_depth:units = "meters" ;
+	int gc_vbd_errors(gc_event) ;
+		gc_vbd_errors:units = "1" ;
+	int gc_gcphase(gc_event) ;
+		gc_gcphase:flag_meanings = "pitch vbd active_roll passive_roll roll_back passive" ;
+		gc_gcphase:flag_values = 1, 2, 3, 4, 5, 6 ;
+	int gc_data_pts(gc_event) ;
+		gc_data_pts:units = "1" ;
+	int gc_pitch_errors(gc_event) ;
+		gc_pitch_errors:units = "1" ;
+	double gc_vbd_pot1_ad(gc_event) ;
+		gc_vbd_pot1_ad:units = "1" ;
+	double gc_vbd_volts(gc_event) ;
+		gc_vbd_volts:units = "V" ;
+	char glider(string_16) ;
+		glider:nodc_name = "glider" ;
+		glider:call_sign = "SG401" ;
+		glider:long_name = "deepglider" ;
+	double gc_humidity(gc_event) ;
+		gc_humidity:units = "percent" ;
+		gc_humidity:comment = "Internal relative humidity" ;
+	double gc_roll_ad(gc_event) ;
+		gc_roll_ad:units = "1" ;
+	int gc_pitch_retries(gc_event) ;
+		gc_pitch_retries:units = "1" ;
+	int gc_roll_errors(gc_event) ;
+		gc_roll_errors:units = "1" ;
+	double gc_vbd_secs(gc_event) ;
+		gc_vbd_secs:units = "seconds" ;
+		gc_vbd_secs:comment = "Elapsed seconds since start of this VBD change" ;
+	int gc_vbd_retries(gc_event) ;
+		gc_vbd_retries:units = "1" ;
+	double gc_roll_secs(gc_event) ;
+		gc_roll_secs:units = "seconds" ;
+		gc_roll_secs:comment = "Elapsed seconds since start of this roll change" ;
+	char magnetometer(string_12) ;
+		magnetometer:long_name = "magnetometer" ;
+		magnetometer:make_model = "magnetometer" ;
+	char log_24V_AH(string_12) ;
+	char log_SPEED_LIMITS(string_11) ;
+	char sg_cal_mission_title(string_10) ;
+		sg_cal_mission_title:comment = "Description of mission" ;
+	char log_10V_AH(string_10) ;
+	char log_ALTIM_BOTTOM_PING(string_8) ;
+	char sat1001(string_7) ;
+		sat1001:long_name = "sat1001" ;
+		sat1001:make_model = "sat1001" ;
+	char log_TGT_NAME(string_7) ;
+	char log_DATA_FILE_SIZE(string_7) ;
+	char sat1000(string_7) ;
+		sat1000:long_name = "sat1000" ;
+		sat1000:make_model = "sat1000" ;
+	char log_CAP_FILE_SIZE(string_7) ;
+	char wlbb2fl(string_7) ;
+		wlbb2fl:long_name = "underway backscatter fluorescence puck" ;
+		wlbb2fl:make_model = "Wetlabs backscatter fluorescence puck" ;
+	char aa4330(string_6) ;
+		aa4330:long_name = "underway optode" ;
+		aa4330:ancillary_variables = "temperature salinity ctd_pressure density eng_aa4330_TCPhase aa4330_tcphase sg_cal_optode_ConcCoef0 sg_cal_optode_ConcCoef1 sg_cal_optode_FoilCoef*" ;
+		aa4330:make_model = "Aanderaa 4330" ;
+		aa4330:nodc_name = "optode" ;
+	char log_MEM(string_6) ;
+	char sbe41(string_5) ;
+		sbe41:long_name = "underway thermosalinograph" ;
+		sbe41:ancillary_variables = " sg_cal_t_g sg_cal_t_h sg_cal_t_i sg_cal_t_jsg_cal_c_g sg_cal_c_h sg_cal_c_i sg_cal_c_j sg_cal_cpcor sg_cal_ctcor" ;
+		sbe41:make_model = "unpumped Seabird SBE41" ;
+		sbe41:nodc_name = "thermosalinograph" ;
+	double log_gps_time(gps_info) ;
+		log_gps_time:units = "seconds since 1970-1-1 00:00:00" ;
+		log_gps_time:comment = "GPS times in GMT epoch format" ;
+		log_gps_time:standard_name = "time" ;
+	double log_gps_lat(gps_info) ;
+		log_gps_lat:units = "degrees_north" ;
+		log_gps_lat:comment = "GPS latitudes" ;
+		log_gps_lat:standard_name = "latitude" ;
+	char sg_cal_id_str(string_3) ;
+		sg_cal_id_str:comment = "Three digit vehicle identification string" ;
+	double log_gps_lon(gps_info) ;
+		log_gps_lon:units = "degrees_east" ;
+		log_gps_lon:comment = "GPS longitudes" ;
+		log_gps_lon:standard_name = "longitude" ;
+	char aanderaa4330_qc(string_1) ;
+		aanderaa4330_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		aanderaa4330_qc:comment = "Whether to trust the Aanderaa 3880 results" ;
+		aanderaa4330_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+	char GPS2_qc(string_1) ;
+		GPS2_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		GPS2_qc:comment = "Whether to trust the GPS2 information" ;
+		GPS2_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+	char CTD_qc(string_1) ;
+		CTD_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		CTD_qc:comment = "Whether to trust the corrected CTD values" ;
+		CTD_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+	char hdm_qc(string_1) ;
+		hdm_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		hdm_qc:comment = "Whether corrected temperatures, salinities, and velocities from the hydrodynamic model converged on a consistent solution" ;
+		hdm_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+	char latlong_qc(string_1) ;
+		latlong_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		latlong_qc:comment = "Whether to trust the dive estimated latitude and longitude estimates" ;
+		latlong_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+	char surface_curr_qc(string_1) ;
+		surface_curr_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		surface_curr_qc:comment = "Whether to trust the surface current values" ;
+		surface_curr_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+	int trajectory(trajectory) ;
+		trajectory:comment = "Dive number for observations" ;
+		trajectory:long_name = "Unique identifier for each feature instance" ;
+		trajectory:cf_role = "trajectory_id" ;
+	char depth_avg_curr_qc(string_1) ;
+		depth_avg_curr_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		depth_avg_curr_qc:comment = "Whether to trust the dive depth-average current values and displacements" ;
+		depth_avg_curr_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+	char GPS1_qc(string_1) ;
+		GPS1_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		GPS1_qc:comment = "Whether to trust the GPS1 information" ;
+		GPS1_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+	char GPSE_qc(string_1) ;
+		GPSE_qc:flag_meanings = "QC_NO_CHANGE QC_GOOD QC_PROBABLY_GOOD QC_PROBABLY_BAD QC_BAD QC_CHANGED QC_UNSAMPLED QC_INTERPOLATED QC_MISSING" ;
+		GPSE_qc:comment = "Whether to trust the final GPS information" ;
+		GPSE_qc:flag_values = "0 1 2 3 4 5 6 8 9" ;
+	double log_T_MISSION ;
+	int log_VBD_MIN ;
+	double log_T_ABORT ;
+	double log_PITCH_AD_RATE ;
+	int log_ROLL_MAX ;
+	double log_PRESSURE_YINT ;
+	double log_D_FINISH ;
+	double log_VBD_CNV ;
+	double log_T_TURN ;
+	int log_VBD_MAXERRORS ;
+	double sg_cal_wlbb2fl_sig470nm_scale_factor ;
+	double log_SIM_W ;
+	double sg_cal_wlbb2fl_sig470nm_dark_counts ;
+	double sg_cal_optode_FoilCoefB13 ;
+	double sg_cal_optode_FoilCoefB12 ;
+	double sg_cal_optode_FoilCoefB11 ;
+	double sg_cal_optode_FoilCoefB10 ;
+	double log__SM_ANGLEo ;
+	double log_MAXI_10V ;
+	double log_VBD_DBAND ;
+	double sg_cal_optode_SVUCoef6 ;
+	double sg_cal_optode_SVUCoef5 ;
+	double sg_cal_optode_SVUCoef4 ;
+	double sg_cal_optode_SVUCoef3 ;
+	double sg_cal_optode_SVUCoef2 ;
+	double sg_cal_optode_SVUCoef1 ;
+	double sg_cal_optode_SVUCoef0 ;
+	double sg_cal_c_j ;
+	double sg_cal_c_h ;
+	double sg_cal_c_i ;
+	double sg_cal_wlbb2fl_sig695nm_scale_factor ;
+	double log_PITCH_ADJ_GAIN ;
+	double log_T_WATCHDOG ;
+	double log_VBD_LP_IGNORE ;
+	int log_SURFACE_URGENCY_FORCE ;
+	double log_ALTIM_PING_DEPTH ;
+	double log_INT_PRESSURE_SLOPE ;
+	int log_SURFACE_URGENCY_TRY ;
+	double log_C_ROLL_DIVE ;
+	double log_D_OFFGRID ;
+	double log_HEAD_ERRBAND ;
+	int log_PHONE_SUPPLY ;
+	double log_T_RSLEEP ;
+	double log_C_ROLL_CLIMB ;
+	double log_ALTIM_TOP_TURN_MARGIN ;
+	double log_ESCAPE_HEADING_DELTA ;
+	double log_MAXI_24V ;
+	int log_N_NOCOMM ;
+	double log_D_TGT ;
+	double log_W_ADJ_DBAND ;
+	double log_TCM_TEMP ;
+	double log_HUMID ;
+	double log_D_BOOST ;
+	double sg_cal_optode_FoilCoefA3 ;
+	double sg_cal_optode_FoilCoefA0 ;
+	double sg_cal_optode_FoilCoefA1 ;
+	double sg_cal_optode_FoilCoefA6 ;
+	double sg_cal_optode_FoilCoefA7 ;
+	double sg_cal_optode_FoilCoefA4 ;
+	double sg_cal_optode_FoilCoefA5 ;
+	double sg_cal_optode_FoilCoefA8 ;
+	double sg_cal_optode_FoilCoefA9 ;
+	double log_ROLL_CNV ;
+	double log_PITCH_CNV ;
+	double log_R_STBD_OVSHOOT ;
+	double sg_cal_t_i ;
+	double sg_cal_t_h ;
+	double sg_cal_t_j ;
+	int log_USE_ICE ;
+	double sg_cal_t_g ;
+	double flight_avg_speed_east ;
+		flight_avg_speed_east:units = "m/s" ;
+		flight_avg_speed_east:comment = "Eastward component of flight average speed based on hdm" ;
+	int log_CALL_TRIES ;
+	int log_VBD_MAX ;
+	double log_ALTIM_SENSITIVITY ;
+	double log_SPEED_FACTOR ;
+	double log_COMPASS2_DEVICE ;
+	double log_VBD_PUMP_AD_RATE_SURFACE ;
+	double log_VBD_BLEED_AD_RATE ;
+	double log_T_GPS ;
+	double log_XPDR_VALID ;
+	double log_PITCH_ADJ_DBAND ;
+	int log_NAV_MODE ;
+	double log_LOGGERDEVICE1 ;
+	double log_LOGGERDEVICE2 ;
+	double log_LOGGERDEVICE3 ;
+	double log_COMPASS_DEVICE ;
+	double sg_cal_wlbb2fl_sig695nm_resolution_counts ;
+	double log_D_GRID ;
+	double depth_avg_curr_north_gsm ;
+		depth_avg_curr_north_gsm:units = "m/s" ;
+		depth_avg_curr_north_gsm:comment = "Northward component of depth-average current based on gsm" ;
+	int log_CALL_NDIVES ;
+	double log_ALTIM_TOP_MIN_OBSTACLE ;
+	double sg_cal_mass ;
+		sg_cal_mass:units = "kg" ;
+		sg_cal_mass:comment = "Mass of the glider" ;
+	double log_ALTIM_FREQUENCY ;
+	double sg_cal_optode_FoilCoefA10 ;
+	double sg_cal_optode_FoilCoefA12 ;
+	double sg_cal_optode_FoilCoefA13 ;
+	double log_SM_CC ;
+	double sg_cal_optode_FoilCoefA2 ;
+	double log_COURSE_BIAS ;
+	double log_T_DIVE ;
+	double log_FIX_MISSING_TIMEOUT ;
+	int log_PITCH_MIN ;
+	double log__SM_DEPTHo ;
+	double log_ROLL_TIMEOUT ;
+	double log_APOGEE_PITCH ;
+	double sg_cal_optode_FoilCoefA11 ;
+	double log_MAX_BUOY ;
+	int log_UNCOM_BLEED ;
+	double log_T_SLOITER ;
+	double sg_cal_abs_compress ;
+		sg_cal_abs_compress:units = "cc/dbar" ;
+		sg_cal_abs_compress:comment = "SG vehicle compressibility" ;
+	double log_ROLL_ADJ_GAIN ;
+	double log_ESCAPE_HEADING ;
+	int log_N_FILEKB ;
+	double log_HEADING ;
+	double log_ROLL_ADJ_DBAND ;
+	int log_C_VBD ;
+	double log_TGT_DEFAULT_LAT ;
+	double log_ALTIM_PING_DELTA ;
+	double sg_cal_wlbb2fl_sig695nm_dark_counts ;
+	int log_COMPASS_USE ;
+	double log_FG_AHR_24Vo ;
+	double log_T_BOOST ;
+	double log_D_SAFE ;
+	double flight_avg_speed_east_gsm ;
+		flight_avg_speed_east_gsm:units = "m/s" ;
+		flight_avg_speed_east_gsm:comment = "Eastward component of flight average speed based on gsm" ;
+	double log_TCM_ROLL_OFFSET ;
+	double log_GPS_DEVICE ;
+	double log_FG_AHR_10Vo ;
+	double log_TGT_RADIUS ;
+	double log_RAFOS_PEAK_OFFSET ;
+	double log_T_NO_W ;
+	double log_PRESSURE_SLOPE ;
+	double log_ALTIM_BOTTOM_TURN_MARGIN ;
+	double log_STOP_T ;
+	double log_VBD_PUMP_AD_RATE_APOGEE ;
+	double log_FG_AHR_10V ;
+	double log_ALTIM_BOTTOM_PING_RANGE ;
+	double log_FERRY_MAX ;
+	double flight_avg_speed_north_gsm ;
+		flight_avg_speed_north_gsm:units = "m/s" ;
+		flight_avg_speed_north_gsm:comment = "Northward component of flight average speed based on gsm" ;
+	double sg_cal_rho0 ;
+		sg_cal_rho0:units = "kg/m^3" ;
+		sg_cal_rho0:comment = "Typical expected density of seawater for this deployment" ;
+	int log_DIVE ;
+	double sg_cal_c_g ;
+	double log_PITCH_TIMEOUT ;
+	double log_HD_A ;
+		log_HD_A:comment = "Hydrodynamic lift factor for given hull shape (1/degrees of attack angle)" ;
+	double log_HD_B ;
+		log_HD_B:comment = "Hydrodynamic drag factor for given hull shape (Pa^(-1/4))" ;
+	double log_HD_C ;
+		log_HD_C:comment = "Hydrodynamic induced drag factor for given hull shape (1/degrees^2 of attack angle)" ;
+	double log_D_PITCH ;
+	double depth_avg_curr_east_gsm ;
+		depth_avg_curr_east_gsm:units = "m/s" ;
+		depth_avg_curr_east_gsm:comment = "Eastward component of depth-average current based on gsm" ;
+	double depth_avg_curr_east ;
+		depth_avg_curr_east:units = "m/s" ;
+		depth_avg_curr_east:comment = "Eastward component of the dive depth-average current based on hdm" ;
+		depth_avg_curr_east:standard_name = "eastward_sea_water_velocity" ;
+	double log_SEABIRD_T_H ;
+	int log_MOTHERBOARD ;
+	double log_SEABIRD_T_I ;
+	double log_D_CALL ;
+	double avg_latitude ;
+		avg_latitude:units = "degrees_north" ;
+		avg_latitude:comment = "The average latitude of the dive" ;
+	double log_TCM_PITCH_OFFSET ;
+	double log_D_SURF ;
+	double log_MINV_10V ;
+	int log_PITCH_MAXERRORS ;
+	double sg_cal_ctcor ;
+		sg_cal_ctcor:comment = "Nominal thermal expansion factor of a cube of boro-silicate glass" ;
+	double log_PITCH_MAX ;
+	double log_ALTIM_TOP_PING_RANGE ;
+	double log_GLIDE_SLOPE ;
+	int log_CAPUPLOAD ;
+	double log_ROLL_DEG ;
+	int log_FILEMGR ;
+	double log__XMS_NAKs ;
+	double log_MASS ;
+	double log_MINV_24V ;
+	double sg_cal_optode_PhaseCoef2 ;
+	double sg_cal_cpcor ;
+		sg_cal_cpcor:comment = "Nominal compression factor of conductivity tube with pressure" ;
+	double sg_cal_optode_PhaseCoef0 ;
+	double sg_cal_optode_PhaseCoef1 ;
+	double log_RAFOS_HIT_WINDOW ;
+	double surface_curr_east ;
+		surface_curr_east:units = "cm/s" ;
+		surface_curr_east:comment = "Eastward component of surface current" ;
+		surface_curr_east:standard_name = "surface_eastward_sea_water_velocity" ;
+	int log_N_NOSURFACE ;
+	double log_AH0_10V ;
+	double sg_cal_optode_FoilCoefB9 ;
+	double log_R_PORT_OVSHOOT ;
+	double log_PITCH_W_DBAND ;
+	int log_COMM_SEQ ;
+	double log_D_ABORT ;
+	int log_DEEPGLIDER ;
+	double log_ALTIM_PULSE ;
+	int log_AD7714Ch0Gain ;
+	int log_C_PITCH ;
+	double log_D_NO_BLEED ;
+	double depth_avg_curr_north ;
+		depth_avg_curr_north:units = "m/s" ;
+		depth_avg_curr_north:comment = "Northward component of the dive depth-average current based on hdm" ;
+		depth_avg_curr_north:standard_name = "northward_sea_water_velocity" ;
+	int log_TGT_AUTO_DEFAULT ;
+	double log_LOGGERDEVICE4 ;
+	double log_D_FLARE ;
+	int log_NOCOMM_ACTION ;
+	double log_TGT_DEFAULT_LON ;
+	double sg_cal_optode_SVU_enabled ;
+	double log__XMS_TOUTs ;
+	int log_USE_BATHY ;
+	double sg_cal_optode_ConcCoef1 ;
+	double sg_cal_optode_ConcCoef0 ;
+	int log_N_DIVES ;
+	double log_PITCH_VBD_SHIFT ;
+	double sg_cal_optode_PhaseCoef3 ;
+	double log_PITCH_GAIN ;
+	double log_INT_PRESSURE_YINT ;
+	double log_XPDR_INHIBIT ;
+	int reviewed ;
+		reviewed:comment = "Whether a scientist has reviewed and approved this profile" ;
+	double sg_cal_wlbb2fl_sig700nm_resolution_counts ;
+	double log_SEABIRD_T_G ;
+	double log_SEABIRD_T_J ;
+	int log_PROTOCOL ;
+	double log_RHO ;
+		log_RHO:units = "gram/cc" ;
+		log_RHO:comment = "Expected density at deepest point over the deployment" ;
+	double log_SIM_PITCH ;
+	double sg_cal_hd_a ;
+		sg_cal_hd_a:comment = "Hydrodynamic lift factor for given hull shape (1/degrees of attack angle)" ;
+	double sg_cal_hd_b ;
+		sg_cal_hd_b:comment = "Hydrodynamic drag factor for given hull shape (Pa^(-1/4))" ;
+	double sg_cal_hd_c ;
+		sg_cal_hd_c:comment = "Hydrodynamic induced drag factor for given hull shape (1/radians^2 of attack angle)" ;
+	int log_CF8_MAXERRORS ;
+	int log_N_GPS ;
+	double log_T_LOITER ;
+	double sg_cal_wlbb2fl_sig700nm_dark_counts ;
+	double log_T_TURN_SAMPINT ;
+	int log_HEAPDBG ;
+	double log_DEVICE6 ;
+	double log_DEVICE4 ;
+	double log_DEVICE5 ;
+	double log_DEVICE2 ;
+	double log_DEVICE3 ;
+	double log_DEVICE1 ;
+	double log_XPDR_DEVICE ;
+	int log_CALL_WAIT ;
+	double log_PITCH_DBAND ;
+	int log_STROBE ;
+	double log_PITCH_W_GAIN ;
+	double log_P_OVSHOOT_WITHG ;
+	double start_of_climb_time ;
+		start_of_climb_time:units = "seconds" ;
+		start_of_climb_time:comment = "Elapsed seconds after dive start when second (positive) apogee pump starts" ;
+	double log_XPDR_PINGS ;
+	int log_ROLL_MIN ;
+	double log_RAFOS_CORR_THRESH ;
+	double log_P_OVSHOOT ;
+	double log_AH0_24V ;
+	double magnetic_variation ;
+		magnetic_variation:comment = "The magnetic variance from true north (degrees)" ;
+	int log_KALMAN_USE ;
+	double sg_cal_therm_expan ;
+		sg_cal_therm_expan:units = "cc/degrees_Celsius" ;
+		sg_cal_therm_expan:comment = "SG thermal expansion coeff" ;
+	double sg_cal_wlbb2fl_sig700nm_scale_factor ;
+	double log_T_EPIRB ;
+	double log_VBD_TIMEOUT ;
+	int log_ID ;
+	double log_SEABIRD_C_Z ;
+		log_SEABIRD_C_Z:comment = "Conductivity zero frequency" ;
+	double log_ROLL_AD_RATE ;
+	double log_DBDW ;
+	double log_SEABIRD_C_G ;
+	double log_SEABIRD_C_J ;
+	double log_SEABIRD_C_I ;
+	double log_SEABIRD_C_H ;
+	double sg_cal_wlbb2fl_sig470nm_resolution_counts ;
+	int log_SURFACE_URGENCY ;
+	int log_CAPMAXSIZE ;
+	int log_ROLL_MAXERRORS ;
+	double log_MASS_COMP ;
+	double log_INTERNAL_PRESSURE ;
+	double log_LOGGERS ;
+	int log_UPLOAD_DIVES_MAX ;
+	double flight_avg_speed_north ;
+		flight_avg_speed_north:units = "m/s" ;
+		flight_avg_speed_north:comment = "Northward component of flight average speed based on hdm" ;
+	int log_RELAUNCH ;
+	double log_PHONE_DEVICE ;
+	double log__CALLS ;
+	double sg_cal_l ;
+	double sg_cal_optode_FoilCoefB8 ;
+	double sg_cal_optode_FoilCoefB7 ;
+	double sg_cal_optode_FoilCoefB6 ;
+	double sg_cal_optode_FoilCoefB5 ;
+	double sg_cal_optode_FoilCoefB4 ;
+	double sg_cal_optode_FoilCoefB3 ;
+	double sg_cal_optode_FoilCoefB2 ;
+	double sg_cal_optode_FoilCoefB1 ;
+	double sg_cal_optode_FoilCoefB0 ;
+	int log_MISSION ;
+	double sg_cal_volmax ;
+		sg_cal_volmax:units = "m^3" ;
+		sg_cal_volmax:comment = "Maximum displaced volume of the glider" ;
+	double log_FG_AHR_24V ;
+	double log_ICE_FREEZE_MARGIN ;
+	double surface_curr_north ;
+		surface_curr_north:units = "cm/s" ;
+		surface_curr_north:comment = "Northward component of surface current" ;
+		surface_curr_north:standard_name = "surface_northward_sea_water_velocity" ;
+	double log_RAFOS_DEVICE ;
+
+// global attributes:
+		:quality_control_version = "1.12" ;
+		:base_station_micro_version = 4636 ;
+		:time_coverage_resolution = "PT1S" ;
+		:geospatial_vertical_max = 61.6220402206234 ;
+		:mission = 20 ;
+		:geospatial_lat_units = "degrees" ;
+		:geospatial_lon_units = "degrees" ;
+		:references = "http://data.nodc.noaa.gov/accession/0092291" ;
+		:seaglider_software_version = 66.12f ;
+		:Metadata_Conventions = "Unidata Dataset Discovery v1.0" ;
+		:keywords = "Water Temperature, Conductivity, Salinity, Density, Potential Density, Potential Temperature" ;
+		:summary = "SG401 Bering Sea" ;
+		:id = "p4010101_20170430" ;
+		:naming_authority = "edu.washington.apl" ;
+		:project = "Bering Sea" ;
+		:geospatial_lat_max = 57.2270016666667 ;
+		:uuid = "cc87aca9-2d6d-11e7-8f74-0013d4217869" ;
+		:source = "Deepglider SG401" ;
+		:standard_name_vocabulary = "CF-1.6" ;
+		:file_version = "2.71" ;
+		:glider = 401 ;
+		:platform = "glider" ;
+		:instrument = "magnetometer aa4330 sbe41 sat1000 sat1001 wlbb2fl " ;
+		:processing_level = "1.12" ;
+		:nodc_template_version = "NODC_NetCDF_Trajectory_Template_v0.9" ;
+		:featureType = "trajectory" ;
+		:base_station_version = "2.10" ;
+		:keywords_vocabulary = "NASA/GCMD Earth Science Keywords Version 6.0.0.0" ;
+		:start_time = 1493532035. ;
+		:geospatial_lat_min = 57.2256934043721 ;
+		:geospatial_lat_resolution = "seconds" ;
+		:time_coverage_start = "2017-04-30T06:04:53Z" ;
+		:geospatial_vertical_positive = "no" ;
+		:date_created = "2017-04-30T06:04:26Z" ;
+		:institution = "Applied Physics Lab\n",
+			"University of Washington\n",
+			"Seattle, WA" ;
+		:geospatial_lon_max = -165.435254177419 ;
+		:geospatial_lon_min = -165.440853333333 ;
+		:geospatial_lon_resolution = "seconds" ;
+		:geospatial_vertical_resolution = "centimeter" ;
+		:license = "These data may be redistributed and used without restriction." ;
+		:date_modified = "2017-04-30T06:04:26Z" ;
+		:time_coverage_end = "2017-04-30T06:04:47Z" ;
+		:Conventions = "CF-1.6" ;
+		:platform_id = "SG401" ;
+		:cdm_data_type = "Trajectory" ;
+		:geospatial_vertical_min = -0.0598362554142285 ;
+		:title = "Physical, chemical, and biological data collected from Seaglider SG401 during Bering Sea deployed on 2017-04-30" ;
+		:geospatial_vertical_units = "meter" ;
+		:dive_number = 101 ;
+		:history = "Processing start:\n",
+			"INFO: MakeDiveProfiles.py(2199): Subsurface dive: skipping DAC computation\n",
+			"WARNING: MakeDiveProfiles.py(2248): No trustworthy GPS values; assuming average latitude of 57.2 degrees\n",
+			"INFO: MakeDiveProfiles.py(3439): Changed (3/80) 78:80 to QC_BAD because CT out of water\n",
+			"WARNING: MakeDiveProfiles.py(3452): CTD out of the water after climb (0.298m)\n",
+			"INFO: QC.py(394): Changed (2/80) 78 79 to QC_PROBABLY_BAD because raw temperature spikes\n",
+			"INFO: QC.py(208): Changed (2/80) 78 79 to QC_PROBABLY_BAD because changed raw temp implies changed raw salinity\n",
+			"INFO: QC.py(208): Changed (3/80) 78:80 to QC_BAD because changed raw cond implies changed raw salinity\n",
+			"INFO: QC.py(394): Changed (2/80) 78 79 to QC_INTERPOLATED because temperature spikes\n",
+			"WARNING: MakeDiveProfiles.py(3618): Mass of compressee in sg_calib_constants (10000.0g) does not match $MASS_COMP in log file (0.0g); using sg_calib_constants\n",
+			"INFO: MakeDiveProfiles.py(3663): Changed (4/80) 41:44 to QC_BAD because slow apogee CT flow\n",
+			"INFO: MakeDiveProfiles.py(3778): Changed (1/80) 1 to QC_BAD because prior to dive start\n",
+			"INFO: MakeDiveProfiles.py(3857): Changed (2/80) 76 77 to QC_BAD because end of climb\n",
+			"INFO: MakeDiveProfiles.py(3884): Changed (10/80) 1 41:44 76:80 to QC_BAD because bad corrected temperature and conductivity suggests bad salinity\n",
+			"INFO: QC.py(208): Changed (10/80) 1 41:44 76:80 to QC_BAD because changed corrected salin implies changed speed\n",
+			"INFO: TempSalinityVelocity.py(1250): TSV exiting after 2 iterations\n",
+			"INFO: TempSalinityVelocity.py(1252): Changed (1/80) 75 to QC_PROBABLY_BAD because TS bad extrapolation\n",
+			"INFO: TempSalinityVelocity.py(1270): SUGGESTION: 101 interp_salinity data_points in_between 21 39 % suspect thermal-inertia points 21\n",
+			"INFO: MakeDiveProfiles.py(4047): 10 (12.50%) HDM speeds are QC_BAD; 0 (0.00%) are stalled (80)\n",
+			"INFO: MakeDiveProfiles.py(4069): Average estimated final speed: 36.90 cm/s\n",
+			"INFO: MakeDiveProfiles.py(4072): RMS observed vs. computed w: 4.68 cm/s\n",
+			"INFO: MakeDiveProfiles.py(4124): Starting sensor extensions data processing\n",
+			"INFO: QC.py(208): Changed (2/80) 78 79 to QC_INTERPOLATED because changed temperature implies changed optode oxygen\n",
+			"INFO: QC.py(208): Changed (1/80) 75 to QC_PROBABLY_BAD because changed salinity implies changed optode oxygen\n",
+			"INFO: QC.py(208): Changed (10/80) 1 41:44 76:80 to QC_BAD because changed salinity implies changed optode oxygen\n",
+			"INFO: MakeDiveProfiles.py(4126): Finished sensor extensions data processing\n",
+			"INFO: MakeDiveProfiles.py(4156): Estimated total flight and drift time: 1073.3s (SM: 0.0s)\n",
+			"WARNING: MakeDiveProfiles.py(4249): Unable to determine surface drift\n",
+			"INFO: MakeDiveProfiles.py(4302): RAFOS or Iridium fix: Not computing QC_BAD depth-average current.\n",
+			"" ;
+data:
+
+ log_DEVICES = "Pitch_motor,Roll_motor,VBD_pump_during_apogee,VBD_pump_during_surface,VBD_valve,Iridium_during_init,Iridium_during_connect,Iridium_during_xfer,Transponder_ping,GUMSTIX_24V,GPS,TT8,LPSleep,TT8_Active,TT8_Sampling,TT8_CF8,TT8_Kalman,Analog_circuits,GPS_charging,Compass,RAFOS,Transponder,Compass2" ;
+
+ log_DEVICE_MAMPS = "208.572,283.062,4342.767,0.000,0.000,0.000,0.000,0.000,420.000,0.000,0.000,19.800,2.190,19.800,39.800,45.800,81.800,12.000,0.000,15.000,0.000,30.000,0.000" ;
+
+ log_DEVICE_SECS = "46.400,15.650,52.625,0.000,0.000,0.000,0.000,0.000,0.500,0.000,0.000,270.534,60.391,125.068,768.494,22.102,33.414,379.953,0.000,781.414,0.000,5.446,0.000" ;
+
+ log_SM_GC = "0.80,28.67,0.00,0.00,0.104,0.000,0.000,243,2027,1647,-6.77,0.14,452.48,0,0,0,0,0,0,25.78,26.11,25.86" ;
+
+ eng_depth = 123, 340, 590, 780, 950, 1102, 1261, 1441, 1642, 1767, 1875, 
+    1972, 2086, 2236, 2385, 2510, 2625, 2738, 2850, 3012, 3185, 3320, 3447, 
+    3583, 3701, 3872, 4045, 4175, 4298, 4420, 4549, 4713, 4883, 5015, 5178, 
+    5315, 5448, 5604, 5763, 5897, 6085, 6138, 6180, 6074, 5916, 5782, 5641, 
+    5498, 5350, 5155, 4957, 4803, 4653, 4506, 4354, 4160, 3901, 3749, 3599, 
+    3447, 3295, 3107, 2837, 2673, 2512, 2345, 2155, 1893, 1725, 1543, 1359, 
+    1176, 964, 709, 502, 310, 79, 5, 23, -6 ;
+
+ ctd_time = 1493532053.841, 1493532070.16, 1493532085.648, 1493532098.253, 
+    1493532109.884, 1493532121.537, 1493532133.179, 1493532147.797, 
+    1493532162.625, 1493532174.252, 1493532185.89, 1493532197.541, 
+    1493532209.177, 1493532224.187, 1493532239.025, 1493532251.654, 
+    1493532263.288, 1493532274.911, 1493532286.554, 1493532301.147, 
+    1493532315.996, 1493532327.62, 1493532339.251, 1493532351.893, 
+    1493532363.533, 1493532379.13, 1493532393.982, 1493532405.612, 
+    1493532417.265, 1493532428.906, 1493532440.536, 1493532455.142, 
+    1493532473.604, 1493532486.436, 1493532502.274, 1493532514.915, 
+    1493532526.549, 1493532541.166, 1493532555.998, 1493532568.625, 
+    1493532585.335, 1493532599.082, 1493532621.485, 1493532639.217, 
+    1493532660.031, 1493532672.643, 1493532684.257, 1493532695.89, 
+    1493532707.521, 1493532722.135, 1493532736.967, 1493532748.584, 
+    1493532760.204, 1493532771.827, 1493532783.458, 1493532798.039, 
+    1493532816.49, 1493532828.099, 1493532839.717, 1493532851.339, 
+    1493532862.961, 1493532877.602, 1493532896.907, 1493532908.555, 
+    1493532920.188, 1493532931.834, 1493532946.286, 1493532965.754, 
+    1493532978.394, 1493532991.025, 1493533003.663, 1493533016.301, 
+    1493533030.65, 1493533047.468, 1493533060.105, 1493533071.736, 
+    1493533086.193, 1493533101.723, 1493533115.484, 1493533127.109 ;
+
+ eng_wlbb2fl_sig470nm = 111, 92, 112, 108, 99, 97, 94, 95, 93, 109, 97, 92, 
+    93, 94, 92, 93, 94, 95, 95, 94, 142, 186, 215, 188, 228, 202, 187, 196, 
+    247, 186, 193, 237, 225, 235, 216, 242, 225, 245, 231, 225, 210, 308, 
+    243, 263, 197, 256, 236, 253, 249, 216, 225, 217, 226, 226, 207, 207, 
+    196, 191, 171, 163, 156, 104, 103, 101, 112, 101, 114, 96, 95, 95, 97, 
+    95, 91, 112, 111, 92, 95, 96, 95, 97 ;
+
+ salinity_qc = "41111111111111111111111111111111111111114444111111111111111111111111111111344444" ;
+
+ density_insitu = NaN, 1025.32328375494, 1025.33513188279, 1025.34499091308, 
+    1025.35237168797, 1025.35946108817, 1025.36721776096, 1025.37691303146, 
+    1025.38575174522, 1025.39128219294, 1025.39950886644, 1025.40461918579, 
+    1025.40672297958, 1025.41572951711, 1025.44068270805, 1025.42737423628, 
+    1025.43491927191, 1025.43851644564, 1025.45122248405, 1025.38492160341, 
+    1025.69387151658, 1025.72544507746, 1025.73188277884, 1025.73349537071, 
+    1025.73524950785, 1025.73543151884, 1025.73880514814, 1025.74677509819, 
+    1025.75281679371, 1025.75788778313, 1025.76322464222, 1025.77144900675, 
+    1025.78000162184, 1025.78715754823, 1025.79330173331, 1025.80066498972, 
+    1025.8079849234, 1025.81431909321, 1025.82325010321, 1025.82935101268, 
+    NaN, NaN, NaN, NaN, 1025.83045718382, 1025.82353182501, 1025.81634874881, 
+    1025.8095772985, 1025.8023977205, 1025.79314787613, 1025.78409755657, 
+    1025.77565710189, 1025.76979886659, 1025.7616548826, 1025.75578869286, 
+    1025.74382454879, 1025.73258739352, 1025.7175434112, 1025.7163519787, 
+    1025.67856858451, 1025.66947319044, 1025.58010986814, 1025.48161165188, 
+    1025.45641163894, 1025.43816424759, 1025.42511410751, 1025.41324594, 
+    1025.39910391184, 1025.38996225714, 1025.38132270485, 1025.37378385801, 
+    1025.36366965539, 1025.35507847901, 1025.34162859296, 1025.33253217265, 
+    NaN, NaN, NaN, NaN, NaN ;
+
+ eng_aa4330_Temp = 0.388, 0.394, 0.395, 0.396, 0.399, 0.4, 0.401, 0.401, 
+    0.399, 0.398, 0.386, 0.386, 0.388, 0.379, 0.367, 0.396, 0.391, 0.39, 
+    0.384, 0.244, -0.694, -0.749, -0.764, -0.771, -0.777, -0.779, -0.783, 
+    -0.784, -0.785, -0.784, -0.786, -0.788, -0.79, -0.79, -0.79, -0.791, 
+    -0.791, -0.79, -0.793, -0.792, -0.793, -0.794, -0.789, -0.786, -0.787, 
+    -0.792, -0.792, -0.795, -0.797, -0.797, -0.796, -0.797, -0.797, -0.795, 
+    -0.795, -0.795, -0.796, -0.796, -0.798, -0.804, -0.82, -0.182, 0.286, 
+    0.344, 0.343, 0.34, 0.351, 0.358, 0.36, 0.349, 0.356, 0.363, 0.362, 
+    0.363, 0.357, 0.362, 0.364, 0.364, 0.363, 0.358 ;
+
+ eng_vbdCC = -345.157, -445.613, -445.613, -445.613, -445.613, -445.613, 
+    -445.613, -447.331, -447.331, -447.331, -447.331, -447.331, -447.331, 
+    -448.189, -448.189, -448.189, -448.189, -448.189, -448.189, -449.048, 
+    -449.906, -449.906, -449.906, -449.906, -449.906, -450.765, -450.765, 
+    -450.765, -450.765, -450.765, -450.765, -452.482, -452.482, -452.482, 
+    -452.482, -452.482, -452.482, -453.341, -453.341, -453.341, -455.058, 
+    -314.248, 0.859, 151.114, 441.32, 441.32, 441.32, 441.32, 441.32, 
+    443.038, 443.038, 443.038, 443.038, 443.038, 443.038, 444.755, 444.755, 
+    444.755, 444.755, 444.755, 444.755, 446.472, 447.331, 447.331, 447.331, 
+    447.331, 448.189, 449.048, 449.048, 449.048, 449.048, 449.048, 450.765, 
+    450.765, 450.765, 450.765, 452.482, 452.482, 452.482, 452.482 ;
+
+ north_displacement = -0, -4.40373316955646, -4.57967834105708, 
+    -3.70079817288534, -1.26293846246008, -1.14696927852786, 
+    -1.39537589411771, -1.0034492193314, -2.07045062848158, 
+    -1.53866372526575, -2.13402770996917, -2.23426534378643, 
+    -2.14528312212681, -2.73903602405966, -3.01472228294075, 
+    -2.6628089696318, -2.32679607885191, -2.39957468618799, 
+    -2.27428009014612, -2.97125570088052, -2.54572363513662, 
+    -2.64475728319092, -3.45616133017119, -4.01131285099829, 
+    -3.23272485650725, -3.97297004071295, -4.06819693251775, 
+    -3.16885031193364, -3.37513777217675, -3.32810314508527, 
+    -3.62922382080863, -4.57147208475142, -6.16578580937704, 
+    -3.89185902632227, -4.88891758246301, -3.41658723003555, 
+    -3.34336383643764, -4.28796410893982, -4.24185920716977, 
+    -3.19594323333635, -0, -0, -0, -0, -1.2219226094437, -0.738284325589677, 
+    -0.735154552554325, -0.868731410827148, -0.921632323941257, 
+    -1.00354881277748, -0.81152900600519, -0.641972962491901, 
+    -0.475382029028561, -0.265429258138626, -0.258242135853808, 
+    -0.324504550192216, 0.15372288872867, 0.317620583386338, 
+    0.513274655365588, 0.757073496707402, 1.11233247485046, 1.47404262117897, 
+    0.23848099124024, -0.298863158841344, -0.832306853724597, 
+    -1.41205081262025, -1.76117748020746, -3.50112028431685, 
+    -2.05139189540665, -1.88184897269052, -1.75309444203766, 
+    -2.00978909361403, -2.28726481124039, -1.66924854503153, 
+    -1.03666419183042, -0, -0, 0, 0, 0 ;
+
+ pressure = 1.23803669166122, 3.4222152452424, 5.93854998439123, 
+    7.85096438614433, 9.56207200876553, 11.092003530168, 12.6923924242667, 
+    14.5041534364538, 16.5272865667295, 17.7854539363039, 18.8725105436162, 
+    19.8488484224059, 20.9962970634578, 22.5060979069471, 24.0058334114798, 
+    25.2640007810542, 26.4215147610627, 27.5588980631579, 28.6862160262966, 
+    30.316800937265, 32.058104576756, 33.4169253358964, 34.695223383384, 
+    36.0641094814809, 37.2518194783592, 38.972992439937, 40.714296079428, 
+    42.0227901437854, 43.2608268354466, 44.4887981881512, 45.787226913552, 
+    47.4379425024336, 49.1490501250548, 50.4776748673254, 52.1183251172504, 
+    53.497276554304, 54.8359666355312, 56.40615951276, 58.0065484068587, 
+    59.3553038270425, 61.2475875508824, 61.7810505155819, 62.2037947517589, 
+    61.1368688223598, 59.5465452672178, 58.197789847034, 56.7785770541541, 
+    55.339233583361, 53.8495634177848, 51.8868223212488, 49.8938852078429, 
+    48.3438230085272, 46.8340221650379, 45.3544173384184, 43.8244858170159, 
+    41.8718100594364, 39.2648872696783, 37.7349557482758, 36.2251549047865, 
+    34.695223383384, 33.1652918619815, 31.2730081381416, 28.5553666198609, 
+    26.9046510309792, 25.2841314589674, 23.603219853216, 21.6908054514629, 
+    19.0536866448349, 17.3627097001269, 15.5308180100265, 13.678795642013, 
+    11.8368386129561, 9.70298675415787, 7.13632532022607, 5.05280015621084, 
+    3.12025507654454, 0.795161777571029, 0.0503266947829765, 
+    0.231502796001692, -0.0603920337395718 ;
+
+ east_displacement = 0, 9.70797588824843, 8.6861328835477, 6.59474478194516, 
+    6.62055527186454, 6.64024388719201, 6.50884701881747, 8.05617161419069, 
+    7.83634110326451, 6.17124313241911, 6.09382655575137, 6.13859358112323, 
+    6.19520802146917, 8.0458654581638, 7.81283541116509, 6.49259914496093, 
+    5.93728380245933, 5.93915575957442, 6.05062412302557, 7.5429720325209, 
+    7.78865125510205, 5.85748808857173, 5.46710661081002, 5.77152281230926, 
+    5.55437742349099, 7.63200443920149, 7.10347227899251, 5.57818533917994, 
+    5.48620814845093, 5.49535146416127, 5.32024316243373, 6.70152746207214, 
+    8.09375080090686, 5.90231402418526, 7.33062266515687, 6.18913709031088, 
+    5.6085450132658, 6.96998618209261, 7.14410512244249, 6.24542069058387, 0, 
+    0, 0, 0, 3.94739415722962, 2.32736707872377, 2.12299967963619, 
+    2.07676928603666, 2.06033486541884, 2.66989834784816, 2.7933011602918, 
+    2.18123700671448, 2.23649660727272, 2.29403804686103, 2.30228050908399, 
+    2.89302324172049, 3.66771701358456, 2.28896818851156, 2.25918683330843, 
+    2.17401894632343, 2.03171683242269, 2.69239393155398, 4.26554502903393, 
+    2.54410081713007, 2.39005971946135, 2.12530732787932, 2.65078520611819, 
+    2.3615354502615, 1.80854523521366, 1.95553042116769, 2.08925659945532, 
+    1.87415864975002, 2.13290894247348, 3.26199767634289, 2.59184538134106, 
+    0, 0, 0, 0, 0 ;
+
+ salinity_raw = 31.5548894816114, 31.5554928889456, 31.5552784655978, 
+    31.5561094080133, 31.5551487007785, 31.5548281639731, 31.5549104112291, 
+    31.5563145839281, 31.5551278153077, 31.5545832870263, 31.5578848318787, 
+    31.5581752400657, 31.553568482306, 31.5566358086592, 31.5771879895098, 
+    31.5540989653324, 31.5554426580818, 31.5566358883022, 31.5554720127538, 
+    31.4807915403765, 31.8257483200698, 31.8424659535079, 31.8268498942266, 
+    31.8136739503593, 31.8053096165165, 31.7937693569236, 31.78676127899, 
+    31.7886588474901, 31.7886963286641, 31.7876071099512, 31.7865501236584, 
+    31.7868577640812, 31.7871491812471, 31.7880371574464, 31.7858786825926, 
+    31.7868018059637, 31.787849986184, 31.7864273754614, 31.78797613769, 
+    31.7874253952147, 31.7869997974062, 31.7856201630652, 31.7867369933004, 
+    31.7863089050787, 31.7875220309355, 31.7873959086769, 31.7865557327229, 
+    31.7871565365985, 31.7869557194795, 31.7870413275332, 31.7872267239919, 
+    31.786312465991, 31.7878788237312, 31.7867746728319, 31.7876679353121, 
+    31.787001948043, 31.7844856254638, 31.7834857787343, 31.7779879631869, 
+    31.767794553269, 31.7337551359863, 31.5208727412298, 31.4919442160096, 
+    31.5133238137306, 31.5302027247087, 31.5393295877967, 31.5453434732397, 
+    31.5489722878183, 31.5507544033764, 31.5529611609421, 31.5533568418698, 
+    31.5524804521387, 31.5552951163672, 31.5541395550677, 31.5547360043378, 
+    31.5542159930591, 31.5538679478488, 31.4940002987014, 31.5504809897929, 
+    31.3611499156376 ;
+
+ temperature_qc = "11111111111111111111111111111111111111111111111111111111111111111111111111111881" ;
+
+ eng_wlbb2fl_sig695nm = 112, 115, 112, 110, 107, 107, 105, 113, 120, 114, 
+    114, 108, 114, 119, 127, 114, 117, 124, 119, 122, 335, 416, 520, 558, 
+    550, 516, 461, 551, 473, 478, 495, 662, 566, 638, 566, 601, 628, 516, 
+    516, 606, 537, 719, 582, 623, 502, 497, 580, 620, 564, 535, 561, 547, 
+    539, 601, 522, 503, 422, 484, 430, 424, 385, 163, 122, 111, 120, 98, 117, 
+    122, 116, 103, 108, 114, 116, 115, 123, 108, 125, 115, 108, 109 ;
+
+ eng_pitchAng = 9.7, -17.9, -16.8, -14.4, -12.8, -13.8, -13.1, -12, -11.7, 
+    -11.4, -12.3, -12.4, -12.5, -12.7, -12.6, -12.3, -11.2, -12.1, -12, -12, 
+    -11.4, -11.7, -11.8, -12, -11.4, -11.6, -11.5, -11.4, -11.8, -11.3, 
+    -11.7, -11.7, -11.4, -11.3, -11.8, -11.7, -12.1, -11.7, -11.9, -11.8, 
+    -0.3, -0.3, -0.3, -0.3, 17.3, 16.9, 17.1, 16.8, 17.1, 16.7, 17.2, 16.6, 
+    16.8, 17.7, 17.2, 17.2, 16.8, 16.7, 17.3, 16.8, 16.7, 16.7, 18.3, 17.9, 
+    16.8, 18, 18, 16.5, 17.2, 15.9, 16.7, 16.7, 16.7, 15.9, 18.5, 18.7, -3.3, 
+    1.2, -0.9, 10.5 ;
+
+ eng_satu_pitch = 10.1, -14.8, -15.2, -13, -12.5, -13.3, -11.9, -11.2, -10, 
+    -11.1, -11.7, -11.2, -11.7, -12.1, -11.8, -11.3, -10.3, -11.2, -11.4, 
+    -11.3, -10.6, -11.2, -11.3, -11.2, -11.2, -11, -11, -10.9, -10.9, -10.5, 
+    -11, -11.2, -10.7, -10.7, -10.8, -10.7, -11.2, -10.9, -11.1, -11.2, -0.9, 
+    0.2, 19.6, 19.3, 17.4, 16.8, 17.1, 16.7, 17.1, 16.7, 17.1, 16.7, 17, 
+    17.8, 17.2, 16.8, 16.8, 16.7, 17.3, 16.9, 16.8, 16.2, 15.8, 15.2, 15.1, 
+    15.5, 17.3, 16.7, 17.4, 16.3, 16.4, 16.7, 19.3, 18.1, 20, 18.8, 3.5, 2.5, 
+    -0.3, 7.4 ;
+
+ longitude = -165.440853333333, -165.440772777054, -165.440620143695, 
+    -165.440493343766, -165.440383683893, -165.44027364647, 
+    -165.440164535997, -165.440043676229, -165.439911800984, 
+    -165.439795566778, -165.439693791867, -165.43959228788, 
+    -165.439489942635, -165.439371770947, -165.439240176271, 
+    -165.439121470519, -165.439018327996, -165.438919777917, 
+    -165.438820287347, -165.438707488392, -165.438580267379, 
+    -165.438467032423, -165.438373061525, -165.438279803962, 
+    -165.43818582223, -165.438076402318, -165.437954128098, 
+    -165.437848896362, -165.4377570846, -165.437665960189, -165.437576212946, 
+    -165.437476456918, -165.437353686468, -165.437237547849, 
+    -165.437127741628, -165.437015555364, -165.436917658811, 
+    -165.436813282812, -165.436696164816, -165.436585059226, 
+    -165.43653323505, -165.43653323505, -165.43653323505, -165.43653323505, 
+    -165.436500479778, -165.436448412136, -165.436411483223, 
+    -165.436376633759, -165.436342304283, -165.436303053054, 
+    -165.436257719708, -165.436216441249, -165.436179783125, 
+    -165.436142188984, -165.436104048971, -165.436060938611, 
+    -165.436006497929, -165.435957069665, -165.43591932931, 
+    -165.435882542799, -165.435847643822, -165.435808443397, 
+    -165.435750706781, -165.435694200693, -165.435653257285, 
+    -165.435615789004, -165.435576157236, -165.43553456526, 
+    -165.435499962147, -165.435468728043, -165.43543516461, 
+    -165.435402276397, -165.435369025958, -165.435324259303, 
+    -165.435275684417, -165.435254177419, -165.435254177419, 
+    -165.435254177419, -165.435254177419, -165.435254177419 ;
+
+ eng_satd_Temp = 1, 1.3, 1.5, 1.7, 1.9, 1.9, 2.1, 2, 2.1, 2.2, 2.2, 2.3, 2.3, 
+    2.2, 2.3, 2.4, 2.4, 2.4, 2.4, 2.4, 2.3, 2.4, 2.5, 2.6, 2.6, 2.5, 2.4, 
+    2.5, 2.4, 2.4, 2.4, 2.3, 2.2, 2.3, 2.2, 2.3, 2.2, 2.1, 2.1, 2.2, 2, 2, 
+    1.8, 1.8, 1.7, 1.9, 1.9, 1.9, 2, 1.9, 1.9, 1.9, 2, 2, 2, 1.8, 1.8, 1.8, 
+    1.9, 1.9, 1.9, 1.8, 1.7, 1.7, 1.8, 1.7, 1.7, 1.6, 1.7, 1.8, 1.9, 1.9, 
+    1.9, 1.8, 1.9, 1.9, 1.9, 1.9, 1.9, 2 ;
+
+ longitude_gsm = -165.440853333333, -165.440803958723, -165.440702999687, 
+    -165.440606769513, -165.440514888542, -165.440424604777, 
+    -165.440338667882, -165.440237170966, -165.440122610553, 
+    -165.440030968526, -165.439966747475, -165.439909027228, 
+    -165.439847682847, -165.43977396312, -165.439691851707, 
+    -165.439616788355, -165.439548389392, -165.439483080936, 
+    -165.439416852308, -165.439334405934, -165.439234066373, 
+    -165.439143907999, -165.439073349891, -165.439007047443, 
+    -165.438939915829, -165.438856614094, -165.438760297422, 
+    -165.438678348583, -165.438611006351, -165.438544267064, 
+    -165.438476216274, -165.438404752701, -165.438322353092, 
+    -165.43824263921, -165.438164509584, -165.438082933721, -165.43801074735, 
+    -165.437935570123, -165.437852049731, -165.437771722631, 
+    -165.437733345384, -165.437733345384, -165.437733345384, 
+    -165.437733345384, -165.43769419578, -165.437623080857, 
+    -165.437559877883, -165.437496827902, -165.437432546374, 
+    -165.437356401261, -165.437268545696, -165.437189349829, 
+    -165.43711986626, -165.437051736412, -165.436982530738, 
+    -165.436900584762, -165.436794103021, -165.43669831578, 
+    -165.436628517866, -165.436560308831, -165.436494677282, 
+    -165.436421682003, -165.436320421042, -165.436224210277, 
+    -165.436150809063, -165.436084090245, -165.436018430379, 
+    -165.435947262462, -165.435884950333, -165.435824808515, 
+    -165.435757906824, -165.435693731926, -165.43562802954, -165.43553343868, 
+    -165.435431569964, -165.435347911661, -165.435306872099, 
+    -165.435195443489, -165.435054995243, -165.435018068529 ;
+
+ eng_satu_Temp = 0.2, 0.6, 0.8, 1.2, 1.4, 1.6, 1.7, 1.7, 1.7, 1.9, 2, 2.1, 
+    2.1, 2, 2, 2.1, 2.1, 2.2, 2.3, 2.1, 2.1, 2.2, 2.3, 2.3, 2.4, 2.2, 2.1, 
+    2.3, 2.3, 2.3, 2.3, 2.2, 2, 2.1, 2, 2.1, 2.2, 2.1, 2, 2.1, 1.9, 1.9, 1.6, 
+    1.7, 1.5, 1.8, 1.9, 2, 2, 1.9, 1.9, 2, 2, 2, 2, 1.8, 1.7, 1.8, 1.8, 1.9, 
+    1.8, 1.6, 1.4, 1.5, 1.7, 1.7, 1.5, 1.4, 1.5, 1.6, 1.7, 1.8, 1.7, 1.6, 
+    1.7, 1.8, 1.7, 1.7, 1.6, 1.8 ;
+
+ eng_wlbb2fl_sig700nm = 217, 216, 217, 222, 197, 174, 173, 221, 158, 218, 
+    164, 160, 165, 164, 159, 158, 168, 173, 163, 158, 380, 563, 641, 702, 
+    834, 788, 653, 865, 880, 710, 718, 1106, 860, 867, 722, 883, 886, 687, 
+    880, 876, 698, 1274, 827, 941, 714, 741, 807, 983, 871, 779, 910, 748, 
+    855, 809, 887, 680, 722, 562, 517, 522, 412, 231, 192, 190, 209, 181, 
+    221, 182, 174, 164, 164, 162, 160, 231, 235, 153, 172, 171, 168, 183 ;
+
+ wlbb2fl_sig470nm_adjusted = 0.00080704, 0.00056745, 0.00081965, 0.00076921, 
+    0.00065572, 0.0006305, 0.00059267, 0.00060528, 0.00058006, 0.00078182, 
+    0.0006305, 0.00056745, 0.00058006, 0.00059267, 0.00056745, 0.00058006, 
+    0.00059267, 0.00060528, 0.00060528, 0.00059267, 0.00119795, 0.00175279, 
+    0.00211848, 0.00177801, 0.00228241, 0.00195455, 0.0017654, 0.00187889, 
+    0.002522, 0.00175279, 0.00184106, 0.0023959, 0.00224458, 0.00237068, 
+    0.00213109, 0.00245895, 0.00224458, 0.00249678, 0.00232024, 0.00224458, 
+    0.00205543, 0.00329121, 0.00247156, 0.00272376, 0.0018915, 0.00263549, 
+    0.00238329, 0.00259766, 0.00254722, 0.00213109, 0.00224458, 0.0021437, 
+    0.00225719, 0.00225719, 0.0020176, 0.0020176, 0.00187889, 0.00181584, 
+    0.00156364, 0.00146276, 0.00137449, 0.00071877, 0.00070616, 0.00068094, 
+    0.00081965, 0.00068094, 0.00084487, 0.00061789, 0.00060528, 0.00060528, 
+    0.0006305, 0.00060528, 0.00055484, 0.00081965, 0.00080704, 0.00056745, 
+    0.00060528, 0.00061789, 0.00060528, 0.0006305 ;
+
+ sigma_t = NaN, 25.3081819602382, 25.3080006233083, 25.3087175409103, 
+    25.3079177749944, 25.3076935735426, 25.3077998420313, 25.3088334227921, 
+    25.3080000080317, 25.3075148688292, 25.3105402080494, 25.3109844755018, 
+    25.3076057983108, 25.3093892926418, 25.3271650791028, 25.3078645664152, 
+    25.3098725291063, 25.3080332244576, 25.3153506720193, 25.241062690332, 
+    25.540795857584, 25.5658305130737, 25.5661183734924, 25.5611416474289, 
+    25.5571764215813, 25.5490754299719, 25.5440662646133, 25.5457416534589, 
+    25.5458256655832, 25.5449895528168, 25.5440777972065, 25.5443560316148, 
+    25.5446747365252, 25.5454394190067, 25.543691831364, 25.5444212413972, 
+    25.5453026354505, 25.5440855914771, 25.5453140669904, 25.5449292786025, 
+    NaN, NaN, NaN, NaN, 25.5449297556074, 25.5444924461078, 25.5441347314954, 
+    25.544288440449, 25.5442700408571, 25.5444674831451, 25.5450020341952, 
+    25.5440266608562, 25.5454294203378, 25.5443976369338, 25.5458993897639, 
+    25.5433308199999, 25.5446425749442, 25.5369593246273, 25.5430267234153, 
+    25.5125922019088, 25.5108617367948, 25.4313002884221, 25.3461621787555, 
+    25.3288549792155, 25.3183547973031, 25.3133188309496, 25.3105978633587, 
+    25.3090837376865, 25.3080171087618, 25.308145550892, 25.3094550855244, 
+    25.3081491762077, 25.3097593291211, 25.3085913262021, NaN, NaN, NaN, NaN, 
+    NaN, NaN ;
+
+ vert_speed_gsm = 13.2609419959103, -14.6419764847364, -15.6190917286483, 
+    -14.812839674613, -13.7908622577617, -13.3133492871123, 
+    -12.8733361306628, -12.9027114361899, -12.2882182989451, 
+    -9.98685335307634, -8.7776139434474, -9.03524669512982, 
+    -9.87962335944806, -9.98899164876064, -9.94722905866366, 
+    -9.86340189393133, -9.7754918462366, -9.64308184022542, 
+    -10.4137005419538, -11.3455779278784, -11.6009494511875, 
+    -11.2338273886936, -10.8036926462118, -10.4300548922955, 
+    -10.5796829199164, -11.2646163596984, -11.4082664461215, 
+    -10.8344346912378, -10.4868249083501, -10.7541975442678, 
+    -11.134899544656, -10.0705148965425, -9.62178986991522, 
+    -10.2589000763805, -10.5026803292073, -11.0893226288157, 
+    -10.9761335183197, -10.6643477965077, -10.6383464877202, 
+    -10.9427814229289, 0, 0, 0, 0, 8.70935336426095, 11.317268401063, 
+    12.1799356084965, 12.4711133898572, 13.030100047462, 13.3066922884714, 
+    13.269084947027, 13.043819449708, 12.7402722369028, 12.8200925362791, 
+    13.1612515903855, 13.6737909944486, 13.6327074791907, 12.9642508620125, 
+    12.957094999375, 13.0407551285856, 12.9085722192819, 13.4531804601008, 
+    13.9810184309288, 13.9199643676943, 14.049776781945, 13.6403216022956, 
+    13.2877288810668, 13.3544855511025, 13.8109096365904, 14.4435326693613, 
+    14.4791139026043, 14.5959024222356, 14.9422152211786, 15.6415756115177, 
+    16.39612416123, 16.1698694834836, 0, 1.90662744386327, 
+    -0.432127110221335, 2.48781424023847 ;
+
+ latitude = 57.2270016666667, 57.2269818870353, 57.2269415375043, 
+    57.226904345248, 57.2268820503275, 57.2268712260825, 57.2268598069868, 
+    57.2268490325201, 57.2268352259148, 57.2268190153615, 57.2268025192479, 
+    57.2267828987979, 57.2267632277936, 57.2267412895815, 57.2267154462314, 
+    57.2266899452596, 57.2266675341496, 57.2266463053722, 57.2266253124734, 
+    57.2266017518352, 57.226576971992, 57.226553658636, 57.2265262559945, 
+    57.2264927153868, 57.2264601783575, 57.2264278135472, 57.226391696164, 
+    57.2263591905327, 57.2263297978182, 57.22629968981, 57.2262684405591, 
+    57.2262316066422, 57.2261833796051, 57.2261382050907, 57.2260987657065, 
+    57.2260614610341, 57.2260310983089, 57.2259968217422, 57.2259585095298, 
+    57.2259251021945, 57.225910747424, 57.225910747424, 57.225910747424, 
+    57.225910747424, 57.2259052590854, 57.2258964546985, 57.2258898366595, 
+    57.2258826327097, 57.2258745911837, 57.2258659441173, 57.2258577915865, 
+    57.2258512630953, 57.2258462444284, 57.2258429170302, 57.2258405649287, 
+    57.2258379474871, 57.225837180411, 57.2258392974785, 57.2258430294942, 
+    57.225848735339, 57.2258571318879, 57.2258687487466, 57.225876440649, 
+    57.2258761694389, 57.225871088721, 57.2258610080541, 57.2258467553091, 
+    57.2258231193835, 57.2257981799424, 57.2257805135554, 57.2257641869892, 
+    57.2257472857724, 57.2257279852974, 57.2257102143806, 57.2256980606114, 
+    57.2256934043721, 57.2256934043721, 57.2256934043721, 57.2256934043721, 
+    57.2256934043721 ;
+
+ ctd_depth = 0.987390990479296, 3.12870198152902, 5.6215775821052, 
+    7.51613028073881, 9.21154251977939, 10.7272169890184, 12.312848491069, 
+    14.1079947100473, 16.1124232271577, 17.3589802603946, 18.4357416337417, 
+    19.4029857442131, 20.5397449127089, 22.035461851212, 23.5212430288947, 
+    24.767733299004, 25.9146984652447, 27.0412572517956, 28.1580683006504, 
+    29.7734158310906, 31.4985707535378, 32.8446002860923, 34.1109025194304, 
+    35.4669154953184, 36.6436232417257, 38.3485921382025, 40.0735613812639, 
+    41.3697782518394, 42.596072912903, 43.8126049400185, 45.0987047242051, 
+    46.7338591979539, 48.4288948827663, 49.7450001064458, 51.3700267413165, 
+    52.7359604508001, 54.0618970983402, 55.6173052606942, 57.2024818897701, 
+    58.5384663219817, 60.4205743424231, 60.9489702589987, 61.3676981287797, 
+    60.310907094289, 58.7671397214186, 57.4302164250217, 56.0249360156682, 
+    54.5985080459128, 53.1236561966518, 51.1785202228506, 49.2056083770058, 
+    47.6687425629266, 46.1736569703785, 44.7101697543514, 43.1934317330908, 
+    41.2591283490207, 38.6757460107059, 37.1599393340715, 35.6657400153765, 
+    34.1489485218226, 32.633108275292, 30.7585321342668, 28.0701821864596, 
+    26.4338891769114, 24.8258227974691, 23.1634878481428, 21.2688814859666, 
+    18.6526682452891, 16.9790725260527, 15.1611074867406, 13.3281391091273, 
+    11.5032465215295, 9.3891429224386, 6.84432643873362, 4.78630584434703, 
+    2.87208505830927, 0.530464347396189, -0.20269856110375, 
+    -0.0256331975794281, -0.297555457252991 ;
+
+ speed_gsm = 78.7049132126119, 42.631271164381, 47.987818560663, 
+    51.138174330722, 51.6975007349305, 47.0994924825839, 47.1941471810173, 
+    50.3711998026846, 48.6129499957861, 39.411017927984, 32.5103473057241, 
+    33.3758238122132, 36.6010370262336, 36.639961989584, 36.6727676338787, 
+    36.9410368092149, 38.9430727663733, 36.441811223112, 39.867294080559, 
+    43.7832367992873, 46.4647957271525, 44.0708014762748, 41.9823780098123, 
+    39.9358284300166, 41.9931593642579, 44.4622126277593, 45.349892376937, 
+    43.105923168007, 40.6351805257163, 43.007820032802, 43.6460188968562, 
+    39.0921219399845, 37.8263394867299, 40.8326026572068, 40.7025277288286, 
+    43.4504015626235, 41.9878341031529, 41.6289996364416, 41.0429320329119, 
+    42.5745615464913, 0, 0, 0, 0, 25.2764089190338, 33.9836496613846, 
+    36.4001067058994, 37.8373609312785, 39.0902368866903, 40.7127797911361, 
+    39.665952340264, 40.0491862584408, 38.7019905446251, 37.4012298466872, 
+    39.3258694129914, 40.9431479157196, 41.5734572119797, 39.6054743216726, 
+    38.5071681830139, 39.6680301339703, 39.4255338332446, 41.1867745747795, 
+    39.9040589883406, 40.4253708538467, 42.9177233680474, 39.3976287488371, 
+    38.3275306408354, 41.2525566678646, 41.3761693949721, 46.1321819482568, 
+    44.5114436913439, 44.8904463125014, 46.0149129746277, 50.1918817213719, 
+    46.7434124467647, 45.6700365285978, 0, 91.0414104235622, 
+    27.5111975929928, 8.58629441124207 ;
+
+ eng_satu_roll = -2.6, 1.3, 0.2, 1.1, 3, 2.2, 3.2, 2.7, 3.8, 2, 2.6, 3.1, 
+    1.5, 1.8, 2.8, 2.7, 4.1, 2.6, 2.1, 1.5, 2.1, 1.5, 1, 1.6, -0.1, 1.8, 0.6, 
+    1.8, 2.3, 1.5, 2.2, 1.4, 1.8, 2.1, 1.5, 2.7, 2.6, 1.5, 1.7, 1.2, -0.4, 
+    -1.2, -4, -3.9, -3.9, -2.5, -2.4, -2.8, -2.1, -2.8, -2, -3.3, -3, -1.7, 
+    -2.2, -2.7, -2.4, -3.2, -2.4, -2.5, -2.6, -18.8, -23, -23.2, -21.4, -22, 
+    -7.2, -2.4, -0.5, -0.7, -2.5, -1.2, 14.6, 16.6, 15.3, 16, 4.2, -3.3, 1.6, 
+    0.5 ;
+
+ salinity = NaN, 31.5554899211291, 31.5552542334522, 31.5560654595495, 
+    31.5551347521025, 31.5547940066588, 31.5549610811383, 31.5561603224085, 
+    31.5549727921221, 31.5542207308512, 31.5572266850059, 31.5578496758131, 
+    31.5539318539779, 31.5554882431646, 31.5764299977547, 31.5546617387545, 
+    31.5567959308466, 31.5544134846961, 31.563268046867, 31.4600749893962, 
+    31.7826110658789, 31.813208677866, 31.8136356000822, 31.8074914091326, 
+    31.8025445891144, 31.7926340664789, 31.7864110280871, 31.7885206313439, 
+    31.7885968143843, 31.7876374687649, 31.7864784413731, 31.7867157110294, 
+    31.7870832119287, 31.7880463848501, 31.7859321371508, 31.7868272999664, 
+    31.7879288543956, 31.7865018724477, 31.7879059471409, 31.787483584174, 
+    NaN, NaN, NaN, NaN, 31.7875742406864, 31.7869472008674, 31.7865288860251, 
+    31.7866659491623, 31.7866053608558, 31.7868513045328, 31.7875687721366, 
+    31.7863899888124, 31.7880794726598, 31.7869194294812, 31.7887722644993, 
+    31.7856266225253, 31.7872187455191, 31.7777375468851, 31.7851454345149, 
+    31.7472365192891, 31.7451077620655, 31.681154258986, 31.6007061114521, 
+    31.5795177229688, 31.5658584874605, 31.5591608000125, 31.5563095211627, 
+    31.5548793024212, 31.553514944585, 31.553092791374, 31.5550839240056, 
+    31.5537747255047, 31.5555214249406, 31.5541570717655, NaN, NaN, NaN, NaN, 
+    NaN, NaN ;
+
+ eng_satd_pitch = -8.2, 1.6, 12.3, 13.8, 9.4, 12.4, 12.6, 11, 10.2, 11.1, 
+    10.3, 11.9, 11.6, 11.4, 11.4, 10.7, 10.9, 10.7, 11.9, 11.7, 10.2, 10.9, 
+    12.4, 11.5, 12.5, 11.8, 10.6, 10.5, 10.4, 10.7, 10.5, 11.5, 10.5, 10.7, 
+    10.5, 10.3, 10, 10.8, 10.1, 11.6, 7.7, 1.4, -0.5, -13.4, -11.4, -11.6, 
+    -11.7, -11.7, -11.8, -11.8, -12.3, -11.2, -11, -12.2, -12.2, -11.8, 
+    -11.6, -11.6, -11.6, -11.4, -11.6, -6.1, -1.7, -1, -1.7, -2, -7.2, -10.9, 
+    -11.9, -11.6, -11, -12.1, -20.1, -23.5, -25.3, -24.4, -3.4, 3.4, 0.5, 2.3 ;
+
+ temperature = 0.393811351241483, 0.394098500673641, 0.393922951267821, 
+    0.392612484544754, 0.393646538398343, 0.392608871903631, 0.3931933042922, 
+    0.391797501593886, 0.389253692286476, 0.386759319234327, 
+    0.37424692546258, 0.375441633262295, 0.380059502496502, 
+    0.369065115580154, 0.350212676845491, 0.386873851256921, 
+    0.380895771035742, 0.379241759903318, 0.375411518367689, 
+    0.185690573143737, -0.827066341252751, -0.835343593301123, 
+    -0.833541794481037, -0.833454070498091, -0.834683739704182, 
+    -0.832242722164826, -0.833134597212315, -0.832122232531119, 
+    -0.832820459133255, -0.830961165395194, -0.831789120344492, 
+    -0.834483300010554, -0.835146749502241, -0.834676238904882, 
+    -0.833548711759719, -0.833697331187258, -0.833373849081856, 
+    -0.831439953766967, -0.834311353395351, -0.832970532073054, 
+    -0.833160301747548, -0.834154285937657, -0.834410484144307, 
+    -0.833368039462678, -0.830692144523738, -0.832888713765019, 
+    -0.832292270998113, -0.833629050752227, -0.834587838425777, 
+    -0.834536006559226, -0.833089146868956, -0.832428869569975, 
+    -0.833525676084915, -0.830628499537556, -0.830686301950505, 
+    -0.829995460258147, -0.830710848784633, -0.830458745194085, 
+    -0.832665171277098, -0.840637246886325, -0.840412086303687, 
+    -0.0868333778718568, 0.361871715973716, 0.36681635442228, 
+    0.356338375587908, 0.348827403763735, 0.357677900929236, 
+    0.36521779718938, 0.364542075251261, 0.354775744205079, 
+    0.360917874963131, 0.36614875188421, 0.361922000973719, 
+    0.363356839651954, 0.35673742584529, 0.361055135124512, 
+    0.361883560809094, 0.378928912996557, 0.393766750048089, 0.406301439076797 ;
+
+ temperature_raw = 0.393800501501119, 0.394095596356124, 0.393954464213266, 
+    0.392620107728817, 0.393646538398343, 0.392620107728817, 
+    0.393210307485504, 0.391875934635209, 0.389361075260865, 
+    0.387141240322762, 0.374552085056791, 0.375296470673447, 
+    0.380186087067614, 0.369674849870364, 0.349853838577303, 
+    0.386101867724221, 0.381071566000458, 0.37928776190023, 0.37928776190023, 
+    0.209792553033992, -0.803396391314607, -0.834565088153511, 
+    -0.833569953327469, -0.833425922021092, -0.834709122191612, 
+    -0.832273684004235, -0.833137860444651, -0.832129655806341, 
+    -0.832849800249676, -0.83099053586318, -0.83171066664886, 
+    -0.834421054460847, -0.835141226378369, -0.834709122191612, 
+    -0.833569953327469, -0.833700891178353, -0.833425922021092, 
+    -0.831422613298514, -0.834277021113564, -0.832993830174473, 
+    -0.833137860444651, -0.834132988111662, -0.834421054460847, 
+    -0.833425922021092, -0.830702485966412, -0.832849800249676, 
+    -0.832273684004235, -0.833569953327469, -0.834565088153511, 
+    -0.834565088153511, -0.833137860444651, -0.832417712547567, 
+    -0.833569953327469, -0.830702485966412, -0.830702485966412, 
+    -0.829995460258147, -0.830702485966412, -0.830414437450997, 
+    -0.832417712547567, -0.839999338908171, -0.857130267621244, 
+    -0.108216679003192, 0.352665632719265, 0.366709812621821, 
+    0.35679963214676, 0.348813826899288, 0.357390180493951, 
+    0.365079622174051, 0.364784386147619, 0.354873891070952, 
+    0.360650930891381, 0.366119355000194, 0.361973153739598, 
+    0.363462224576608, 0.35679963214676, 0.360946187036461, 
+    0.361536695015218, 0.419865954663862, 0.362576488569857, 0.405654487384993 ;
+
+ wlbb2fl_sig700nm_adjusted = 0.000546645, 0.000543332, 0.000546645, 
+    0.00056321, 0.000480385, 0.000404186, 0.000400873, 0.000559897, 
+    0.000351178, 0.000549958, 0.000371056, 0.000357804, 0.000374369, 
+    0.000371056, 0.000354491, 0.000351178, 0.000384308, 0.000400873, 
+    0.000367743, 0.000351178, 0.001086664, 0.001692943, 0.001951357, 
+    0.00215345, 0.002590766, 0.002438368, 0.001991113, 0.002693469, 
+    0.002743164, 0.002179954, 0.002206458, 0.003491902, 0.002676904, 
+    0.002700095, 0.00221971, 0.002753103, 0.002763042, 0.002103755, 
+    0.002743164, 0.002729912, 0.002140198, 0.004048486, 0.002567575, 
+    0.002945257, 0.002193206, 0.002282657, 0.002501315, 0.003084403, 
+    0.002713347, 0.002408551, 0.002842554, 0.002305848, 0.002660339, 
+    0.002507941, 0.002766355, 0.002080564, 0.00221971, 0.00168963, 
+    0.001540545, 0.00155711, 0.00119268, 0.000593027, 0.00046382, 
+    0.000457194, 0.000520141, 0.000427377, 0.000559897, 0.00043069, 
+    0.000404186, 0.000371056, 0.000371056, 0.00036443, 0.000357804, 
+    0.000593027, 0.000606279, 0.000334613, 0.00039756, 0.000394247, 
+    0.000384308, 0.000434003 ;
+
+ eng_mag_x = -3, 186, 167, 144, 191, 203, 189, 196, 167, 169, 159, 157, 162, 
+    165, 156, 149, 143, 149, 152, 150, 155, 138, 115, 109, 118, 128, 120, 
+    119, 117, 113, 108, 108, 98, 107, 110, 124, 122, 118, 120, 130, 23, 23, 
+    23, 23, -105, -103, -110, -118, -125, -111, -101, -97, -85, -75, -70, 
+    -70, -39, -21, -11, 11, 37, 37, -40, -73, -106, -160, -160, -203, -191, 
+    -172, -164, -187, -187, -128, -136, -81, 70, 174, 190, 24 ;
+
+ eng_aa4330_TCPhase = 34.099, 34.094, 34.114, 34.127, 34.111, 34.098, 34.098, 
+    34.067, 34.09, 34.085, 34.077, 34.072, 34.068, 34.042, 34.031, 34.068, 
+    34.069, 34.07, 34.07, 34.161, 34.406, 35.271, 36, 36.501, 36.807, 37.046, 
+    37.111, 37.155, 37.206, 37.24, 37.263, 37.302, 37.336, 37.353, 37.338, 
+    37.368, 37.376, 37.379, 37.389, 37.396, 37.377, 37.404, 37.406, 37.378, 
+    37.409, 37.41, 37.39, 37.391, 37.393, 37.397, 37.422, 37.397, 37.398, 
+    37.386, 37.401, 37.375, 37.378, 37.326, 37.28, 37.223, 37.064, 36.104, 
+    34.93, 34.575, 34.394, 34.286, 34.208, 34.189, 34.173, 34.162, 34.146, 
+    34.145, 34.109, 34.129, 34.124, 34.121, 34.12, 34.269, 34.232, 34.213 ;
+
+ eng_sbect_tempFreq = 3431.051, 3431.074, 3431.063, 3430.959, 3431.039, 
+    3430.959, 3431.005, 3430.901, 3430.705, 3430.532, 3429.551, 3429.609, 
+    3429.99, 3429.171, 3427.627, 3430.451, 3430.059, 3429.92, 3429.92, 
+    3416.731, 3338.658, 3336.277, 3336.353, 3336.364, 3336.266, 3336.452, 
+    3336.386, 3336.463, 3336.408, 3336.55, 3336.495, 3336.288, 3336.233, 
+    3336.266, 3336.353, 3336.343, 3336.364, 3336.517, 3336.299, 3336.397, 
+    3336.386, 3336.31, 3336.288, 3336.364, 3336.572, 3336.408, 3336.452, 
+    3336.353, 3336.277, 3336.277, 3336.386, 3336.441, 3336.353, 3336.572, 
+    3336.572, 3336.626, 3336.572, 3336.594, 3336.441, 3335.862, 3334.554, 
+    3392.085, 3427.846, 3428.94, 3428.168, 3427.546, 3428.214, 3428.813, 
+    3428.79, 3428.018, 3428.468, 3428.894, 3428.571, 3428.687, 3428.168, 
+    3428.491, 3428.537, 3433.083, 3428.618, 3431.975 ;
+
+ conductivity_raw_qc = "11111111111111111111111111111111111111111111111111111111111111111111111111111444" ;
+
+ eng_mag_y = -126, -161, -148, -149, -165, -157, -178, -171, -183, -158, 
+    -167, -173, -157, -156, -169, -168, -176, -165, -162, -158, -166, -155, 
+    -143, -146, -138, -158, -142, -152, -152, -150, -149, -149, -143, -151, 
+    -148, -158, -157, -145, -153, -150, -149, -149, -149, -149, -147, -159, 
+    -161, -152, -160, -154, -164, -154, -157, -172, -167, -167, -161, -147, 
+    -152, -140, -122, -122, 3, 3, -13, 2, 2, -106, -134, -145, -131, -138, 
+    -138, -291, -326, -335, -135, -126, -148, -169 ;
+
+ eng_sbect_condFreq = 5688.885, 5689.012, 5689.075, 5689.107, 5689.17, 
+    5689.139, 5689.234, 5689.297, 5689.139, 5689.012, 5688.472, 5688.568, 
+    5688.631, 5688.219, 5688.282, 5689.17, 5688.98, 5688.98, 5688.948, 
+    5674.106, 5632.154, 5631.252, 5630.444, 5629.729, 5629.201, 5628.735, 
+    5628.331, 5628.549, 5628.549, 5628.642, 5628.58, 5628.487, 5628.518, 
+    5628.642, 5628.642, 5628.735, 5628.859, 5628.953, 5628.922, 5629.015, 
+    5629.046, 5628.922, 5628.984, 5628.984, 5629.17, 5628.984, 5628.922, 
+    5628.828, 5628.704, 5628.642, 5628.673, 5628.611, 5628.58, 5628.642, 
+    5628.642, 5628.58, 5628.3, 5628.207, 5627.71, 5626.593, 5623.491, 
+    5656.987, 5683.496, 5685.587, 5685.936, 5685.936, 5686.76, 5687.362, 
+    5687.394, 5686.855, 5687.172, 5687.394, 5687.236, 5687.172, 5686.728, 
+    5686.887, 5686.823, 5686.792, 5686.665, 5677.928 ;
+
+ eng_satd_roll = -13.4, -3.4, 2.5, 4.5, 4.4, 6.2, 3.1, 7.1, 4.5, 5.9, 5.4, 
+    5.7, 4.7, 4.6, 5.2, 5.9, 6.2, 5.6, 5.3, 4.4, 5.3, 4.8, 3.7, 4.3, 4.1, 
+    5.1, 4.1, 5, 5.2, 5.3, 5.8, 3.6, 5.5, 5.4, 6, 6.1, 5.5, 4.6, 5.1, 4.7, 
+    2.8, -3.7, -5, -15.3, -13.7, -12.7, -12.4, -12.2, -11.6, -12, -11.2, 
+    -12.9, -12.9, -11.3, -10.8, -12, -11.7, -12.1, -11.9, -12.3, -12.1, 
+    -21.5, -28.4, -29.1, -29.2, -27.9, -19.5, -12.5, -10.9, -11.4, -12.5, 
+    -11.4, -3.1, 3.3, 4.7, 2.1, 4.1, -8.9, -4.4, 14.1 ;
+
+ eng_rec = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
+    19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 
+    37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 
+    55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 
+    73, 74, 75, 76, 77, 78, 79 ;
+
+ north_displacement_gsm = -0, -2.69913916551141, -3.27760337404356, 
+    -3.01930366172649, -1.08588302144247, -0.896097936926476, 
+    -1.10804097826777, -0.879745480847795, -1.78153883548831, 
+    -1.07238082609874, -1.20407718854046, -1.28032413351874, 
+    -1.34185821773729, -1.70521489600267, -1.88548625489122, 
+    -1.70600167518973, -1.60019438241708, -1.53013604214495, 
+    -1.57646093966622, -2.26169531803301, -2.07564540799177, 
+    -2.03846328906606, -2.5213512268081, -2.78135043969467, 
+    -2.37945184631926, -3.097648678203, -3.23965710659474, -2.39674571127843, 
+    -2.39713841765845, -2.51113299229618, -2.76582266311181, 
+    -3.1090206283184, -4.09272149909785, -2.79180343182531, 
+    -3.45565998492717, -2.56655373830099, -2.41428439574905, 
+    -3.08201090254477, -3.00170592064811, -2.36668505195656, -0, -0, -0, -0, 
+    -1.46046067476389, -1.22198845037946, -1.30357620466058, 
+    -1.6036958240917, -1.7503333993385, -1.97840426675858, -1.54681324771193, 
+    -1.24197353311795, -0.882900540183197, -0.469379068385435, 
+    -0.480456940961561, -0.627252324767604, 0.303455018528182, 
+    0.597127753834128, 0.933359896007156, 1.43187651484811, 2.07911523953391, 
+    2.73698484229923, 0.402762078993003, -0.515776646535145, 
+    -1.55143320364096, -2.38206116423796, -2.87517956820948, 
+    -6.29951283319211, -3.69804678152926, -3.83728323350135, 
+    -3.41925594718605, -3.9237080071512, -4.56720839476208, 
+    -3.65388455121565, -2.05427658059324, -0.467510850641839, -0, 
+    4.4150508926985, 1.44859028353698, 0.0683043995611709 ;
+
+ eng_rollCtl = 0.319, 0.273, 0.273, 0.273, 0.273, 0.273, 0.273, 0.273, 0.273, 
+    0.273, 0.273, 0.273, 0.273, 0.273, 0.273, 0.273, 0.273, 0.273, 0.273, 
+    0.273, 0.273, 0.273, 0.273, 0.273, 0.273, 0.273, 0.273, 0.273, 0.273, 
+    0.273, 0.273, 0.273, 0.319, 0.319, 0.319, 0.319, 0.319, 0.273, 0.273, 
+    0.273, 0.273, 0.319, 0.273, 0.273, 0.319, 0.319, 0.319, 0.319, 0.319, 
+    0.273, 0.273, 0.273, 0.273, 0.273, 0.273, 0.273, 0.319, 0.319, 0.319, 
+    0.319, 0.319, 1.048, 64.225, 64.225, 64.225, 64.225, 63.952, -0.091, 
+    -0.091, -0.091, -0.091, -0.091, -1.048, -64.271, -64.271, -64.271, 
+    -63.998, 0, 0, 0 ;
+
+ horz_speed_gsm = 77.5797059880087, 40.0379545645305, 45.3748245592551, 
+    48.9458134537932, 49.8241276935742, 45.1787220146423, 45.4044573253606, 
+    48.6906336696945, 47.0342279444478, 38.1246782835479, 31.3029739066211, 
+    32.1295803318693, 35.2424311543793, 35.2520476063327, 35.2979393163813, 
+    35.5999087585707, 37.696189139636, 35.1428026463976, 38.4831908542975, 
+    42.2877013575449, 44.993279651488, 42.614981696139, 40.5684642125502, 
+    38.5497645561607, 40.6385991725354, 43.0115887874988, 43.8915048192024, 
+    41.7221240720966, 39.2586856593437, 41.6415636011996, 42.2017651014166, 
+    37.7727246500584, 36.5821420732102, 39.5228593219693, 39.3241588520154, 
+    42.0114784265832, 40.5278016386518, 40.2398471270205, 39.640230244859, 
+    41.1442441370112, 0, 0, 0, 0, 23.7285484557873, 32.0438430942049, 
+    34.3018503403787, 35.7230627614874, 36.8546213195943, 38.4767771345454, 
+    37.380732466455, 37.8655000511905, 36.5448975295574, 35.1354126403258, 
+    37.0581362410771, 38.5923412232094, 39.2746945416909, 37.4235460082483, 
+    36.2617662373483, 37.4631995481678, 37.2524023560347, 38.9276551487713, 
+    37.3746578229018, 37.9531975026237, 40.5528636655139, 36.9609899436845, 
+    35.9504640610861, 39.0311561102253, 39.0031558827149, 43.8128129128474, 
+    42.0906626234737, 42.45128740823, 43.5212869794373, 47.692411378765, 
+    43.7734362331528, 42.7116794028351, 0, 91.021443537783, 27.5078036048192, 
+    8.21798223547566 ;
+
+ aanderaa4330_instrument_dissolved_oxygen = _, 398.99026461605, 
+    398.332356201544, 397.923222712187, 398.420959544663, 398.843957207854, 
+    398.861217613957, 399.867078436527, 399.167628215126, 399.407165517791, 
+    399.852364072523, 400.040948744353, 400.165701158115, 401.204188857834, 
+    401.718688664154, 400.074930944052, 400.116459717816, 400.144852904322, 
+    400.24213021026, 399.999288663585, 407.295022599584, 380.668005369981, 
+    359.289409400992, 345.311351646291, 337.130460115169, 330.832839223305, 
+    329.221652531887, 328.094359932269, 326.812626703245, 325.937098693815, 
+    325.380082031999, 324.407308797546, 323.579790742018, 323.168294081677, 
+    323.566122605284, 322.82536864428, 322.618773082881, 322.553245071466, 
+    322.358039359204, 322.192763343598, _, _, _, _, 321.767001416429, 
+    321.814878851075, 322.31711010507, 322.309597174316, 322.260963373747, 
+    322.153504104247, 321.495969852615, 322.126692463699, 322.069437469003, 
+    322.334708140833, 321.953622150161, 322.599111829097, 322.503704800242, 
+    323.848950849993, 325.024019584566, 326.651700615784, 331.043221650885, 
+    347.789746478527, 374.741503878412, 384.713030096815, 390.462762579092, 
+    393.950484197553, 396.261148180336, 396.731859517157, 397.176187405215, 
+    397.720871699815, 398.073028158893, 397.972652172245, 399.143219595538, 
+    398.425258650823, _, _, _, _, _, _ ;
+
+ speed_qc = "41111111111111111111111111111111111111114444111111111111111111111111111111144444" ;
+
+ dissolved_oxygen_sat = NaN, 362.706016941607, 362.708275362354, 
+    362.718625694518, 362.711194286849, 362.721879453886, 362.715924208832, 
+    362.726100186093, 362.753189340229, 362.778710792739, 362.889602180017, 
+    362.876705778589, 362.84288994408, 362.94310423848, 363.068721412166, 
+    362.776509388502, 362.827714000037, 362.849415134994, 362.863262819628, 
+    364.931422355302, 373.989471727472, 373.991287272614, 373.972172827524, 
+    373.98752499314, 374.012867396386, 374.014674531612, 374.040017232205, 
+    374.024336862222, 374.031106857462, 374.015077763498, 374.026405388687, 
+    374.052679161063, 374.058333145702, 374.051090465501, 374.045417132277, 
+    374.04453639956, 374.038396629793, 374.022857416992, 374.047818012164, 
+    374.035545880425, NaN, NaN, NaN, NaN, 374.01255899043, 374.036145844258, 
+    374.031295695008, 374.044280853747, 374.054014523554, 374.052847253406, 
+    374.03650516737, 374.03302644019, 374.039514705623, 374.013653162939, 
+    374.009336303311, 374.01074796856, 374.013684704599, 374.036211448447, 
+    374.03867332931, 374.218466541035, 374.221843109197, 366.98435289572, 
+    362.896672602181, 362.903516710569, 363.037445176466, 363.125650367044, 
+    363.048955027006, 362.981108071932, 362.990970746134, 363.084627917471, 
+    363.021346678888, 362.975084590648, 363.010719218725, 363.000577150473, 
+    NaN, NaN, NaN, NaN, NaN, NaN ;
+
+ eng_aa4330_O2 = 509.52, 509.603, 508.721, 508.172, 508.775, 509.29, 509.286, 
+    510.547, 509.619, 509.904, 510.48, 510.706, 510.826, 512.145, 512.881, 
+    510.636, 510.685, 510.695, 510.84, 510.298, 522.013, 487.991, 460.566, 
+    442.607, 432.089, 423.959, 421.851, 420.395, 418.737, 417.594, 416.86, 
+    415.595, 414.514, 413.972, 414.452, 413.488, 413.209, 413.098, 412.834, 
+    412.602, 413.236, 412.341, 412.218, 413.05, 412.052, 412.131, 412.791, 
+    412.802, 412.76, 412.649, 411.834, 412.658, 412.611, 412.964, 412.502, 
+    413.344, 413.262, 414.975, 416.527, 418.516, 424.156, 444.699, 478.447, 
+    491.118, 498.442, 502.903, 505.863, 506.493, 507.083, 507.817, 508.298, 
+    508.189, 509.73, 508.848, 509.22, 509.229, 509.209, 503.077, 504.612, 
+    505.49 ;
+
+ conductivity_raw = 2.67412981047973, 2.67429336618362, 2.67437487356527, 
+    2.67441644779498, 2.67449774045419, 2.67445835078793, 2.67458069354529, 
+    2.67466203439107, 2.67445977033146, 2.67429710259927, 2.67360442169625, 
+    2.67372787236203, 2.67380897943175, 2.67328070108922, 2.67336210796254, 
+    2.67450182495853, 2.67425829299293, 2.67425859952954, 2.67421781566391, 
+    2.65519496381839, 2.60170059684433, 2.60055523466142, 2.59952916179206, 
+    2.59862137806041, 2.59795114503546, 2.59735980335334, 2.59684726496065, 
+    2.59712438230501, 2.59712469606951, 2.59724307362143, 2.5971646768433, 
+    2.59704702327903, 2.59708681668348, 2.5972445935938, 2.5972449917449, 
+    2.597363425686, 2.59752121262677, 2.59764095061831, 2.59760200742039, 
+    2.59772042796186, 2.59776026736014, 2.59760294647176, 2.59768178451681, 
+    2.59768151087729, 2.59791729715964, 2.59768078298911, 2.59760169494807, 
+    2.5974819840205, 2.59732416666124, 2.59724495206189, 2.59728380808087, 
+    2.59720469033203, 2.59716496223118, 2.59724329637844, 2.59724291579813, 
+    2.59716369893984, 2.59680753302699, 2.59668906963841, 2.59605771185827, 
+    2.59463943829639, 2.5907029113712, 2.63331683536114, 2.66722372370662, 
+    2.66990489596493, 2.67035225804565, 2.67035189853817, 2.67140845732343, 
+    2.67218012786291, 2.67222075920018, 2.67152878985185, 2.67193499848838, 
+    2.67221933415887, 2.6720160893241, 2.67193330065575, 2.67136315310197, 
+    2.67156662294395, 2.67148389981036, 2.67144343067188, 2.67128103288267, 
+    2.66007985273422 ;
+
+ eng_aa4330_AirSat = 112.813, 112.852, 112.659, 112.54, 112.682, 112.798, 
+    112.802, 113.081, 112.871, 112.929, 113.018, 113.069, 113.102, 113.364, 
+    113.489, 113.085, 113.081, 113.08, 113.091, 112.528, 112.083, 104.611, 
+    98.689, 94.823, 92.553, 90.806, 90.344, 90.031, 89.673, 89.429, 89.269, 
+    88.991, 88.755, 88.639, 88.741, 88.534, 88.474, 88.451, 88.389, 88.339, 
+    88.473, 88.281, 88.266, 88.452, 88.236, 88.241, 88.38, 88.375, 88.363, 
+    88.337, 88.165, 88.341, 88.33, 88.411, 88.311, 88.491, 88.472, 88.838, 
+    89.166, 89.577, 90.741, 96.888, 105.63, 108.604, 110.22, 111.199, 
+    111.885, 112.048, 112.185, 112.312, 112.441, 112.44, 112.776, 112.585, 
+    112.647, 112.665, 112.668, 111.31, 111.648, 111.825 ;
+
+ eng_pitchCtl = 0.063, 0.053, -1.66, -1.66, -1.66, -1.66, -1.66, -1.66, 
+    -1.66, -1.66, -1.66, -1.66, -1.66, -1.66, -1.66, -1.66, -1.66, -1.66, 
+    -1.66, -1.66, -1.66, -1.66, -1.66, -1.66, -1.66, -1.657, -1.66, -1.66, 
+    -1.66, -1.66, -1.66, -1.66, -1.66, -1.66, -1.66, -1.66, -1.66, -1.66, 
+    -1.66, -1.66, -1.66, -0.481, -0.463, 1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 
+    1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 
+    1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 
+    1.66, 1.66, 1.66, 1.66, 1.66, 1.66, 1.66 ;
+
+ conductivity = NaN, 2.67429336618362, 2.67437487356527, 2.67441644779498, 
+    2.67449774045419, 2.67445835078793, 2.67458069354529, 2.67466203439107, 
+    2.67445977033146, 2.67429710259927, 2.67360442169625, 2.67372787236203, 
+    2.67380897943175, 2.67328070108922, 2.67336210796254, 2.67450182495853, 
+    2.67425829299293, 2.67425859952954, 2.67421781566391, 2.65519496381839, 
+    2.60170059684433, 2.60055523466142, 2.59952916179206, 2.59862137806041, 
+    2.59795114503546, 2.59735980335334, 2.59684726496065, 2.59712438230501, 
+    2.59712469606951, 2.59724307362143, 2.5971646768433, 2.59704702327903, 
+    2.59708681668348, 2.5972445935938, 2.5972449917449, 2.597363425686, 
+    2.59752121262677, 2.59764095061831, 2.59760200742039, 2.59772042796186, 
+    NaN, NaN, NaN, NaN, 2.59791729715964, 2.59768078298911, 2.59760169494807, 
+    2.5974819840205, 2.59732416666124, 2.59724495206189, 2.59728380808087, 
+    2.59720469033203, 2.59716496223118, 2.59724329637844, 2.59724291579813, 
+    2.59716369893984, 2.59680753302699, 2.59668906963841, 2.59605771185827, 
+    2.59463943829639, 2.5907029113712, 2.63331683536114, 2.66722372370662, 
+    2.66990489596493, 2.67035225804565, 2.67035189853817, 2.67140845732343, 
+    2.67218012786291, 2.67222075920018, 2.67152878985185, 2.67193499848838, 
+    2.67221933415887, 2.6720160893241, 2.67193330065575, 2.67136315310197, 
+    NaN, NaN, NaN, NaN, NaN ;
+
+ latitude_gsm = 57.2270016666667, 57.2269895433214, 57.2269626984242, 
+    57.226934415489, 57.2269159767971, 57.2269070746109, 57.2268980729009, 
+    57.2268891446389, 57.226877191321, 57.2268643727698, 57.2268541479223, 
+    57.2268429890849, 57.2268312113958, 57.2268175252843, 57.226801397435, 
+    57.2267852660518, 57.2267704160741, 57.2267563560075, 57.226742402541, 
+    57.2267251632322, 57.2267056818065, 57.2266872030408, 57.2266667223608, 
+    57.2266429049585, 57.2266197249059, 57.2265951241808, 57.2265666597922, 
+    57.2265413435512, 57.2265198115335, 57.2264977657384, 57.2264740639759, 
+    57.2264476767653, 57.2264153297091, 57.2263844074529, 57.2263563465967, 
+    57.2263292974629, 57.2263069257301, 57.2262822387905, 57.2262549134119, 
+    57.2262308009622, 57.2262201708545, 57.2262201708545, 57.2262201708545, 
+    57.2262201708545, 57.2262136111079, 57.2262015627269, 57.226190219002, 
+    57.2261771608155, 57.2261620959923, 57.2261453481437, 57.226129514418, 
+    57.2261169884151, 57.2261074444159, 57.226101370571, 57.2260971043257, 
+    57.2260921289832, 57.2260906746282, 57.2260947196496, 57.2261015939266, 
+    57.2261122175276, 57.2261279873575, 57.2261496191595, 57.2261637215209, 
+    57.2261632139092, 57.2261539289123, 57.2261362613867, 57.226112648175, 
+    57.2260714394944, 57.2260265348565, 57.2259926894703, 57.2259600962898, 
+    57.2259271149273, 57.2258889774676, 57.2258520519361, 57.2258264133884, 
+    57.2258150866291, 57.2258129867761, 57.2258328172416, 57.2258591541373, 
+    57.2258659673606 ;
+
+ theta = NaN, 0.393986523667516, 0.393728511035169, 0.392355365209434, 
+    0.393333159790809, 0.392245301367257, 0.392777020164123, 
+    0.391321693212558, 0.388711603518362, 0.386176162439995, 
+    0.373629862763687, 0.374792240372066, 0.379371664095596, 
+    0.368329565926563, 0.34943073285805, 0.386043684787718, 
+    0.380028539317101, 0.378337420495025, 0.374470355636888, 
+    0.184750936735573, -0.827797668863143, -0.836105906312867, 
+    -0.834334276044486, -0.834277900204161, -0.835534374870001, 
+    -0.833133401963145, -0.834064955796724, -0.833083569610981, 
+    -0.833810380814434, -0.831980359966767, -0.832838204460706, 
+    -0.835569869183754, -0.836273078616302, -0.835833969267738, 
+    -0.83474520504638, -0.834926221097595, -0.834634475305872, 
+    -0.832738338219241, -0.835646177126665, -0.834337819340746, NaN, NaN, 
+    NaN, NaN, -0.832065145876678, -0.834228663897339, -0.833599012703918, 
+    -0.834901259121224, -0.835824562236141, -0.835726711601847, 
+    -0.834233852171383, -0.833537453407245, -0.834598653221486, 
+    -0.831667975785084, -0.831690195972122, -0.83095382876804, 
+    -0.83160842846036, -0.831320184056131, -0.833491427814952, 
+    -0.841423132864697, -0.841162753118039, -0.0877422486459011, 
+    0.360936204532469, 0.365935259066115, 0.355513660555983, 
+    0.348059709192265, 0.356971255433443, 0.364596344539812, 
+    0.363976193698864, 0.354271151055252, 0.360472914040328, 
+    0.365763406641046, 0.361606636870648, 0.363124996893114, NaN, NaN, NaN, 
+    NaN, NaN, NaN ;
+
+ eng_elaps_t_0000 = 21653.841, 21670.16, 21685.648, 21698.253, 21709.884, 
+    21721.537, 21733.179, 21747.797, 21762.625, 21774.252, 21785.89, 
+    21797.541, 21809.177, 21824.187, 21839.025, 21851.654, 21863.288, 
+    21874.911, 21886.554, 21901.147, 21915.996, 21927.62, 21939.251, 
+    21951.893, 21963.533, 21979.13, 21993.982, 22005.612, 22017.265, 
+    22028.906, 22040.536, 22055.142, 22073.604, 22086.436, 22102.274, 
+    22114.915, 22126.549, 22141.166, 22155.998, 22168.625, 22185.335, 
+    22199.082, 22221.485, 22239.217, 22260.031, 22272.643, 22284.257, 
+    22295.89, 22307.521, 22322.135, 22336.967, 22348.584, 22360.204, 
+    22371.827, 22383.458, 22398.039, 22416.49, 22428.099, 22439.717, 
+    22451.339, 22462.961, 22477.602, 22496.907, 22508.555, 22520.188, 
+    22531.834, 22546.286, 22565.754, 22578.394, 22591.025, 22603.663, 
+    22616.301, 22630.65, 22647.468, 22660.105, 22671.736, 22686.193, 
+    22701.723, 22715.484, 22727.109 ;
+
+ buoyancy = NaN, -767.358751398959, -767.748053881988, -768.01051878806, 
+    -768.296305308496, -768.562422633593, -768.777968732252, 
+    -770.764434388084, -771.18116411657, -771.458980309347, 
+    -771.694173743541, -771.779269020016, -772.081373986381, 
+    -773.310416180394, -772.707653876338, -773.414521818935, -773.5809272734, 
+    -773.91713463841, -773.653490955496, -784.404986290724, -787.6154201617, 
+    -786.227944091806, -786.348963744302, -786.894904449895, 
+    -787.373526430869, -789.016784956161, -789.640537185704, 
+    -789.685647207477, -789.872553291161, -790.064419148436, 
+    -790.333332515701, -792.369955154385, -792.606793316182, 
+    -792.731481567316, -793.063394840985, -793.211879559351, 
+    -793.333050818418, -794.478760497, -794.685721822034, -794.874522339711, 
+    NaN, NaN, NaN, NaN, 121.664030821037, 121.774042679661, 121.964140516894, 
+    122.149194154034, 122.338043430616, 124.392584252362, 124.748144970113, 
+    124.913956211472, 125.204447615474, 125.408348941193, 125.732467622854, 
+    127.601575616225, 128.050682583677, 127.72401014962, 128.323692280929, 
+    126.17683110679, 126.27615939239, 139.981630025417, 145.519747683281, 
+    144.635799765211, 143.878632349669, 143.591739798282, 144.761783896357, 
+    146.095395495763, 146.25274726636, 146.305205371078, 146.814779652445, 
+    147.113958069255, 149.204868243373, 149.532708704044, 149.747657330309, 
+    NaN, NaN, NaN, NaN, NaN ;
+
+ east_displacement_gsm = 0, 5.95021926372777, 6.21652795814811, 
+    5.38033584597093, 5.69239814601529, 5.18785372842649, 5.16854938409693, 
+    7.06301866998397, 6.74285385584757, 4.30108457080624, 3.43830471948665, 
+    3.51766164642554, 3.87505532880848, 5.00903584691059, 4.88635184170583, 
+    4.15966189988099, 4.08321480075694, 3.7872196018514, 4.19410636002145, 
+    5.74164805975833, 6.35044511076093, 4.51469573808648, 3.98838325049303, 
+    4.00183882634066, 4.08830760492222, 5.95052774646382, 5.65676018930934, 
+    4.21903544577264, 3.89649288640471, 4.14637340381016, 4.05454439804878, 
+    4.55765380047321, 5.37246491125822, 4.23399214539447, 5.181543558732, 
+    4.64930407640418, 4.04999975198971, 5.00973722214925, 5.05544894265273, 
+    4.6249081139513, 0, 0, 0, 0, 4.71798613911502, 3.85219568046806, 
+    3.76450347108646, 3.83375827109532, 3.91291932268864, 5.26345925174811, 
+    5.3241661205155, 4.21986405982165, 4.15372046502065, 4.05672475154946, 
+    4.28337012847553, 5.59208045896737, 7.24021740365495, 4.30326781227891, 
+    4.10819892576925, 4.11178925905322, 3.79758168013163, 4.99920509372228, 
+    7.20392755413072, 4.39059733221673, 4.45510930357434, 3.58529027607533, 
+    4.32749314024002, 4.24907505794624, 3.26026679802504, 3.98752727059711, 
+    4.07491055905809, 3.65891691026763, 4.25899072965021, 7.14031649221265, 
+    5.13605785689051, 4.94574819721778, 0, 13.4284535782965, 
+    3.49720630883686, 0.952895511326356 ;
+
+ eng_rollAng = 0.1, -0.3, 0.5, -0.6, -2.5, -1.4, -3.3, -2.5, -3.8, -2, -2.4, 
+    -3, -1.3, -1.4, -2.8, -2.5, -4, -2.4, -1.9, -1.6, -2, -1.5, -1, -1.6, 
+    -0.1, -2.1, -0.7, -1.7, -2.1, -1.4, -2, -2, -1.9, -2.1, -1.6, -2.4, -2.4, 
+    -1.6, -1.8, -1.1, -1.2, -1.2, -1.2, -1.2, 0, -0.9, -1.4, -0.7, -1.8, 
+    -0.7, -1.5, 0, -0.6, -2.3, -1.6, -1.6, -1.3, -0.3, -1.4, -1.1, -1.1, 
+    -1.1, 19.9, 19.9, 17.5, 18.8, 18.8, -1.4, -3.5, -3, -1.4, -2.6, -2.6, 
+    -20.8, -21.8, -22.9, -2.5, 5.8, -1.1, -1.5 ;
+
+ sound_velocity = NaN, 1446.4030931178, 1446.44268825378, 1446.4687005337, 
+    1446.49989359755, 1446.51943686594, 1446.54823887058, 1446.57275167848, 
+    1446.59224145707, 1446.60015745711, 1446.56433013766, 1446.58644515747, 
+    1446.62099455576, 1446.59703894192, 1446.56264157222, 1446.72231709583, 
+    1446.71646172413, 1446.72410942128, 1446.73656995387, 1445.75244029865, 
+    1441.48632810146, 1441.51043156213, 1441.54017008314, 1441.55442035642, 
+    1441.56113554034, 1441.58711683813, 1441.60265339915, 1441.63142332839, 
+    1441.6482348481, 1441.67556799195, 1441.69107887197, 1441.70535107805, 
+    1441.73036780193, 1441.75536318652, 1441.78435716927, 1441.80715140097, 
+    1441.83180397552, 1441.86439735116, 1441.87859835665, 1441.90616713343, 
+    NaN, NaN, NaN, NaN, 1441.92014348759, 1441.88711754134, 1441.86642809833, 
+    1441.8370309314, 1441.80834008809, 1441.77719083299, 1441.75278029329, 
+    1441.72925691558, 1441.7019526147, 1441.6901604576, 1441.66766022955, 
+    1441.63512718468, 1441.59176881171, 1441.5554584841, 1441.53062786418, 
+    1441.41715332407, 1441.39063109851, 1444.80250235747, 1446.72215871671, 
+    1446.6899159252, 1446.59738262448, 1446.5267599293, 1446.53265452153, 
+    1446.52268814152, 1446.49040223563, 1446.41535128775, 1446.41623562391, 
+    1446.40870098964, 1446.35709383153, 1446.3203351005, NaN, NaN, NaN, NaN, 
+    NaN, NaN ;
+
+ eng_satd_Timer = 4.464, 4.464, 5.464, 4.464, 4.464, 4.464, 4.464, 4.464, 
+    4.464, 4.464, 4.464, 4.464, 4.464, 5.464, 5.464, 4.464, 4.464, 4.464, 
+    4.464, 4.464, 4.464, 4.464, 5.464, 4.464, 5.464, 4.464, 4.464, 4.464, 
+    4.464, 4.464, 4.464, 5.464, 5.464, 4.464, 5.464, 4.464, 4.464, 5.464, 
+    5.464, 4.464, 4.464, 5.464, 5.464, 5.464, 5.464, 4.464, 4.464, 4.464, 
+    4.464, 4.464, 4.464, 4.464, 4.464, 4.464, 4.464, 5.464, 4.464, 4.464, 
+    4.464, 4.464, 4.464, 5.464, 4.464, 4.464, 4.464, 4.464, 5.464, 5.464, 
+    5.464, 5.464, 5.464, 5.464, 5.464, 5.464, 4.464, 4.464, 5.464, 4.464, 
+    4.464, 4.464 ;
+
+ eng_aa4330_CalPhase = 34.099, 34.094, 34.114, 34.127, 34.111, 34.098, 
+    34.098, 34.067, 34.09, 34.085, 34.077, 34.072, 34.068, 34.042, 34.031, 
+    34.068, 34.069, 34.07, 34.07, 34.161, 34.406, 35.271, 36, 36.501, 36.807, 
+    37.046, 37.111, 37.155, 37.206, 37.24, 37.263, 37.302, 37.336, 37.353, 
+    37.338, 37.368, 37.376, 37.379, 37.389, 37.396, 37.377, 37.404, 37.406, 
+    37.378, 37.409, 37.41, 37.39, 37.391, 37.393, 37.397, 37.422, 37.397, 
+    37.398, 37.386, 37.401, 37.375, 37.378, 37.326, 37.28, 37.223, 37.064, 
+    36.104, 34.93, 34.575, 34.394, 34.286, 34.208, 34.189, 34.173, 34.162, 
+    34.146, 34.145, 34.109, 34.129, 34.124, 34.121, 34.12, 34.269, 34.232, 
+    34.213 ;
+
+ sigma_theta = NaN, 1025.30818738604, 1025.30801004411, 1025.30872999448, 
+    1025.3079329569, 1025.30771118132, 1025.30782000616, 1025.30885646265, 
+    1025.30802623606, 1025.30754306225, 1025.31056994001, 1025.31101577707, 
+    1025.30763898804, 1025.30942467644, 1025.32720254325, 1025.30790470288, 
+    1025.30991439179, 1025.30807685068, 1025.31539605121, 1025.24110521992, 
+    1025.54081929505, 1025.56585493084, 1025.56614377896, 1025.56116804185, 
+    1025.55720364568, 1025.54910393711, 1025.5440960103, 1025.54577241006, 
+    1025.54585732687, 1025.54502217399, 1025.54411135835, 1025.54439075064, 
+    1025.54471071637, 1025.54547641319, 1025.54373007471, 1025.544460521, 
+    1025.54534293963, 1025.54412713224, 1025.54535672467, 1025.54497299772, 
+    NaN, NaN, NaN, NaN, 1025.54497370253, 1025.54453529055, 1025.54417652375, 
+    1025.54432910483, 1025.54430955413, 1025.54450552837, 1025.54503863644, 
+    1025.54406211451, 1025.54546372474, 1025.54443090957, 1025.54593152907, 
+    1025.54336150156, 1025.54467130635, 1025.5369868753, 1025.5430531434, 
+    1025.51261714237, 1025.51088555684, 1025.43133862289, 1025.3462072223, 
+    1025.3288974037, 1025.31839435237, 1025.31335555557, 1025.31063174771, 
+    1025.30911359913, 1025.30804429244, 1025.30816972197, 1025.3094764408, 
+    1025.30816769667, 1025.30977446967, 1025.30860246063, NaN, NaN, NaN, NaN, 
+    NaN, NaN ;
+
+ salinity_raw_qc = "11111111111111111111111111111111111111111111111111111111111111111111111111111444" ;
+
+ aanderaa4330_dissolved_oxygen_qc = "41111111111111111111111111111111111111114444111111111111111111111111111111344444" ;
+
+ temperature_raw_qc = "11111111111111111111111111111111111111111111111111111111111111111111111111111331" ;
+
+ speed = NaN, 69.2304171963949, 66.8271601641687, 62.6829476138627, 
+    60.2453556661355, 60.0979024422299, 59.3434138789105, 57.4480780338805, 
+    56.4480383915302, 56.4931771069018, 57.3755860723071, 58.0455687645125, 
+    58.3580750687556, 58.6766513413827, 58.4631179547687, 57.4674914952218, 
+    56.6101287697541, 56.9456796048302, 57.3950963713663, 57.4041737867444, 
+    56.9653583069967, 57.0854857408267, 57.4478524404609, 57.4323394425615, 
+    56.9929873788001, 56.9346705710756, 56.8762246854351, 56.9274907586842, 
+    57.0545860334102, 56.9561385987825, 57.163326181348, 57.3431414157867, 
+    56.856992171753, 56.8386241719443, 57.4447623755364, 57.7737610459157, 
+    57.9974301576306, 57.8362867789444, 57.8708793260042, 57.3574271518315, 
+    NaN, NaN, NaN, NaN, 21.0396954455352, 20.6280571888199, 20.6067909479061, 
+    20.6104032977577, 20.6669905168319, 20.778851193294, 20.8841977445822, 
+    20.8285761750765, 20.9585724940646, 21.2017396975253, 21.2511424022659, 
+    21.2806805315199, 21.1743394814951, 21.1877195435759, 21.2409023242979, 
+    21.086084172345, 21.1948413654873, 22.317511608434, 23.6759966760298, 
+    23.4979936586509, 23.2043870792824, 23.407547469552, 23.5336304032008, 
+    23.0753066380481, 22.9953001754421, 22.7996069645427, 22.9109180275187, 
+    23.1040187608149, 23.1414929732784, 23.1218654529274, 23.5128915181876, 
+    NaN, NaN, NaN, NaN, NaN ;
+
+ wlbb2fl_results_time = 1493532053.841, 1493532070.16, 1493532085.648, 
+    1493532098.253, 1493532109.884, 1493532121.537, 1493532133.179, 
+    1493532147.797, 1493532162.625, 1493532174.252, 1493532185.89, 
+    1493532197.541, 1493532209.177, 1493532224.187, 1493532239.025, 
+    1493532251.654, 1493532263.288, 1493532274.911, 1493532286.554, 
+    1493532301.147, 1493532315.996, 1493532327.62, 1493532339.251, 
+    1493532351.893, 1493532363.533, 1493532379.13, 1493532393.982, 
+    1493532405.612, 1493532417.265, 1493532428.906, 1493532440.536, 
+    1493532455.142, 1493532473.604, 1493532486.436, 1493532502.274, 
+    1493532514.915, 1493532526.549, 1493532541.166, 1493532555.998, 
+    1493532568.625, 1493532585.335, 1493532599.082, 1493532621.485, 
+    1493532639.217, 1493532660.031, 1493532672.643, 1493532684.257, 
+    1493532695.89, 1493532707.521, 1493532722.135, 1493532736.967, 
+    1493532748.584, 1493532760.204, 1493532771.827, 1493532783.458, 
+    1493532798.039, 1493532816.49, 1493532828.099, 1493532839.717, 
+    1493532851.339, 1493532862.961, 1493532877.602, 1493532896.907, 
+    1493532908.555, 1493532920.188, 1493532931.834, 1493532946.286, 
+    1493532965.754, 1493532978.394, 1493532991.025, 1493533003.663, 
+    1493533016.301, 1493533030.65, 1493533047.468, 1493533060.105, 
+    1493533071.736, 1493533086.193, 1493533101.723, 1493533115.484, 
+    1493533127.109 ;
+
+ density = NaN, 1025.30818196024, 1025.30800062331, 1025.30871754091, 
+    1025.30791777499, 1025.30769357354, 1025.30779984203, 1025.30883342279, 
+    1025.30800000803, 1025.30751486883, 1025.31054020805, 1025.3109844755, 
+    1025.30760579831, 1025.30938929264, 1025.3271650791, 1025.30786456642, 
+    1025.30987252911, 1025.30803322446, 1025.31535067202, 1025.24106269033, 
+    1025.54079585758, 1025.56583051307, 1025.56611837349, 1025.56114164743, 
+    1025.55717642158, 1025.54907542997, 1025.54406626461, 1025.54574165346, 
+    1025.54582566558, 1025.54498955282, 1025.54407779721, 1025.54435603161, 
+    1025.54467473653, 1025.54543941901, 1025.54369183136, 1025.5444212414, 
+    1025.54530263545, 1025.54408559148, 1025.54531406699, 1025.5449292786, 
+    NaN, NaN, NaN, NaN, 1025.54492975561, 1025.54449244611, 1025.5441347315, 
+    1025.54428844045, 1025.54427004086, 1025.54446748315, 1025.5450020342, 
+    1025.54402666086, 1025.54542942034, 1025.54439763693, 1025.54589938976, 
+    1025.54333082, 1025.54464257494, 1025.53695932463, 1025.54302672342, 
+    1025.51259220191, 1025.51086173679, 1025.43130028842, 1025.34616217876, 
+    1025.32885497922, 1025.3183547973, 1025.31331883095, 1025.31059786336, 
+    1025.30908373769, 1025.30801710876, 1025.30814555089, 1025.30945508552, 
+    1025.30814917621, 1025.30975932912, 1025.3085913262, 1025.30942674665, 
+    NaN, NaN, NaN, NaN, NaN ;
+
+ eng_mag_z = 663, 650, 658, 661, 645, 646, 640, 641, 642, 653, 651, 649, 656, 
+    656, 651, 653, 650, 654, 655, 658, 653, 660, 667, 666, 669, 662, 667, 
+    663, 661, 664, 665, 665, 668, 664, 665, 659, 661, 665, 663, 663, 667, 
+    667, 667, 667, 635, 632, 628, 629, 622, 632, 630, 636, 638, 636, 640, 
+    640, 651, 660, 659, 668, 676, 676, 688, 679, 667, 645, 645, 601, 600, 
+    605, 616, 600, 600, 552, 510, 529, 670, 666, 652, 658 ;
+
+ eng_GC_phase = 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 
+    6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 2, 2, 2, 2, 
+    6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 4, 4, 4, 4, 4, 6, 
+    6, 6, 6, 6, 6, 4, 4, 4, 4, 6, 6, 6 ;
+
+ eng_wlbb2fl_temp = 573, 573, 573, 573, 573, 573, 573, 573, 573, 573, 573, 
+    572, 572, 572, 573, 572, 572, 572, 572, 572, 573, 572, 572, 572, 572, 
+    572, 572, 572, 572, 572, 572, 572, 572, 572, 572, 572, 572, 572, 572, 
+    572, 572, 573, 573, 573, 573, 573, 573, 572, 573, 573, 573, 573, 572, 
+    572, 573, 573, 573, 573, 573, 573, 573, 573, 573, 573, 573, 573, 573, 
+    573, 573, 573, 573, 573, 573, 573, 573, 573, 573, 573, 573, 573 ;
+
+ wlbb2fl_sig695nm_adjusted = 0.78, 0.816, 0.78, 0.756, 0.72, 0.72, 0.696, 
+    0.792, 0.876, 0.804, 0.804, 0.732, 0.804, 0.864, 0.96, 0.804, 0.84, 
+    0.924, 0.864, 0.9, 3.456, 4.428, 5.676, 6.132, 6.036, 5.628, 4.968, 
+    6.048, 5.112, 5.172, 5.376, 7.38, 6.228, 7.092, 6.228, 6.648, 6.972, 
+    5.628, 5.628, 6.708, 5.88, 8.064, 6.42, 6.912, 5.46, 5.4, 6.396, 6.876, 
+    6.204, 5.856, 6.168, 6, 5.904, 6.648, 5.7, 5.472, 4.5, 5.244, 4.596, 
+    4.524, 4.056, 1.392, 0.9, 0.768, 0.876, 0.612, 0.84, 0.9, 0.828, 0.672, 
+    0.732, 0.804, 0.828, 0.816, 0.912, 0.732, 0.936, 0.816, 0.732, 0.744 ;
+
+ glide_angle = NaN, -19.3413011867236, -18.4273179909769, -16.8445765916811, 
+    -15.8735743980512, -15.8011834912343, -15.523367627619, 
+    -14.8193957191324, -14.4523954230549, -14.4676857436324, 
+    -14.7714884653035, -14.9965426337743, -15.098571941974, 
+    -15.1985835285526, -15.1237667723233, -14.7799854139967, 
+    -14.4758521614066, -14.5822703101519, -14.6948139967151, 
+    -14.5839451896358, -14.3701685240824, -14.4089284278342, 
+    -14.5337109135878, -14.5232146587377, -14.3628438790465, 
+    -14.3201835191161, -14.2887100104557, -14.3034637071539, 
+    -14.3450778425634, -14.3089375810491, -14.3662352692589, 
+    -14.4039118834864, -14.2322037193926, -14.2241019194205, 
+    -14.4237174847549, -14.5316509569, -14.6027080100627, -14.5350021646962, 
+    -14.539426266139, -14.3788652660128, NaN, NaN, NaN, NaN, 
+    19.3356987680958, 20.1957797069902, 20.1575105825069, 20.1300636427667, 
+    20.1207362247477, 20.0670075663979, 20.1046888817491, 19.9990235807195, 
+    20.1407489721112, 20.4253956494567, 20.3987039069752, 20.2490318447761, 
+    20.0140075330417, 20.0303189438965, 20.1477086243377, 20.0522700689671, 
+    19.8929949359634, 20.0491190323606, 20.8196067706494, 20.626367365659, 
+    20.3532774147575, 20.6064478494768, 20.652487567779, 19.9352997241395, 
+    19.7991541263538, 19.5416276291221, 19.6223703635601, 19.7550369971431, 
+    19.6375347387295, 19.5572655509492, 20.036947192881, NaN, NaN, NaN, NaN, 
+    NaN ;
+
+ aanderaa4330_results_time = 1493532053.841, 1493532070.16, 1493532085.648, 
+    1493532098.253, 1493532109.884, 1493532121.537, 1493532133.179, 
+    1493532147.797, 1493532162.625, 1493532174.252, 1493532185.89, 
+    1493532197.541, 1493532209.177, 1493532224.187, 1493532239.025, 
+    1493532251.654, 1493532263.288, 1493532274.911, 1493532286.554, 
+    1493532301.147, 1493532315.996, 1493532327.62, 1493532339.251, 
+    1493532351.893, 1493532363.533, 1493532379.13, 1493532393.982, 
+    1493532405.612, 1493532417.265, 1493532428.906, 1493532440.536, 
+    1493532455.142, 1493532473.604, 1493532486.436, 1493532502.274, 
+    1493532514.915, 1493532526.549, 1493532541.166, 1493532555.998, 
+    1493532568.625, 1493532585.335, 1493532599.082, 1493532621.485, 
+    1493532639.217, 1493532660.031, 1493532672.643, 1493532684.257, 
+    1493532695.89, 1493532707.521, 1493532722.135, 1493532736.967, 
+    1493532748.584, 1493532760.204, 1493532771.827, 1493532783.458, 
+    1493532798.039, 1493532816.49, 1493532828.099, 1493532839.717, 
+    1493532851.339, 1493532862.961, 1493532877.602, 1493532896.907, 
+    1493532908.555, 1493532920.188, 1493532931.834, 1493532946.286, 
+    1493532965.754, 1493532978.394, 1493532991.025, 1493533003.663, 
+    1493533016.301, 1493533030.65, 1493533047.468, 1493533060.105, 
+    1493533071.736, 1493533086.193, 1493533101.723, 1493533115.484, 
+    1493533127.109 ;
+
+ eng_head = 86.5, 103.5, 106.9, 108.4, 89.9, 88.9, 91.2, 86.2, 93.9, 93.1, 
+    98.4, 99.1, 98.2, 97.9, 100.2, 101.4, 100.5, 101.1, 99.7, 100.6, 97.2, 
+    103.4, 111.4, 113.9, 109.3, 106.6, 108.9, 108.7, 110.7, 110.3, 113.4, 
+    113.4, 116.4, 112.5, 112.8, 108, 109.9, 110.7, 109.8, 106.2, 106.9, 
+    106.9, 106.9, 106.9, 96.3, 96.7, 98.2, 101.8, 103.2, 99.7, 95.3, 95.5, 
+    91.1, 85.7, 85.5, 85.5, 76.7, 71.2, 66.3, 59.9, 50.4, 50.4, 75.9, 85.8, 
+    98.3, 112.7, 112.7, 135.1, 127.7, 123, 119.1, 126.1, 126.1, 106.2, 100.9, 
+    84.5, 99.6, 60.9, 56.6, 75 ;
+
+ glide_angle_gsm = 9.7, -20.0875879223376, -18.994679062211, 
+    -16.8377845446256, -15.4716010569872, -16.4192883605629, 
+    -15.8294026996933, -14.8418900703832, -14.6418806455378, 
+    -14.6789507061553, -15.6639376987286, -15.7066584267079, 
+    -15.6599477471668, -15.820565314, -15.7382420002417, -15.4860605358746, 
+    -14.5378813461586, -15.3441294089314, -15.1418187516755, 
+    -15.018483327729, -14.458092195168, -14.7679018978429, -14.9122113410057, 
+    -15.1395187992457, -14.5922372980315, -14.67598978832, -14.5699061965921, 
+    -14.5570842671898, -14.9557251277714, -14.480597731897, 
+    -14.7805969956081, -14.9282850624902, -14.7361073860993, 
+    -14.5510707179327, -14.9535031085372, -14.7865003853342, 
+    -15.1538756280952, -14.8432758392751, -15.0226250262396, 
+    -14.8936853427676, 0, 0, 0, 0, 20.1552138959559, 19.4522397668586, 
+    19.5489841891934, 19.2443693745926, 19.4712534144958, 19.0772777843473, 
+    19.5433989000681, 19.0076862558301, 19.2195626824585, 20.0458465909092, 
+    19.5525692797995, 19.5099280574205, 19.1424880668818, 19.1070895923405, 
+    19.6628819629769, 19.1927552438865, 19.1120453140125, 19.0648640570937, 
+    20.5096920527021, 20.1413493395672, 19.1089425139382, 20.2564025059393, 
+    20.2849257546896, 18.8883497996331, 19.4989136442317, 18.2455575090606, 
+    18.9831269373031, 18.9743576447949, 18.9489447945597, 18.1578251382348, 
+    20.534337012481, 20.7357595696341, 0, 1.2, -0.9, 16.8425393311809 ;
+
+ eng_elaps_t = 18.841, 35.16, 50.648, 63.253, 74.884, 86.537, 98.179, 
+    112.797, 127.625, 139.252, 150.89, 162.541, 174.177, 189.187, 204.025, 
+    216.654, 228.288, 239.911, 251.554, 266.147, 280.996, 292.62, 304.251, 
+    316.893, 328.533, 344.13, 358.982, 370.612, 382.265, 393.906, 405.536, 
+    420.142, 438.604, 451.436, 467.274, 479.915, 491.549, 506.166, 520.998, 
+    533.625, 550.335, 564.082, 586.485, 604.217, 625.031, 637.643, 649.257, 
+    660.89, 672.521, 687.135, 701.967, 713.584, 725.204, 736.827, 748.458, 
+    763.039, 781.49, 793.099, 804.717, 816.339, 827.961, 842.602, 861.907, 
+    873.555, 885.188, 896.834, 911.286, 930.754, 943.394, 956.025, 968.663, 
+    981.301, 995.65, 1012.468, 1025.105, 1036.736, 1051.193, 1066.723, 
+    1080.484, 1092.109 ;
+
+ conductivity_qc = "41111111111111111111111111111111111111114444111111111111111111111111111111144444" ;
+
+ vert_speed = NaN, -22.9287429523016, -21.1241598609347, -18.1640459153778, 
+    -16.4780458820763, -16.3646661899759, -15.8821587327007, 
+    -14.693669074536, -14.0880488654566, -14.113912935621, -14.6287442433571, 
+    -15.0199153909405, -15.2011373526478, -15.3829831538116, 
+    -15.2533181767007, -14.6604174640616, -14.150944109146, 
+    -14.3372078794719, -14.5594366758428, -14.4542668995073, 
+    -14.1379789769748, -14.2051990194485, -14.4165148014922, 
+    -14.4024369865025, -14.1377780201916, -14.0822414293294, 
+    -14.037511005248, -14.0643688008486, -14.1359193131328, 
+    -14.0767191487494, -14.1833103250442, -14.2644514516572, 
+    -13.9784185702065, -13.9661121418265, -14.3089623387887, 
+    -14.4962907484522, -14.6220276411773, -14.5152539570056, 
+    -14.5282611447586, -14.2437183434427, NaN, NaN, NaN, NaN, 
+    6.96629311290469, 7.12140501023741, 7.10114418172926, 7.09311973883879, 
+    7.10943532893283, 7.12961619475192, 7.17866198932361, 7.12345905904151, 
+    7.21661276462977, 7.39914111034429, 7.40710363922449, 7.36526915269452, 
+    7.24691486864988, 7.25716151322052, 7.31624896713449, 7.22993893761508, 
+    7.21185393732958, 7.65101443133098, 8.41508471753942, 8.27769422764618, 
+    8.07066247597617, 8.23821579940956, 8.30028807170172, 7.86772871596515, 
+    7.789060740092, 7.62627785779204, 7.69392977829812, 7.8091458080795, 
+    7.7771301650515, 7.7400175584087, 8.05612874791546, NaN, NaN, NaN, NaN, 
+    NaN ;
+
+ eng_satu_PARuV = 15.518, 7.033, 7.78, 7.116, 5.798, 4.997, 4.296, 3.561, 
+    3.035, 2.718, 2.403, 2.266, 1.985, 1.722, 1.433, 1.311, 1.153, 0.987, 
+    0.874, 0.728, 0.492, 0.305, 0.165, 0.074, 0.072, 0.023, -0.018, -0.039, 
+    -0.05, -0.057, -0.06, -0.066, -0.066, -0.065, -0.066, -0.067, -0.068, 
+    -0.068, -0.068, -0.068, -0.067, -0.069, -0.068, -0.068, -0.069, -0.069, 
+    -0.067, -0.067, -0.069, -0.064, -0.066, -0.064, -0.059, -0.055, -0.048, 
+    -0.03, 0.008, 0.06, 0.125, 0.189, 0.324, 0.425, 0.524, 0.641, 0.768, 
+    0.865, 1.164, 1.528, 1.752, 2.128, 2.542, 3.097, 3.624, 4.955, 6.281, 
+    8.127, 13.136, 13.289, 12.81, 12.485 ;
+
+ aanderaa4330_dissolved_oxygen = _, 303.904798507994, 303.442129650303, 
+    303.155716001191, 303.554106536295, 303.899806875604, 303.908374948441, 
+    304.699693622265, 304.18625394042, 304.351137124802, 304.692522549687, 
+    304.809950250747, 304.876514903814, 305.652439165041, 306.102766154186, 
+    304.839258580758, 304.888568117674, 304.899424100821, 304.932791169593, 
+    305.092633569191, 309.357359001953, 288.597662149072, 272.28537225237, 
+    261.693785904077, 255.462339372257, 250.696850313394, 249.447200616018, 
+    248.58055671192, 247.597676952488, 246.931029324446, 246.502679486816, 
+    245.779954142666, 245.140000466379, 244.816461894917, 245.113998975991, 
+    244.545258169047, 244.396851964109, 244.3386071448, 244.178816285367, 
+    244.04476278754, _, _, _, _, 243.778321459684, 243.767304816536, 
+    244.136821660842, 244.116758631153, 244.074438644347, 243.981312975143, 
+    243.472706096446, 243.937774549408, 243.912297489557, 244.110664286839, 
+    243.807232541912, 244.292620859121, 244.217170863449, 245.224526691916, 
+    246.10717306363, 247.342181744532, 250.45540372671, 263.413882627288, 
+    284.657134836692, 292.837802560152, 297.2542154393, 299.929452697538, 
+    301.707738511028, 302.063186961482, 302.447188865084, 302.808160911044, 
+    303.107179610839, 303.058051400845, 303.961511107766, 303.433970492411, 
+    _, _, _, _, _, _ ;
+
+ ctd_pressure = 0.997225085598608, 3.15851291119109, 5.67460131565165, 
+    7.58681601654233, 9.29804796486451, 10.8278776467168, 12.4283293820657, 
+    14.2402687719879, 16.2634674344534, 17.5217075689525, 18.6085675814918, 
+    19.5848876356843, 20.7323192562092, 22.2420884710607, 23.7418393878265, 
+    25.0000578189298, 26.15782092087, 27.2949931622193, 28.4223313618307, 
+    30.0529162727991, 31.7943582094046, 33.1531062036203, 34.4313816033146, 
+    35.800224817015, 36.9880731110078, 38.709196759093, 40.4505246535835, 
+    41.7590437764339, 42.9969850553772, 44.22507768271, 45.5234077812759, 
+    47.1741233701576, 48.8853037577034, 50.2139543618842, 51.8544833371811, 
+    53.2334574220279, 54.5720617345926, 56.142340380484, 57.7426847827039, 
+    59.0914620469731, 60.9915836143487, 61.5250465790483, 61.9477908152253, 
+    60.8808648858262, 59.3222064748248, 57.9724829661243, 56.5537528477967, 
+    55.1136863942937, 53.6247392114275, 51.6610355110799, 49.6693033664101, 
+    48.1177972650425, 46.6084749759707, 45.1310575684985, 43.5999039755832, 
+    41.6472282180037, 39.039340080611, 37.5091689381069, 36.0008161123935, 
+    34.4696761943167, 32.9395050518126, 31.0472213279727, 28.3334957802942, 
+    26.6817848576389, 25.0585842699001, 23.3806014968753, 21.4681870951222, 
+    18.8274226565479, 17.1381278586941, 15.303139052206, 13.4530088318441, 
+    11.6110518027872, 9.47719994398898, 6.90864636240548, 4.83143104171044, 
+    2.89939038442323, 0.53610204906628, -0.203885613476364, 
+    -0.0251687299250244, -0.299664468039416 ;
+
+ eng_satd_PARuV = 0.219, 0.148, 0.102, 0.091, 0.06, 0.047, 0.03, 0.012, 0, 
+    -0.004, -0.008, -0.016, -0.02, -0.026, -0.031, -0.038, -0.038, -0.042, 
+    -0.044, -0.044, -0.053, -0.057, -0.057, -0.06, -0.061, -0.062, -0.064, 
+    -0.063, -0.062, -0.064, -0.064, -0.064, -0.064, -0.066, -0.065, -0.064, 
+    -0.063, -0.065, -0.067, -0.067, -0.067, -0.066, -0.067, -0.066, -0.067, 
+    -0.065, -0.067, -0.068, -0.066, -0.065, -0.064, -0.066, -0.066, -0.065, 
+    -0.064, -0.068, -0.066, -0.064, -0.065, -0.059, -0.06, -0.055, -0.052, 
+    -0.048, -0.044, -0.041, -0.04, -0.036, -0.03, -0.024, -0.01, -0.002, 
+    0.014, 0.043, 0.079, 0.098, 0.113, 0.116, 0.103, 0.123 ;
+
+ eng_satu_Timer = 8.464, 8.464, 9.464, 8.464, 8.464, 8.464, 8.464, 8.464, 
+    8.464, 8.464, 8.464, 8.464, 8.464, 8.464, 9.464, 8.464, 8.464, 8.464, 
+    8.464, 8.464, 8.464, 8.464, 9.464, 8.464, 9.464, 8.464, 8.464, 8.464, 
+    8.464, 8.464, 8.464, 9.464, 9.464, 8.464, 9.464, 8.464, 8.464, 8.464, 
+    9.464, 8.464, 8.464, 9.464, 9.464, 9.464, 9.464, 8.464, 8.464, 8.464, 
+    8.464, 8.464, 8.464, 8.464, 8.464, 8.464, 8.464, 9.464, 8.464, 8.464, 
+    8.464, 8.464, 8.464, 9.464, 8.464, 8.464, 8.464, 8.464, 9.464, 9.464, 
+    9.464, 9.464, 9.464, 9.464, 9.464, 9.464, 8.464, 8.464, 8.464, 8.464, 
+    8.464, 8.464 ;
+
+ depth = 1.22663937257657, 3.39069249688918, 5.88381283307668, 
+    7.77856393621836, 9.47385265661589, 10.9896283043156, 12.5751973730487, 
+    14.3701663722276, 16.3745297825492, 17.6210145232136, 18.6979712151424, 
+    19.665233034503, 20.8020091130373, 22.2977574748616, 23.7835233403593, 
+    25.0299628804047, 26.1766805418839, 27.3034490190839, 28.4202399628307, 
+    30.0355874932709, 31.7606050163567, 33.1067068414838, 34.3730315755974, 
+    35.7290871574988, 36.9056575045446, 38.6106753943964, 40.3356205399092, 
+    41.6318125146583, 42.85820196907, 44.0746135088094, 45.3608112795966, 
+    46.9959657533453, 48.6909291455853, 50.0070086752366, 51.6321557974836, 
+    52.9980670061915, 54.3240888656286, 55.8794118160856, 57.4646326482221, 
+    58.8005953781487, 60.6749164342668, 61.2033123508424, 61.6220402206234, 
+    60.5652491861327, 58.9900222228032, 57.6540607305948, 56.2483007799616, 
+    54.8225910996876, 53.3470209609453, 51.4028413422312, 49.428732349682, 
+    47.8933010645921, 46.3977400241533, 44.9320795885687, 43.416555705767, 
+    41.4822523216969, 38.8998290644807, 37.3842604534521, 35.8886225167611, 
+    34.3730315755974, 32.8574293946727, 30.9828532536474, 28.2906127556868, 
+    26.655308618722, 25.0499058512439, 23.384661081653, 21.4900547194768, 
+    18.8774634451952, 17.2021964987288, 15.3873084709324, 13.5524602285079, 
+    11.7275676409101, 9.61346404181923, 7.07052742292542, 5.00623794544667, 
+    3.09151601147811, 0.787842394595483, 0.0498635327865595, 
+    0.229372150013494, -0.0598362554142285 ;
+
+ time = 1493532053.841, 1493532070.16, 1493532085.648, 1493532098.253, 
+    1493532109.884, 1493532121.537, 1493532133.179, 1493532147.797, 
+    1493532162.625, 1493532174.252, 1493532185.89, 1493532197.541, 
+    1493532209.177, 1493532224.187, 1493532239.025, 1493532251.654, 
+    1493532263.288, 1493532274.911, 1493532286.554, 1493532301.147, 
+    1493532315.996, 1493532327.62, 1493532339.251, 1493532351.893, 
+    1493532363.533, 1493532379.13, 1493532393.982, 1493532405.612, 
+    1493532417.265, 1493532428.906, 1493532440.536, 1493532455.142, 
+    1493532473.604, 1493532486.436, 1493532502.274, 1493532514.915, 
+    1493532526.549, 1493532541.166, 1493532555.998, 1493532568.625, 
+    1493532585.335, 1493532599.082, 1493532621.485, 1493532639.217, 
+    1493532660.031, 1493532672.643, 1493532684.257, 1493532695.89, 
+    1493532707.521, 1493532722.135, 1493532736.967, 1493532748.584, 
+    1493532760.204, 1493532771.827, 1493532783.458, 1493532798.039, 
+    1493532816.49, 1493532828.099, 1493532839.717, 1493532851.339, 
+    1493532862.961, 1493532877.602, 1493532896.907, 1493532908.555, 
+    1493532920.188, 1493532931.834, 1493532946.286, 1493532965.754, 
+    1493532978.394, 1493532991.025, 1493533003.663, 1493533016.301, 
+    1493533030.65, 1493533047.468, 1493533060.105, 1493533071.736, 
+    1493533086.193, 1493533101.723, 1493533115.484, 1493533127.109 ;
+
+ horz_speed = NaN, 65.3232226073865, 63.400624648162, 59.9934942935174, 
+    57.9480533171509, 57.8269450900395, 57.1786481546475, 55.5371745672648, 
+    54.6617591869872, 54.7017049211218, 55.4793449763348, 56.0686204114631, 
+    56.3435031651072, 56.624316701641, 56.4382179519653, 55.5660394353676, 
+    54.8129315047824, 55.111295538, 55.5177439307519, 55.5545977983512, 
+    55.1830553475533, 55.289827301991, 55.6095302173946, 55.5971530089035, 
+    55.2116277881015, 55.165634133607, 55.1167235895389, 55.1627839608716, 
+    55.2756869936178, 55.1891991434099, 55.3758030942999, 55.5406274020579, 
+    55.111898652604, 55.0960698181046, 55.6341111294947, 55.9255310205179, 
+    56.1239539996059, 55.9852076082596, 56.0175713689431, 55.5606959750356, 
+    NaN, NaN, NaN, NaN, 19.8529480104586, 19.3598123458207, 19.344600912942, 
+    19.3513921066862, 19.4056802593092, 19.5174083788957, 19.6116426511869, 
+    19.5725807321141, 19.6769474562074, 19.868731137917, 19.9184805916307, 
+    19.965474554665, 19.8955994472181, 19.9061062548219, 19.9411241559063, 
+    19.8078501781888, 19.9301395703792, 20.9650495483353, 22.1300512380791, 
+    21.9917139908556, 21.7556426456227, 21.9099310583509, 22.0212846555604, 
+    21.6925936967418, 21.635950705847, 21.4863203870131, 21.5803987319581, 
+    21.7442618786714, 21.79552576627, 21.7879046771093, 22.0897002501861, 
+    NaN, NaN, NaN, NaN, NaN ;
+
+ log_GPS1 = "$GPS1,300417,054141,5713.6201,-16526.4512,5,0.8,19,10.9,0.0,0.0,10,4.9" ;
+
+ log_GPS2 = "$GPS2,300417,054141,5713.6201,-16526.4512,5,0.8,19,10.9,0.0,0.0,10,4.9" ;
+
+ log_SENSOR_SECS = "54.772,102.686,172.035,439.980,756.622,0.000,0.000,0.000,0.000,0.000" ;
+
+ log_GPS = "$GPS,300417,062128,5713.836,-16525.377,3,0.8,27,10.9,0.0,0.0,11,5.0" ;
+
+ log_SENSOR_MAMPS = "24.000,33.000,105.000,17.800,17.800,0.000,0.000,0.000,0.000,0.000" ;
+
+ log_SENSORS = "SBE_CT,AA4330,WL_blue_red_Chl,SAT1000,SAT1001,nil,nil,nil,nil,nil" ;
+
+ log_KALMAN_X = "-8200.548828,-103.055725,-426.953033,27717.275391,148.548340" ;
+
+ log_KALMAN_Y = "7737.810547,320.435669,332.688690,-10161.883789,338.504944" ;
+
+ sg_cal_calibcomm_wetlabs = "WET Labs BB2FL-vmt SN 739, cal 17-03-10" ;
+
+ log_MHEAD_RNG_PITCHd_Wd = "99.1,20000,-11.2,-9.667,-14.82,6800" ;
+
+ log_SM_CCo = "1202,0.00,0.000,0,0,1647,452.48" ;
+
+ log_ERRORS = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" ;
+
+ log_IRIDIUM_FIX = "5554.28,-16557.83,300417,045317" ;
+
+ sg_cal_calibcomm = "SN 0258, cal 29-apr-16" ;
+
+ log_CFSIZE = "1024409600,1013547008" ;
+
+ sg_cal_comm_oxy_type = "Aanderaa Optode 4831" ;
+
+ log_TGT_LATLONG = "5709.927,-16507.736" ;
+
+ sg_cal_calibcomm_optode = "Optode 4831 SN: 602" ;
+
+ log_KALMAN_CONTROL = "0.080243,-0.356497" ;
+
+ log_TT8_MAMPS = "0.026964,0.265146" ;
+
+ gc_vbd_ad = 2694, 2694, 2696, 2697, 2699, 2700, 2702, 2703, 2174, 1661, 
+    1659, 1657, 1654, 1652, 1650, 1648 ;
+
+ gc_roll_i = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.283, 0.129, 0.278, 0.144 ;
+
+ gc_pitch_ctl = -1.72, -1.72, -1.72, -1.72, -1.72, -1.72, -1.72, -1.72, 
+    -0.45, 1.72, 1.72, 1.72, 1.72, 1.72, 1.72, 1.72 ;
+
+ gc_pitch_ad = 2432, 1881, 1881, 1881, 1881, 1881, 1881, 1881, 2257, 2943, 
+    2943, 2943, 2943, 2943, 2943, 2943 ;
+
+ gc_pitch_i = 0, 0.164, 0, 0, 0, 0, 0, 0, 0.209, 0.139, 0, 0, 0, 0, 0, 0 ;
+
+ gc_vbd_pot2_ad_start = 4094, 4095, 4094, 4094, 4095, 4095, 4095, 4094, 4094, 
+    4094, 4094, 4094, 4094, 4094, 4094, 4094 ;
+
+ gc_vbd_i = 0, 0, 0, 0, 0, 0, 0, 0, 4.343, 4.261, 0, 0, 0, 0, 0, 0 ;
+
+ gc_vbd_pot2_ad = 4094, 4095, 4095, 4094, 4094, 4094, 4095, 4094, 4094, 4095, 
+    4094, 4094, 4094, 4094, 4094, 4094 ;
+
+ gc_pitch_ad_start = 2432, 2432, 1880, 1880, 1880, 1880, 1880, 1881, 1881, 
+    2257, 2942, 2942, 2942, 2942, 2942, 2942 ;
+
+ gc_vbd_pot1_ad_start = 2182, 2694, 2696, 2697, 2698, 2700, 2702, 2703, 2705, 
+    2173, 1659, 1657, 1655, 1653, 1650, 1648 ;
+
+ gc_ob_vertv = 0, 0, -14, -9.3, -9.9, -10.8, -10.7, -10.7, -10.8, 0, 12.1, 
+    12.9, 13.2, 14, 14.2, 15.6 ;
+
+ gc_roll_retries = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ;
+
+ gc_vbd_ctl = -439.9, -439.9, -439.9, -439.9, -439.9, -439.9, -439.9, -439.9, 
+    0, 439.9, 439.9, 439.9, 439.9, 439.9, 439.9, 439.9 ;
+
+ gc_st_secs = 1493532050, 1493532069, 1493532147, 1493532223, 1493532300, 
+    1493532378, 1493532454, 1493532540, 1493532585, 1493532621, 1493532721, 
+    1493532797, 1493532877, 1493532946, 1493533030, 1493533085 ;
+
+ gc_pitch_secs = 0, 6.07, 0, 0, 0, 0, 0, 0, 4.18, 7.47, 0, 0, 0, 0, 0, 0 ;
+
+ gc_pitch_volts = 26.08, 25.5, 25.92, 26.01, 26.09, 26.15, 26.2, 26.25, 
+    25.96, 25.32, 25.48, 25.69, 25.84, 25.67, 26.01, 25.8 ;
+
+ gc_int_press = 10.01, 10.13, 10.12, 10.12, 10.12, 10.12, 10.11, 10.11, 
+    10.12, 10.01, 9.91, 9.91, 9.9, 9.91, 9.91, 9.91 ;
+
+ gc_roll_volts = 25.27, 25.58, 25.94, 26.03, 26.1, 26.16, 26.22, 26.27, 
+    25.08, 24.58, 25.48, 25.7, 25.41, 25.62, 25.58, 25.75 ;
+
+ gc_roll_ad_start = 2031, 2031, 2031, 2031, 2031, 2031, 2031, 2031, 2031, 
+    2032, 2031, 2031, 2031, 3435, 2022, 613 ;
+
+ gc_end_secs = 1493532068, 1493532084, 1493532161, 1493532237, 1493532314, 
+    1493532392, 1493532472, 1493532554, 1493532618, 1493532658, 1493532735, 
+    1493532815, 1493532895, 1493532964, 1493533046, 1493533100 ;
+
+ gc_depth = 0, 1.2, 12.6, 20.9, 28.5, 37, 45.5, 54.5, 59, 61.4, 53.5, 43.5, 
+    33, 23.5, 11.8, 3.1 ;
+
+ gc_vbd_errors = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ;
+
+ gc_gcphase = 16390, 4102, 6, 6, 6, 6, 6, 6, 10246, 10246, 6, 6, 260, 1030, 
+    516, 1030 ;
+
+ gc_data_pts = 0, 1, 7, 13, 19, 25, 31, 37, 40, 42, 49, 55, 61, 66, 72, 76 ;
+
+ gc_pitch_errors = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ;
+
+ gc_vbd_pot1_ad = 2694, 2694, 2696, 2697, 2699, 2700, 2702, 2703, 2174, 1661, 
+    1659, 1657, 1654, 1652, 1650, 1648 ;
+
+ gc_vbd_volts = 26.08, 25.53, 25.94, 26.03, 26.1, 26.16, 26.22, 26.27, 23.98, 
+    23.57, 25.48, 25.7, 25.84, 25.7, 26.02, 25.83 ;
+
+ glider = "Deepglider SG401" ;
+
+ gc_humidity = 35.27, 35.5, 35.19, 34.95, 34.99, 34.76, 34.91, 34.95, 34.83, 
+    34.87, 34.72, 34.28, 34.05, 34.36, 34.4, 34.87 ;
+
+ gc_roll_ad = 2032, 2031, 2031, 2031, 2031, 2031, 2032, 2031, 2031, 2032, 
+    2031, 2032, 3435, 2023, 614, 2025 ;
+
+ gc_pitch_retries = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ;
+
+ gc_roll_errors = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ;
+
+ gc_vbd_secs = -3.9, 0, 0, 0, 0, 0, 0, 0, 26.6, 26.02, 0, 0, 0, 0, 0, 0 ;
+
+ gc_vbd_retries = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ;
+
+ gc_roll_secs = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4.12, 3.78, 4.03, 3.72 ;
+
+ magnetometer = "magnetometer" ;
+
+ log_24V_AH = "23.57,12.226" ;
+
+ log_SPEED_LIMITS = "0.097,0.365" ;
+
+ sg_cal_mission_title = "Bering Sea" ;
+
+ log_10V_AH = "8.83,9.837" ;
+
+ log_ALTIM_BOTTOM_PING = "50.2,8.5" ;
+
+ sat1001 = "sat1001" ;
+
+ log_TGT_NAME = "HEADING" ;
+
+ log_DATA_FILE_SIZE = "7379,80" ;
+
+ sat1000 = "sat1000" ;
+
+ log_CAP_FILE_SIZE = "21182,8" ;
+
+ wlbb2fl = "wlbb2fl" ;
+
+ aa4330 = "aa4330" ;
+
+ log_MEM = "344692" ;
+
+ sbe41 = "sbe41" ;
+
+ log_gps_time = 1493530901, 1493530901, 1493533288 ;
+
+ log_gps_lat = 57.2270016666667, 57.2270016666667, 57.2306 ;
+
+ sg_cal_id_str = "401" ;
+
+ log_gps_lon = -165.440853333333, -165.440853333333, -165.42295 ;
+
+ aanderaa4330_qc = "1" ;
+
+ GPS2_qc = "1" ;
+
+ CTD_qc = "1" ;
+
+ hdm_qc = "1" ;
+
+ latlong_qc = "4" ;
+
+ surface_curr_qc = "4" ;
+
+ trajectory = 101 ;
+
+ depth_avg_curr_qc = "4" ;
+
+ GPS1_qc = "1" ;
+
+ GPSE_qc = "1" ;
+
+ log_T_MISSION = 42 ;
+
+ log_VBD_MIN = 53 ;
+
+ log_T_ABORT = 1440 ;
+
+ log_PITCH_AD_RATE = 70 ;
+
+ log_ROLL_MAX = 3888 ;
+
+ log_PRESSURE_YINT = -51.144318 ;
+
+ log_D_FINISH = 3 ;
+
+ log_VBD_CNV = -0.85860002 ;
+
+ log_T_TURN = 225 ;
+
+ log_VBD_MAXERRORS = 1 ;
+
+ sg_cal_wlbb2fl_sig470nm_scale_factor = 1.261e-05 ;
+
+ log_SIM_W = 0 ;
+
+ sg_cal_wlbb2fl_sig470nm_dark_counts = 47 ;
+
+ sg_cal_optode_FoilCoefB13 = 0 ;
+
+ sg_cal_optode_FoilCoefB12 = 0 ;
+
+ sg_cal_optode_FoilCoefB11 = 0 ;
+
+ sg_cal_optode_FoilCoefB10 = 0 ;
+
+ log__SM_ANGLEo = -4.2 ;
+
+ log_MAXI_10V = 0.80000001 ;
+
+ log_VBD_DBAND = 2 ;
+
+ sg_cal_optode_SVUCoef6 = 0 ;
+
+ sg_cal_optode_SVUCoef5 = 0 ;
+
+ sg_cal_optode_SVUCoef4 = 0 ;
+
+ sg_cal_optode_SVUCoef3 = 0 ;
+
+ sg_cal_optode_SVUCoef2 = 0 ;
+
+ sg_cal_optode_SVUCoef1 = 0 ;
+
+ sg_cal_optode_SVUCoef0 = 0 ;
+
+ sg_cal_c_j = 0.00018278907 ;
+
+ sg_cal_c_h = 1.12844753 ;
+
+ sg_cal_c_i = -0.00143073826 ;
+
+ sg_cal_wlbb2fl_sig695nm_scale_factor = 0.012 ;
+
+ log_PITCH_ADJ_GAIN = 0 ;
+
+ log_T_WATCHDOG = 10 ;
+
+ log_VBD_LP_IGNORE = 2 ;
+
+ log_SURFACE_URGENCY_FORCE = 0 ;
+
+ log_ALTIM_PING_DEPTH = 50 ;
+
+ log_INT_PRESSURE_SLOPE = 0.0097660003 ;
+
+ log_SURFACE_URGENCY_TRY = 0 ;
+
+ log_C_ROLL_DIVE = 2025 ;
+
+ log_D_OFFGRID = 100 ;
+
+ log_HEAD_ERRBAND = 25 ;
+
+ log_PHONE_SUPPLY = 2 ;
+
+ log_T_RSLEEP = 3 ;
+
+ log_C_ROLL_CLIMB = 2025 ;
+
+ log_ALTIM_TOP_TURN_MARGIN = 0 ;
+
+ log_ESCAPE_HEADING_DELTA = 10 ;
+
+ log_MAXI_24V = 0.60000002 ;
+
+ log_N_NOCOMM = 1 ;
+
+ log_D_TGT = 58 ;
+
+ log_W_ADJ_DBAND = 0 ;
+
+ log_TCM_TEMP = 0 ;
+
+ log_HUMID = 35.27 ;
+
+ log_D_BOOST = 0 ;
+
+ sg_cal_optode_FoilCoefA3 = -0.2072853 ;
+
+ sg_cal_optode_FoilCoefA0 = -2.679283e-06 ;
+
+ sg_cal_optode_FoilCoefA1 = -7.483597e-06 ;
+
+ sg_cal_optode_FoilCoefA6 = 11.1802 ;
+
+ sg_cal_optode_FoilCoefA7 = -0.05148064 ;
+
+ sg_cal_optode_FoilCoefA4 = 0.0006012464 ;
+
+ sg_cal_optode_FoilCoefA5 = -6.604266e-07 ;
+
+ sg_cal_optode_FoilCoefA8 = 6.898503e-05 ;
+
+ sg_cal_optode_FoilCoefA9 = 8.465012e-07 ;
+
+ log_ROLL_CNV = 0.04555 ;
+
+ log_PITCH_CNV = 0.00312576 ;
+
+ log_R_STBD_OVSHOOT = 18 ;
+
+ sg_cal_t_i = 2.49551995e-05 ;
+
+ sg_cal_t_h = 0.0006362639305 ;
+
+ sg_cal_t_j = 2.97852303e-06 ;
+
+ log_USE_ICE = 0 ;
+
+ sg_cal_t_g = 0.00440780081 ;
+
+ flight_avg_speed_east = 0.314350150911953 ;
+
+ log_CALL_TRIES = 5 ;
+
+ log_VBD_MAX = 4044 ;
+
+ log_ALTIM_SENSITIVITY = 5 ;
+
+ log_SPEED_FACTOR = 1 ;
+
+ log_COMPASS2_DEVICE = -1 ;
+
+ log_VBD_PUMP_AD_RATE_SURFACE = 5 ;
+
+ log_VBD_BLEED_AD_RATE = 8 ;
+
+ log_T_GPS = 5 ;
+
+ log_XPDR_VALID = 4 ;
+
+ log_PITCH_ADJ_DBAND = 0 ;
+
+ log_NAV_MODE = 0 ;
+
+ log_LOGGERDEVICE1 = -1 ;
+
+ log_LOGGERDEVICE2 = -1 ;
+
+ log_LOGGERDEVICE3 = -1 ;
+
+ log_COMPASS_DEVICE = 33 ;
+
+ sg_cal_wlbb2fl_sig695nm_resolution_counts = 1.6 ;
+
+ log_D_GRID = 58 ;
+
+ depth_avg_curr_north_gsm = NaN ;
+
+ log_CALL_NDIVES = 1 ;
+
+ log_ALTIM_TOP_MIN_OBSTACLE = 1 ;
+
+ sg_cal_mass = 73.414 ;
+
+ log_ALTIM_FREQUENCY = 11 ;
+
+ sg_cal_optode_FoilCoefA10 = -314.3506 ;
+
+ sg_cal_optode_FoilCoefA12 = -0.002987026 ;
+
+ sg_cal_optode_FoilCoefA13 = -4.449771e-06 ;
+
+ log_SM_CC = 300 ;
+
+ sg_cal_optode_FoilCoefA2 = 0.001960006 ;
+
+ log_COURSE_BIAS = 0 ;
+
+ log_T_DIVE = 20 ;
+
+ log_FIX_MISSING_TIMEOUT = 0 ;
+
+ log_PITCH_MIN = 220 ;
+
+ log__SM_DEPTHo = 0.05 ;
+
+ log_ROLL_TIMEOUT = 15 ;
+
+ log_APOGEE_PITCH = -5 ;
+
+ sg_cal_optode_FoilCoefA11 = 2.051116 ;
+
+ log_MAX_BUOY = 450 ;
+
+ log_UNCOM_BLEED = 60 ;
+
+ log_T_SLOITER = 0 ;
+
+ sg_cal_abs_compress = 4.4e-06 ;
+
+ log_ROLL_ADJ_GAIN = 1 ;
+
+ log_ESCAPE_HEADING = 0 ;
+
+ log_N_FILEKB = 4 ;
+
+ log_HEADING = 110 ;
+
+ log_ROLL_ADJ_DBAND = 0.029999999 ;
+
+ log_C_VBD = 2175 ;
+
+ log_TGT_DEFAULT_LAT = 5650 ;
+
+ log_ALTIM_PING_DELTA = 5 ;
+
+ sg_cal_wlbb2fl_sig695nm_dark_counts = 47 ;
+
+ log_COMPASS_USE = 4 ;
+
+ log_FG_AHR_24Vo = 0 ;
+
+ log_T_BOOST = 0 ;
+
+ log_D_SAFE = 0 ;
+
+ flight_avg_speed_east_gsm = 0.328049797311285 ;
+
+ log_TCM_ROLL_OFFSET = 0 ;
+
+ log_GPS_DEVICE = 32 ;
+
+ log_FG_AHR_10Vo = 0 ;
+
+ log_TGT_RADIUS = 1852 ;
+
+ log_RAFOS_PEAK_OFFSET = 1.5 ;
+
+ log_T_NO_W = 60 ;
+
+ log_PRESSURE_SLOPE = 3.2755801e-05 ;
+
+ log_ALTIM_BOTTOM_TURN_MARGIN = 0 ;
+
+ log_STOP_T = 0 ;
+
+ log_VBD_PUMP_AD_RATE_APOGEE = 4 ;
+
+ log_FG_AHR_10V = 0 ;
+
+ log_ALTIM_BOTTOM_PING_RANGE = 0 ;
+
+ log_FERRY_MAX = 45 ;
+
+ flight_avg_speed_north_gsm = -0.117763485906422 ;
+
+ sg_cal_rho0 = 1025.6 ;
+
+ log_DIVE = 101 ;
+
+ sg_cal_c_g = -9.707119 ;
+
+ log_PITCH_TIMEOUT = 50 ;
+
+ log_HD_A = 0.0049999999 ;
+
+ log_HD_B = 0.013 ;
+
+ log_HD_C = 2.4999999e-05 ;
+
+ log_D_PITCH = 0 ;
+
+ depth_avg_curr_east_gsm = NaN ;
+
+ depth_avg_curr_east = NaN ;
+
+ log_SEABIRD_T_H = 0.00063626393 ;
+
+ log_MOTHERBOARD = 4 ;
+
+ log_SEABIRD_T_I = 2.4955199e-05 ;
+
+ log_D_CALL = 0 ;
+
+ avg_latitude = 57.2288008333333 ;
+
+ log_TCM_PITCH_OFFSET = 0 ;
+
+ log_D_SURF = 2 ;
+
+ log_MINV_10V = 8 ;
+
+ log_PITCH_MAXERRORS = 1 ;
+
+ sg_cal_ctcor = 3.25e-06 ;
+
+ log_PITCH_MAX = 3693 ;
+
+ log_ALTIM_TOP_PING_RANGE = 0 ;
+
+ log_GLIDE_SLOPE = 45 ;
+
+ log_CAPUPLOAD = 1 ;
+
+ log_ROLL_DEG = 65 ;
+
+ log_FILEMGR = 0 ;
+
+ log__XMS_NAKs = 0 ;
+
+ log_MASS = 73414 ;
+
+ log_MINV_24V = 19 ;
+
+ sg_cal_optode_PhaseCoef2 = 0 ;
+
+ sg_cal_cpcor = -9.57e-08 ;
+
+ sg_cal_optode_PhaseCoef0 = 0 ;
+
+ sg_cal_optode_PhaseCoef1 = 1 ;
+
+ log_RAFOS_HIT_WINDOW = 3600 ;
+
+ surface_curr_east = NaN ;
+
+ log_N_NOSURFACE = 2 ;
+
+ log_AH0_10V = 100 ;
+
+ sg_cal_optode_FoilCoefB9 = 0 ;
+
+ log_R_PORT_OVSHOOT = 15 ;
+
+ log_PITCH_W_DBAND = 0 ;
+
+ log_COMM_SEQ = 0 ;
+
+ log_D_ABORT = 200 ;
+
+ log_DEEPGLIDER = 2 ;
+
+ log_ALTIM_PULSE = 3 ;
+
+ log_AD7714Ch0Gain = 32 ;
+
+ log_C_PITCH = 2412 ;
+
+ log_D_NO_BLEED = 200 ;
+
+ depth_avg_curr_north = NaN ;
+
+ log_TGT_AUTO_DEFAULT = 0 ;
+
+ log_LOGGERDEVICE4 = -1 ;
+
+ log_D_FLARE = 2 ;
+
+ log_NOCOMM_ACTION = 0 ;
+
+ log_TGT_DEFAULT_LON = -16401 ;
+
+ sg_cal_optode_SVU_enabled = 0 ;
+
+ log__XMS_TOUTs = 0 ;
+
+ log_USE_BATHY = 0 ;
+
+ sg_cal_optode_ConcCoef1 = 1 ;
+
+ sg_cal_optode_ConcCoef0 = 0 ;
+
+ log_N_DIVES = 0 ;
+
+ log_PITCH_VBD_SHIFT = 0.0016 ;
+
+ sg_cal_optode_PhaseCoef3 = 0 ;
+
+ log_PITCH_GAIN = 11 ;
+
+ log_INT_PRESSURE_YINT = -1.1 ;
+
+ log_XPDR_INHIBIT = 90 ;
+
+ reviewed = 0 ;
+
+ sg_cal_wlbb2fl_sig700nm_resolution_counts = 1.2 ;
+
+ log_SEABIRD_T_G = 0.0044078007 ;
+
+ log_SEABIRD_T_J = 2.9785231e-06 ;
+
+ log_PROTOCOL = 9 ;
+
+ log_RHO = 1.023 ;
+
+ log_SIM_PITCH = 0 ;
+
+ sg_cal_hd_a = 0.00537026 ;
+
+ sg_cal_hd_b = 0.012977 ;
+
+ sg_cal_hd_c = 2.5e-05 ;
+
+ log_CF8_MAXERRORS = 2 ;
+
+ log_N_GPS = 50945 ;
+
+ log_T_LOITER = 0 ;
+
+ sg_cal_wlbb2fl_sig700nm_dark_counts = 52 ;
+
+ log_T_TURN_SAMPINT = 6 ;
+
+ log_HEAPDBG = 0 ;
+
+ log_DEVICE6 = -1 ;
+
+ log_DEVICE4 = 134 ;
+
+ log_DEVICE5 = 151 ;
+
+ log_DEVICE2 = 101 ;
+
+ log_DEVICE3 = 115 ;
+
+ log_DEVICE1 = 2 ;
+
+ log_XPDR_DEVICE = 24 ;
+
+ log_CALL_WAIT = 60 ;
+
+ log_PITCH_DBAND = 0.1 ;
+
+ log_STROBE = 0 ;
+
+ log_PITCH_W_GAIN = 0 ;
+
+ log_P_OVSHOOT_WITHG = 0.079999998 ;
+
+ start_of_climb_time = 586 ;
+
+ log_XPDR_PINGS = 0 ;
+
+ log_ROLL_MIN = 200 ;
+
+ log_RAFOS_CORR_THRESH = 60 ;
+
+ log_P_OVSHOOT = 0.039999999 ;
+
+ log_AH0_24V = 150 ;
+
+ magnetic_variation = 10.9 ;
+
+ log_KALMAN_USE = 1 ;
+
+ sg_cal_therm_expan = 7.05e-05 ;
+
+ sg_cal_wlbb2fl_sig700nm_scale_factor = 3.313e-06 ;
+
+ log_T_EPIRB = 0 ;
+
+ log_VBD_TIMEOUT = 180 ;
+
+ log_ID = 401 ;
+
+ log_SEABIRD_C_Z = 2936.3699 ;
+
+ log_ROLL_AD_RATE = 300 ;
+
+ log_DBDW = 0 ;
+
+ log_SEABIRD_C_G = -9.7071199 ;
+
+ log_SEABIRD_C_J = 0.00018278907 ;
+
+ log_SEABIRD_C_I = -0.0014307383 ;
+
+ log_SEABIRD_C_H = 1.1284475 ;
+
+ sg_cal_wlbb2fl_sig470nm_resolution_counts = 1 ;
+
+ log_SURFACE_URGENCY = 0 ;
+
+ log_CAPMAXSIZE = 200000 ;
+
+ log_ROLL_MAXERRORS = 2 ;
+
+ log_MASS_COMP = 0 ;
+
+ log_INTERNAL_PRESSURE = 9.83792 ;
+
+ log_LOGGERS = 0 ;
+
+ log_UPLOAD_DIVES_MAX = -1 ;
+
+ flight_avg_speed_north = -0.135693627146765 ;
+
+ log_RELAUNCH = 0 ;
+
+ log_PHONE_DEVICE = 49 ;
+
+ log__CALLS = 1 ;
+
+ sg_cal_l = 1.8 ;
+
+ sg_cal_optode_FoilCoefB8 = 0 ;
+
+ sg_cal_optode_FoilCoefB7 = 0 ;
+
+ sg_cal_optode_FoilCoefB6 = 1.042693e-05 ;
+
+ sg_cal_optode_FoilCoefB5 = -0.0006901433 ;
+
+ sg_cal_optode_FoilCoefB4 = 0.0189482 ;
+
+ sg_cal_optode_FoilCoefB3 = -0.1678 ;
+
+ sg_cal_optode_FoilCoefB2 = -32.22806 ;
+
+ sg_cal_optode_FoilCoefB1 = 3814.899 ;
+
+ sg_cal_optode_FoilCoefB0 = -1.861349e-06 ;
+
+ log_MISSION = 20 ;
+
+ sg_cal_volmax = 73456.9 ;
+
+ log_FG_AHR_24V = 0 ;
+
+ log_ICE_FREEZE_MARGIN = 0.30000001 ;
+
+ surface_curr_north = NaN ;
+
+ log_RAFOS_DEVICE = -1 ;
+}

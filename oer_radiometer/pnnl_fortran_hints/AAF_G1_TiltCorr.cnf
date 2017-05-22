@@ -1,0 +1,50 @@
+1             *number of header lines to skip in input files
+56              * number of reals in data line after integers (max 79)
+27          * of reals which is the shaded SPN total SW  
+28           * of reals which is the shaded SPN diffuse SW
+29          * of reals which is the unshaded zen1 SW
+30          * of reals which is the unshaded zen2 SW
+25          * of reals which is the unshaded nad1 SW
+26          * of reals which is the unshaded nad2 SW
+41          * of the reals, which is the latitude
+42          * of the reals, which is the longitude
+45          * of the reals, which is the pitch
+44          * of the reals, which is the roll
+46          * of the reals, which is the heading
+43          * of the reals, which is the altitude
+10.001        * allowable tilt for acceptable data, (real), more than set to -9999.0
+0.6000   -0.4000    0.2000      *  Pitch/roll/heading offsets for shaded SPN zenith Total (deg, 3 reals)
+0.6000    0.4000    1.2000      *  Pitch/roll/heading offsets for unshaded SPN zenith 1 center det (deg, 3 reals)
+0.0000    0.0000   -1.8000      *  Pitch/roll/heading offsets for unshaded SPN zenith 2 avg6 dets (deg, 3 reals)
+The following is the header line to append to the output files header for all the reals read in (all f12.5, header 700 characters max):
+      VN_Lat     VN_Long      VN_Alt     VN_Roll    VN_Pitch     VN_Hdng     Mgnd415     Mgnd500     Mgnd615     Mgnd673     Mgnd870     Mgnd940    Mgnd1625   MgndHdtmp    MgndTHTC     Msky415     Msky500     Msky615     Msky673     Msky870     Msky940    Msky1625   MskyHdtmp    MskyTHTC    SgndTot1    SgndTot2     SPN_TSW     SPN_Dif    SskyTot1    SskyTot2  CGR4gndIRv     CGR4gTr  CGR4skyIRv     CGR4sTr     AIM_lat     AIM_lon     AIM_Alt    AIM_Roll   AIM_Pitch     AIM_Hdg    CMig_lat    CMig_lon    CMig_Alt   CMig_Roll  CMig_Pitch    CMig_Hdg        NHdT      N16Adj        ZHdT      Z16Adj      NLWDet       NLW_T       NadLW      ZLWDet        ZLWT       ZenLW
+
+====================================================
+
+ERASMUS UAS offsets:
+
+0.4 -0.4 4.6      *  Pitch/roll/heading offsets for shaded SPN zenith Total (deg, 3 reals)
+0.0 -0.4 2.8      *  Pitch/roll/heading offsets for unshaded SPN zenith 1 center det (deg, 3 reals)
+0.4 0.4 2.4      *  Pitch/roll/heading offsets for unshaded SPN zenith 2 avg6 dets (deg, 3 reals)
+
+
+Acme-V Offsets:
+
+VecNav
+1.0000   -0.4000    3.8000      *  Pitch/roll/heading offsets for shaded SPN zenith Total (deg, 3 reals)
+0.8000    0.4000    4.6000      *  Pitch/roll/heading offsets for unshaded SPN zenith 1 center det (deg, 3 reals)
+0.2000    0.0000    3.4000      *  Pitch/roll/heading offsets for unshaded SPN zenith 2 avg6 dets (deg, 3 reals)
+
+
+AIM:
+0.2000   -0.4000    1.0000      *  Pitch/roll/heading offsets for shaded SPN zenith Total (deg, 3 reals)
+0.2000    0.4000    1.8000      *  Pitch/roll/heading offsets for unshaded SPN zenith 1 center det (deg, 3 reals)
+-0.4000    0.0000   -1.2000      *  Pitch/roll/heading offsets for unshaded SPN zenith 2 avg6 dets (deg, 3 reals)
+
+CMip:
+0.6000   -0.4000    0.2000      *  Pitch/roll/heading offsets for shaded SPN zenith Total (deg, 3 reals)
+0.6000    0.4000    1.2000      *  Pitch/roll/heading offsets for unshaded SPN zenith 1 center det (deg, 3 reals)
+0.0000    0.0000   -1.8000      *  Pitch/roll/heading offsets for unshaded SPN zenith 2 avg6 dets (deg, 3 reals)
+
+
+

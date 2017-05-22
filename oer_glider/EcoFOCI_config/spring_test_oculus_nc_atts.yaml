@@ -1,0 +1,299 @@
+---
+elaps_t_0000:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+elaps_t:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+depth:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+head:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+pitchAng:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+rollAng:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+pitchCtl:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+rollCtl:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+vbdCC:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+rec:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+GC_phase:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+sbect.condFreq:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+sbect.tempFreq:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+aa4330.O2:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+aa4330.AirSat:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+aa4330.Temp:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+aa4330.CalPhase:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+aa4330.TCPhase:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+wlbb2fl.temp:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+mag.x:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+mag.y:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+mag.z:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+satd.Timer:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+satd.PARuV:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+satd.pitch:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+satd.roll:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+satd.Temp:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+satu.Timer:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+satu.PARuV:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+satu.pitch:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+satu.roll:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+satu.Temp:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+wlbb2fl.sig470nm:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+wlbb2fl.sig700nm:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+wlbb2fl.sig695nm:
+  longname: ''
+  units: ''
+  standard_name: ''
+  instrument_name: ''
+  instrument_serial_number: ''
+
+
+time:
+ long_name: ''
+ delta_t: "0000-00-00 00:00:01"
+ axis: "T"
+ standard_name: 'time'
+
+Latitude_GPS:
+ long_name: 'latitude'
+ units: 'degrees_north'
+ standard_name: 'latitude'
+
+Longitude_GPS: 
+ long_name: 'longitude'
+ units: 'degrees_west'
+ standard_name: 'longitude'
+
+Temperature_SBE49:
+ long_name: 'temperature in degrees celsius'
+ standard_name: 'sea_water_temperature'
+ units: 'degrees_celsius'
+ instrument: 'Seabird FastCat SBE49'
+ serial_number: ''
+
+Salinity_SBE49:
+ long_name: 'salinity in psu'
+ standard_name: 'sea_water_practical_salinity'
+ units: 'PSU'
+ instrument: 'Seabird FastCat SBE49'
+ serial_number: ''
+
+Pressure_SBE49:
+ long_name: 'pressure'
+ standard_name: 'sea_water_pressure'
+ units: 'dbar'
+ positive: 'down'
+ instrument: 'Seabird FastCat SBE49'
+ serial_number: ''
+ 
+
+Global_Attributes:
+ featureType: "TrajectoryProfile"
+ Conventions: 'CF-1.6'
+ title: 'Oculus Glider Spring 2017 Field Test'
+ CruiseID: ''
+ institution: 'NOAA/PMEL'
+ group: 'EcoFOCI/OER`'
+ comment: ''
+ source: ''
+ summary: ''
+ license: ''
+ time_coverage_start: ''
+ time_coverage_end: '' 

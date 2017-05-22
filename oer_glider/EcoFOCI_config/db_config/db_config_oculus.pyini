@@ -1,0 +1,7 @@
+{
+    "database": "pmel_oculus", 
+    "host": "localhost", 
+    "password": "", 
+    "user": "viewer",
+    "port": 8889
+}
