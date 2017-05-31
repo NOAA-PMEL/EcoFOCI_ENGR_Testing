@@ -393,6 +393,7 @@ for k in data_dic.keys():
             mesh_depth_turb[mask] = np.interp(np.flatnonzero(mask), np.flatnonzero(~mask), mesh_depth_turb[~mask], right=-1000)
         mask = np.isnan(mesh_depth_sig)
         mesh_depth_sig[mask] = np.interp(np.flatnonzero(mask), np.flatnonzero(~mask), mesh_depth_sig[~mask], right=-1000)        
+        mesh_depth_stats[mask] = np.interp(np.flatnonzero(mask), np.flatnonzero(~mask), mesh_depth_stats[~mask], right=-1000)        
 
     date_time = date_time + [cast_date]
 
