@@ -37,7 +37,7 @@ def castdirection(depth):
 
 """-------------------------------- Main -----------------------------------------------"""
 
-parser = argparse.ArgumentParser(description='Interpolate or adjust times')
+parser = argparse.ArgumentParser(description='Plot archived NetCDF glider data')
 parser.add_argument('sourcefile', metavar='sourcefile', type=str,
                help='complete path to netcdf file')
 parser.add_argument('-cf','--cal_file', action="store_true",

@@ -138,6 +138,43 @@ class CTDProfilePlot(object):
         
       return plt, fig
 
+    def plot1plot_CTD(self, epic_key=None, xdata=None, ydata=None, xlabel=None, ylabel='Depth (dB)', updown=None, xisdatetime=False, maxdepth=None, **kwargs):
+      fig = plt.figure(1)
+      ax1 = fig.add_subplot(111)
+      for index,value in enumerate(epic_key):
+        if updown[index] == 'u':
+          p1 = ax1.plot(xdata[index], ydata[1])
+          plt.setp(p1, **(self.var2format(value)))
+          if not ylabel == '':
+            ax1.set_ylim(bottom=-5, top=maxdepth)
+        elif updown[index] == 'd':
+          p1 = ax1.plot(xdata[index], ydata[0])
+          plt.setp(p1, **(self.var2format(value)))
+          if not ylabel == '':
+            ax1.set_ylim(bottom=-5, top=maxdepth)
+        elif updown[index] == '':
+          p1 = ax1.plot(xdata[index], ydata[2])
+          plt.setp(p1, **(self.var2format(value)))
+          if not ylabel == '':
+            ax1.set_ylim(bottom=-5, top=maxdepth)
+
+      ax1.invert_yaxis()
+      plt.ylabel(ylabel, fontsize=self.labelsize, fontweight='bold')
+      plt.xlabel(xlabel, fontsize=self.labelsize, fontweight='bold')
+
+      fmt=mpl.ticker.ScalarFormatter(useOffset=False)
+      fmt.set_scientific(False)
+      #ax1.xaxis.set_major_formatter(fmt)
+      #ax1.tick_params(axis='both', which='major', labelsize=self.labelsize)
+
+      if xisdatetime:
+        ax1.xaxis.set_major_formatter(DateFormatter('%H:%M'))
+        ax1.tick_params(axis='both', which='minor', labelsize=self.labelsize)
+        fig.autofmt_xdate()
+        
+      return plt, fig
+
+
     def plot1var(self, epic_key=None, xdata=None, ydata=None, xlabel=None, secondary=False, **kwargs):
       fig = plt.figure(1)
       ax1 = fig.add_subplot(111)

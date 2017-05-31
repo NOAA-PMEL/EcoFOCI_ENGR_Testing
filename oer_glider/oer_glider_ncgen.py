@@ -24,7 +24,7 @@ import io_utils.glider_functions as glider
 
 """-------------------------------- Main -----------------------------------------------"""
 
-parser = argparse.ArgumentParser(description='Interpolate or adjust times')
+parser = argparse.ArgumentParser(description='Create Glider NetCDF data')
 parser.add_argument('sourcefile', metavar='sourcefile', type=str,
                help='complete path to epic file')
 parser.add_argument('cal_file', metavar='cal_file', type=str,

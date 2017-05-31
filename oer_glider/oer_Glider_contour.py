@@ -8,7 +8,7 @@
  
  Purpose:
  --------
- Various routines for visualizing ALAMO data
+ Contour glider profile data as a function of dive/date
 
  History:
  --------

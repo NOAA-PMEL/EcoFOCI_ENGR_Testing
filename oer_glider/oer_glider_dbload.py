@@ -8,7 +8,8 @@
  
  Purpose:
  --------
- 
+ load glider netcdf data into mysql database
+
  History:
  --------
 
@@ -38,7 +39,7 @@ def castdirection(depth):
 
 """-------------------------------- Main -----------------------------------------------"""
 
-parser = argparse.ArgumentParser(description='Interpolate or adjust times')
+parser = argparse.ArgumentParser(description='Load Glider NetCDF data into MySQL database')
 parser.add_argument('sourcefile', metavar='sourcefile', type=str,
                help='complete path to netcdf file')
 args = parser.parse_args()
@@ -86,6 +87,8 @@ downInd,upInd = castdirection(pressure)
 castdir = np.chararray((np.shape(pressure)[0]+1))
 castdir[downInd[0]:downInd[1]] = 'd'
 castdir[upInd[0]:upInd[1]] = 'u'
+
+
 ###
 #
 # load database
