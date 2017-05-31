@@ -464,7 +464,7 @@ if args.Gridded:
     mesh_grid_chl[:,bad_depth] = mesh_grid_chl[:,bad_depth]*np.nan
     mesh_grid_sig[:,bad_depth] = mesh_grid_sig[:,bad_depth]*np.nan
     mesh_grid_turb[:,bad_depth] = mesh_grid_turb[:,bad_depth]*np.nan
-    mesh_grid_stats[bad_depth,:] = mesh_grid_stats[bad_depth,:]*np.nan
+    mesh_grid_stats[:,bad_depth] = mesh_grid_stats[:,bad_depth]*np.nan
 
 extent = (date_time.min(), date_time.max(), press_grid.max(), press_grid.min()) # extent of the plots
 
@@ -480,7 +480,7 @@ if args.image:
                 ha='left', va='top')
     #ax.set_ylabel('Wind Speed m/s', color='k',rotation=0, labelpad=-90,horizontalalignment='right')
     ax.xaxis.set_major_locator(DayLocator(bymonthday=15))
-    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[1,5,10,15,20,25]))
+    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[5,10,15,20,25,30]))
     ax.xaxis.set_major_formatter(plt.NullFormatter())
     ax.set_xlim([extent[0],extent[1]])
     ax.set_yticks(range(0,15,4))
@@ -503,7 +503,7 @@ if args.image:
     cs = plt.imshow(np.transpose(mesh_grid_t), extent=extent, cmap=cmocean.cm.thermal, vmin=-2.0, vmax=5.0, aspect='auto', alpha=0.85)
     cs.cmap.set_under('w')
     ax.xaxis.set_major_locator(DayLocator(bymonthday=15))
-    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[1,5,10,15,20,25]))
+    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[5,10,15,20,25,30]))
     ax.xaxis.set_major_formatter(plt.NullFormatter())
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="1.5%", pad=0.05)
@@ -516,7 +516,7 @@ if args.image:
     cs = plt.imshow(np.transpose(mesh_grid_s), extent=extent, cmap=cmocean.cm.haline, vmin=31.30, vmax=32.3, aspect='auto')
     cs.cmap.set_under('w')
     ax.xaxis.set_major_locator(DayLocator(bymonthday=15))
-    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[1,5,10,15,20,25]))
+    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[5,10,15,20,25,30]))
     ax.xaxis.set_major_formatter(plt.NullFormatter())
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="1.5%", pad=0.05)
@@ -529,7 +529,7 @@ if args.image:
     cs = plt.imshow(np.transpose(mesh_grid_sig), extent=extent, cmap=cmocean.cm.dense, vmin=23.6, vmax=26.0, aspect='auto', alpha=0.85)
     cs.cmap.set_under('w')
     ax.xaxis.set_major_locator(DayLocator(bymonthday=15))
-    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[1,5,10,15,20,25]))
+    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[5,10,15,20,25,30]))
     ax.xaxis.set_major_formatter(ticker.NullFormatter())
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="1.5%", pad=0.05)
@@ -542,7 +542,7 @@ if args.image:
     cs = plt.imshow(np.transpose(mesh_grid_o), extent=extent, cmap=cmocean.cm.oxy, vmin=75, vmax=450, aspect='auto')
     cs.cmap.set_under('w')
     ax.xaxis.set_major_locator(DayLocator(bymonthday=15))
-    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[1,5,10,15,20,25]))
+    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[5,10,15,20,25,30]))
     ax.xaxis.set_major_formatter(plt.NullFormatter())
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="1.5%", pad=0.05)
@@ -555,7 +555,7 @@ if args.image:
     cs = plt.imshow(np.transpose(mesh_grid_osat), extent=extent, cmap=cmocean.cm.delta_r, vmin=40, vmax=160, aspect='auto')
     cs.cmap.set_under('w')
     ax.xaxis.set_major_locator(DayLocator(bymonthday=15))
-    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[1,5,10,15,20,25]))
+    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[5,10,15,20,25,30]))
     ax.xaxis.set_major_formatter(plt.NullFormatter())
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="1.5%", pad=0.05)
@@ -568,7 +568,7 @@ if args.image:
     cs = plt.imshow(np.transpose(mesh_grid_chl), extent=extent, cmap=cmocean.cm.algae, vmin=0, vmax=15, aspect='auto')
     cs.cmap.set_under('w')
     ax.xaxis.set_major_locator(DayLocator(bymonthday=15))
-    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[1,5,10,15,20,25]))
+    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[5,10,15,20,25,30]))
     ax.xaxis.set_major_formatter(plt.NullFormatter())
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="1.5%", pad=0.05)
@@ -581,7 +581,7 @@ if args.image:
     cs = plt.imshow(np.transpose(mesh_grid_turb), extent=extent, cmap=cmocean.cm.turbid, vmin=0, vmax=50, aspect='auto')
     cs.cmap.set_under('w')
     ax.xaxis.set_major_locator(DayLocator(bymonthday=15))
-    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[1,5,10,15,20,25]))
+    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[5,10,15,20,25,30]))
     ax.xaxis.set_major_formatter(plt.NullFormatter())
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="1.5%", pad=0.05)
@@ -594,7 +594,7 @@ if args.image:
     cs = plt.imshow(np.transpose(mesh_grid_stats), extent=extent, cmap=cmocean.cm.gray_r, vmin=0, vmax=5, aspect='auto')
     cs.cmap.set_under('w')
     ax.xaxis.set_major_locator(DayLocator(bymonthday=15))
-    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[1,5,10,15,20,25]))
+    ax.xaxis.set_minor_locator(DayLocator(bymonthday=[5,10,15,20,25,30]))
     ax.xaxis.set_major_formatter(plt.NullFormatter())
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="1.5%", pad=0.05)
