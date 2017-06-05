@@ -73,6 +73,8 @@ def OER_READ(filein):
             elif ('LWR' in line):  # Get end of file.
                 lwr[lwk] = line.split(',')
                 lwk +=1
+            else:
+                print("Line not parsed")
 
     return spn,swr,lwr
     

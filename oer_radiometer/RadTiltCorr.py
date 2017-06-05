@@ -2,10 +2,32 @@
 
 """
 RadTiltCorr.py
- 
-using files from oer_processing, read and average to chosen time 
 
- Tilt Correction Routines from AAF_G1_TiltCorr.fort
+Tilt Correction Routines from AAF_G1_TiltCorr.fort
+
+Example Usage:
+--------------
+
+python RadTiltCorr.py data/2016_spn1_sample.dat --LatLon 56.868 -164.053 > outfile.dat
+
+(Location above is M2 ITAE location during 2016)
+
+### Input file expected format:
+
+Time,Total,Diffuse,Sunshine,Heading,Pitch,Role
+05/01/2016 18:04:55,152.0,116.3,0.0,273.6,80.3,12.3
+05/01/2016 18:05:00,152.0,116.3,0.0,273.0,80.3,11.6
+05/01/2016 18:05:05,152.2,118.0,0.0,272.5,80.3,10.7
+...
+
+### Output
+Date, GtDt, Heading, Pitch, Role, instzen, instaz, sunzen, sunaz, corr_sza, k_ratio, G_corr_factor, SPN Total
+...
+GtDt = Global - Diffuse
+
+Important data is "Date,G_corr_factor,SPN Total"
+G_corr_factor - is the correction to be applied (multiplied) to the Total to get the tilt corrected total
+
 """
 
 #System Stack
@@ -24,7 +46,7 @@ __created__  = datetime.datetime(2014, 06, 07)
 __modified__ = datetime.datetime(2016, 03, 07)
 __version__  = "0.1.0"
 __status__   = "Development"
-__keywords__ = 'mooring','csv','timeseries', 'dygraphs'
+__keywords__ = 'mooring','csv','timeseries'
 
 
 """ ---------------------------------- Data Read --------------------------------------"""
@@ -131,96 +153,42 @@ def muslope(sunzen,sunaz,nrmzen,nrmaz):
 """------------------------------- MAIN ----------------------------------------"""
 
 parser = argparse.ArgumentParser(description='OER Radiometric averaging')
-parser.add_argument('DataPath', metavar='DataPath', type=str, help='full path to file')
-parser.add_argument('InstType', metavar='InstType', type=str, help='LWR, SPN Total, SPN1, SPN Total_SPN1')
-parser.add_argument('--LatLon', nargs='+', type=str, help='lat(degN) lon(degE)')
-parser.add_argument("-s", '--smooth', type=int, help='number of sample points to average')
-parser.add_argument("-p", '--partition', action="store_true", help='determine Direct/Normal Partitioning')
-parser.add_argument("-nt", '--notilt', action="store_true", help='subsample +/- 1degree')
+parser.add_argument('DataPath', metavar='DataPath', type=str, help='full path to SPN1 file with tilts')
+parser.add_argument('--LatLon', nargs='+', type=str, help='lat(decimal degN) lon(decimal degE)')
 
 args = parser.parse_args()
 
 unaveraged_data = CSV2Dic(args.DataPath)
 
-if args.partition and not args.smooth:
-    print "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}".format('Date','GtDt','Heading', 'Pitch', 'Role', 'instzen', 'instaz', 'sunzen', 'sunaz', 'corr_sza', 'k_ratio', 'G_corr_factor','SPN Total')
+print("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}").format('Date','GtDt','Heading', 'Pitch', 'Role', 'instzen', 'instaz', 'sunzen', 'sunaz', 'corr_sza', 'k_ratio', 'G_corr_factor','SPN Total')
 
-    for k,v in enumerate(unaveraged_data['Time']):
-        
-        GtDt = np.float(unaveraged_data['SPN Total'][k]) - np.float(unaveraged_data['SPN Diffuse'][k])
+for k,v in enumerate(unaveraged_data['Time']):
+    
+    GtDt = np.float(unaveraged_data['Total'][k]) - np.float(unaveraged_data['Diffuse'][k])
 
-        ### Convert time into a datetime object - account for local2UTC conversion if necessary
-        time_f = datetime.datetime.strptime(v,'%m/%d/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S') 
-        #time_f = (datetime.datetime.strptime(v,'%m/%d/%Y %H:%M:%S') + datetime.timedelta(8./24.)).strftime('%Y-%m-%d %H:%M:%S') 
-        if not args.LatLon:
-            sunzen, sunaz = solar_zenith(time_f, '71.24102', '-164.301')
-        else:
-            sunzen, sunaz = solar_zenith(time_f, args.LatLon[0], args.LatLon[1])
-        instzen, instaz = rph2za(unaveraged_data['Pitch'][k], unaveraged_data['Role'][k], unaveraged_data['Heading'][k])
-        if instaz <0:
-            instaz = (180+instaz)+180
-        cos_sza = muslope(sunzen,sunaz,instzen,instaz)
-        corr_sza = np.rad2deg(np.arccos(cos_sza))
+    ### Convert time into a datetime object - account for local2UTC conversion if necessary
+    time_f = datetime.datetime.strptime(v,'%m/%d/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S') 
+    #time_f = (datetime.datetime.strptime(v,'%m/%d/%Y %H:%M:%S') + datetime.timedelta(8./24.)).strftime('%Y-%m-%d %H:%M:%S') 
+    if not args.LatLon:
+        sunzen, sunaz = solar_zenith(time_f)
+    else:
+        sunzen, sunaz = solar_zenith(time_f, lat=args.LatLon[0], lon=args.LatLon[1])
+    instzen, instaz = rph2za(unaveraged_data['Pitch'][k], unaveraged_data['Role'][k], unaveraged_data['Heading'][k])
+    if instaz <0:
+        instaz = (180+instaz)+180
+    cos_sza = muslope(sunzen,sunaz,instzen,instaz)
+    corr_sza = np.rad2deg(np.arccos(cos_sza))
 
-        if (corr_sza >= 80.):
-            k_ratio = 1e35
-            G_corr_factor = 1
-        elif (GtDt < 5):
-            k_ratio = 1e35
-            G_corr_factor = 1           
-        else:
-            k_ratio = ( np.float(unaveraged_data['SPN Diffuse'][k]) * cos_sza ) / (GtDt)
-            G_corr_factor = (np.cos(np.deg2rad(sunzen)) + k_ratio)/(cos_sza + k_ratio) 
+    if (corr_sza >= 80.):
+        k_ratio = 1e35
+        G_corr_factor = 1
+    elif (GtDt < 5):
+        k_ratio = 1e35
+        G_corr_factor = 1           
+    else:
+        k_ratio = ( np.float(unaveraged_data['Diffuse'][k]) * cos_sza ) / (GtDt)
+        G_corr_factor = (np.cos(np.deg2rad(sunzen)) + k_ratio)/(cos_sza + k_ratio) 
 
-                
-        print "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}".format(time_f,GtDt,
-                 unaveraged_data['Heading'][k], unaveraged_data['Pitch'][k], unaveraged_data['Role'][k], instzen, instaz, sunzen, sunaz, corr_sza, k_ratio, G_corr_factor,np.float(unaveraged_data['SPN Total'][k]))
-
-if args.partition and args.smooth:
-
-    datatemp = pd.DataFrame.from_dict(unaveraged_data,'columns')
-    for column in datatemp:
-        if not column == 'Time':
-            datatemp[column] = pd.rolling_median(datatemp[column],args.smooth)
-    unaveraged_data = pd.DataFrame.to_dict(datatemp)
-
-    print "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}".format('Date','GtDt','Heading', 'Pitch', 'Role', 'instzen', 'instaz', 'sunzen', 'sunaz', 'corr_sza', 'k_ratio', 'G_corr_factor','SPN Total')
-
-    for k,v in enumerate(unaveraged_data['Time']):
-        
-        GtDt = np.float(unaveraged_data['SPN Total'][k]) - np.float(unaveraged_data['SPN Diffuse'][k])
-
-        ### Convert time into a datetime object - account for local2UTC conversion if necessary
-        time_f = datetime.datetime.strptime(v,'%m/%d/%Y %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S') 
-        #time_f = (datetime.datetime.strptime(unaveraged_data['Time'][k],'%m/%d/%Y %H:%M:%S') + datetime.timedelta(8./24.)).strftime('%Y-%m-%d %H:%M:%S') 
-        if not args.LatLon:
-            sunzen, sunaz = solar_zenith(time_f, '71.24102', '-164.301')
-        else:
-            sunzen, sunaz = solar_zenith(time_f, args.LatLon[0], args.LatLon[1])
-        instzen, instaz = rph2za(unaveraged_data['Pitch'][k], unaveraged_data['Role'][k], unaveraged_data['Heading'][k])
-        if instaz <0:
-            instaz = (180+instaz)+180
-        cos_sza = muslope(sunzen,sunaz,instzen,instaz)
-        corr_sza = np.rad2deg(np.arccos(cos_sza))
-
-        if (corr_sza >= 80.):
-            k_ratio = 1e35
-            G_corr_factor = 1
-        elif (GtDt < 5):
-            k_ratio = 1e35
-            G_corr_factor = 1           
-        else:
-            k_ratio = ( np.float(unaveraged_data['SPN Diffuse'][k]) * cos_sza ) / (GtDt)
-            G_corr_factor = (np.cos(np.deg2rad(sunzen)) + k_ratio)/(cos_sza + k_ratio) 
-
-                
-        print "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}".format(time_f,GtDt,
-                 unaveraged_data['Heading'][k], unaveraged_data['Pitch'][k], unaveraged_data['Role'][k], instzen, instaz, sunzen, sunaz, corr_sza, k_ratio, G_corr_factor,np.float(unaveraged_data['SPN Total'][k]))
-
-
-if args.notilt:
-    if args.InstType == 'SPN1':
-        for k,v in enumerate(unaveraged_data['Time']):
-            if (np.abs(np.float(unaveraged_data['Pitch'][k])) <= 1) and (np.abs(np.float(unaveraged_data['Role'][k])) <= 1):
-                print "{0}, {1}, {2}, {3}, {4}, {5}".format(unaveraged_data['Time'][k],unaveraged_data['SPN Total'][k], unaveraged_data['SPN Diffuse'][k],
-                        unaveraged_data['Heading'][k], unaveraged_data['Pitch'][k], unaveraged_data['Role'][k])
+            
+    print "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}".format(time_f,GtDt,
+             unaveraged_data['Heading'][k], unaveraged_data['Pitch'][k], unaveraged_data['Role'][k], instzen, instaz, sunzen, sunaz, corr_sza, k_ratio, G_corr_factor,np.float(unaveraged_data['Total'][k]))

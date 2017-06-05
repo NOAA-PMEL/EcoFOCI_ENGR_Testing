@@ -83,7 +83,6 @@ Aand_DO = optode_O2_corr.O2_molar2umkg(oxygen_conc=Aand_O2_corr,
                                      temperature=SBE_Temperature,
                                      pressure=pressure) 
 Aand_O2_corr = Aand_DO
-Aand_O2_corr = ncdata['eng_aa4330_O2']
 Aand_DO_Sat  = ncdata['eng_aa4330_AirSat']
 Aand_DO_Sat_calc = optode_O2_corr.O2PercentSat(oxygen_conc=Aand_O2_corr, 
                                      salinity=SBE_Salinity,
