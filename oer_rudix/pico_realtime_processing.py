@@ -610,7 +610,7 @@ if args.image:
     ax.xaxis.set_tick_params(which='major', pad=15)
 
     DefaultSize = fig.get_size_inches()
-    fig.set_size_inches( (DefaultSize[0]*0.5, DefaultSize[1]*1.25) )
+    fig.set_size_inches( (DefaultSize[0]*1.0, DefaultSize[1]*1.25) )
     plt.savefig('prawler_image.svg', bbox_inches='tight', dpi = (300))
     plt.savefig('prawler_image.png', bbox_inches='tight', dpi = (300))
     plt.close()
