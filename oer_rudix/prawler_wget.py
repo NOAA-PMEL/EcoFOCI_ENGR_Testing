@@ -1,5 +1,3 @@
-#!/usr/bin/env
-
 """
 prawler_wget.py
 
