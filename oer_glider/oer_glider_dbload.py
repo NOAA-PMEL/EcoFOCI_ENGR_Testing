@@ -98,14 +98,14 @@ EcoFOCI_db = EcoFOCI_db_oculus()
 
 for i,inst_time in enumerate(data_time):
   if np.isnan(SBE_Salinity[i]):
-    EcoFOCI_db.add_to_DB(table='2017_beringsea',divenum=diveNum,time=data_time[i],
+    EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
     latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection=castdir[i],
     temperature=SBE_Temperature[i],
     do_sat=Aand_DO_Sat[i],
     sig470nm=Wetlabs_CDOM[i],sig695nm=Wetlabs_CHL[i],sig700nm=Wetlabs_NTU[i],
     up_par=PAR_satu[i],down_par=PAR_satd[i])
   else:
-    EcoFOCI_db.add_to_DB(table='2017_beringsea',divenum=diveNum,time=data_time[i],
+    EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
     latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection=castdir[i],
     salinity=SBE_Salinity[i],temperature=SBE_Temperature[i],
     do_sat=Aand_DO_Sat[i],do_conc=Aand_O2_corr[i],
