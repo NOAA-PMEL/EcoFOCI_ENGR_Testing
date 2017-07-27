@@ -92,10 +92,9 @@ def O2PercentSat(oxygen_conc=None, temperature=None, salinity=None, pressure=0):
          
     #replace nan/1e35 with 1e35, >1e10
     try:
-        OxPerSat_pri[oxygen_conc >= 1e30] = np.nan
+        OxPerSat_pri[oxygen_conc >= 1000] = np.nan
     except:
-        if OxPerSat_pri >= 1e30:
-            OxPerSat_pri = np.nan
+        pass
             
     
     return OxPerSat_pri

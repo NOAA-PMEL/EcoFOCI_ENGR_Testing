@@ -175,6 +175,31 @@ class EcoFOCI_db_oculus(object):
 
            self.db.rollback()
 
+    def position2geojson(self, table=None, verbose=False):
+        sql = ("SELECT latitude,longitude,divenum FROM `{table}` group by `divenum`").format(table=table)
+
+        if verbose:
+            print sql
+
+        result_dic = {}
+        try:
+            # Execute the SQL command
+            self.cursor.execute(sql)
+            # Get column names
+            rowid = {}
+            counter = 0
+            for i in self.cursor.description:
+                rowid[i[0]] = counter
+                counter = counter +1 
+            #print rowid
+            # Fetch all the rows in a list of lists.
+            results = self.cursor.fetchall()
+            for row in results:
+                result_dic[row['divenum']] ={keys: row[keys] for val, keys in enumerate(row.keys())} 
+            return (result_dic)
+        except:
+            print "Error: unable to fetch data"
+
     def close(self):
         """close database"""
         self.db.close()
