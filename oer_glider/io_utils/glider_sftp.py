@@ -10,6 +10,8 @@
  --------
  retrieve updated glider data from APL sftp site
 
+ must have approved of the host:key process once before (so connect via command line sftp prior to using this program)
+
  History:
  --------
 

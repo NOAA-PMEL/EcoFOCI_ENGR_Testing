@@ -71,7 +71,10 @@ Wetlabs_NTU  = ncdata['wlbb2fl_sig700nm_adjusted']
 
 Aand_Temp = ncdata['eng_aa4330_Temp']
 Aand_O2_corr = ncdata['aanderaa4330_dissolved_oxygen']
+Aand_O2_corr[Aand_O2_corr >= 1000] = np.nan
 Aand_DO_Sat  = ncdata['eng_aa4330_AirSat']
+Aand_DO_Sat[Aand_DO_Sat <= 0] = np.nan
+Aand_DO_Sat[Aand_DO_Sat > 200] = np.nan
 Aand_DO_Sat_calc = optode_O2_corr.O2PercentSat(oxygen_conc=Aand_O2_corr, 
                                      salinity=SBE_Salinity,
                                      temperature=SBE_Temperature,
