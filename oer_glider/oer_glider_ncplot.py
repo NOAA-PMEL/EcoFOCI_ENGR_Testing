@@ -63,7 +63,9 @@ df.close()
 
 pressure = ncdata['ctd_pressure']
 SBE_Temperature = ncdata['temperature']
-SBE_Salinity = ncdata['salinity']
+SBE_Temperature[SBE_Temperature > 20] = np.nan
+SBE_Salinity = ncdata['salinity_raw']
+SBE_Salinity[SBE_Salinity < 30] = np.nan
 
 Wetlabs_CDOM = ncdata['wlbb2fl_sig470nm_adjusted']
 Wetlabs_CHL  = ncdata['wlbb2fl_sig695nm_adjusted']

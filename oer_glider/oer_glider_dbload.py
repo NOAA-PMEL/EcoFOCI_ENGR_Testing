@@ -64,6 +64,8 @@ df.close()
 pressure = ncdata['ctd_pressure']
 SBE_Temperature = ncdata['temperature']
 SBE_Salinity = ncdata['salinity']
+SBE_Salinity_raw = ncdata['salinity_raw']
+SBE_Salinity_raw_qc = ncdata['salinity_raw_qc']
 
 Wetlabs_CDOM = ncdata['wlbb2fl_sig470nm_adjusted']
 Wetlabs_CHL  = ncdata['wlbb2fl_sig695nm_adjusted']
@@ -107,7 +109,7 @@ for i,inst_time in enumerate(data_time):
   else:
     EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
     latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection=castdir[i],
-    salinity=SBE_Salinity[i],temperature=SBE_Temperature[i],
+    salinity=SBE_Salinity[i],salinity_raw=SBE_Salinity_raw[i],temperature=SBE_Temperature[i],
     do_sat=Aand_DO_Sat[i],do_conc=Aand_O2_corr[i],
     sig470nm=Wetlabs_CDOM[i],sig695nm=Wetlabs_CHL[i],sig700nm=Wetlabs_NTU[i],
     up_par=PAR_satu[i],down_par=PAR_satd[i])

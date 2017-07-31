@@ -214,8 +214,8 @@ parser.add_argument('-grid','--Gridded', action="store_true",
                help='put on regular grid')
 parser.add_argument('-i','--image', action="store_true",
                help='Make an image plot')
-parser.add_argument('-csv_out','--csv_out', action="store_true",
-               help='output to screen in csv format')
+parser.add_argument('-csv_out','--csv_out', type=str,
+               help='save chosen parameter to file')
 
 
 args = parser.parse_args()
@@ -615,9 +615,14 @@ if args.image:
     plt.savefig('prawler_image.png', bbox_inches='tight', dpi = (300))
     plt.close()
 
-if args.csv_out:
+if args.csv_out in ['temperature','T_20','temp']:
+    #at specified depth
+    '''
     print "time,depth,T_20"
     for i in range(0,np.shape(mesh_grid_t)[0],1):
         datetemp = num2date(date_time[i]+1.,'Days since 0001-1-1')
         print "{0},{1},{2}".format(datetemp.strftime('%Y-%m-%d %H:%M:%S'),press_grid[70],mesh_grid_t[i,70])
+    '''
 
+    #all values as depthxtime array
+    np.savetxt('SP03_temp.csv',mesh_grid_t,fmt='%.3f')
