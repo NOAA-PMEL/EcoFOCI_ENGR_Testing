@@ -85,7 +85,8 @@ class EcoFOCI_db_oculus(object):
             print "db error"
             
         # prepare a cursor object using cursor() method
-        self.cursor = self.db.cursor(dictionary=True)
+        self.cursor = self.db.cursor(Dictionary=True)
+        self.prepcursor = self.db.cursor(prepared=True)
         return(self.db,self.cursor)
 
     def read_profile(self, table=None, divenum=None, castdirection=None, verbose=False):
@@ -97,18 +98,8 @@ class EcoFOCI_db_oculus(object):
 
         result_dic = {}
         try:
-            # Execute the SQL command
             self.cursor.execute(sql)
-            # Get column names
-            rowid = {}
-            counter = 0
-            for i in self.cursor.description:
-                rowid[i[0]] = counter
-                counter = counter +1 
-            #print rowid
-            # Fetch all the rows in a list of lists.
-            results = self.cursor.fetchall()
-            for row in results:
+            for row in self.cursor:
                 result_dic[row['depth']] ={keys: row[keys] for val, keys in enumerate(row.keys())} 
             return (result_dic)
         except:
@@ -159,10 +150,10 @@ class EcoFOCI_db_oculus(object):
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         """    
-        sql = ("INSERT INTO `{table}` ({columns}) VALUES ('{values}')").format(table=table,columns=','.join(kwargs.keys()),values="','".join(map(str,kwargs.values())))
+        sql = "INSERT INTO ? (?) VALUES (?)".format(table=table,columns=','.join(kwargs.keys()),values="','".join(map(str,kwargs.values())))
         try:
            # Execute the SQL command
-           self.cursor.execute(sql)
+           self.prepcursor.execute(sql, table, ','.join(kwargs.keys()), "','".join(map(str,kwargs.values())))
            # Commit your changes in the database
            self.db.commit()
         except:
@@ -180,18 +171,8 @@ class EcoFOCI_db_oculus(object):
 
         result_dic = {}
         try:
-            # Execute the SQL command
             self.cursor.execute(sql)
-            # Get column names
-            rowid = {}
-            counter = 0
-            for i in self.cursor.description:
-                rowid[i[0]] = counter
-                counter = counter +1 
-            #print rowid
-            # Fetch all the rows in a list of lists.
-            results = self.cursor.fetchall()
-            for row in results:
+            for row in self.cursor:
                 result_dic[row['divenum']] ={keys: row[keys] for val, keys in enumerate(row.keys())} 
             return (result_dic)
         except:
