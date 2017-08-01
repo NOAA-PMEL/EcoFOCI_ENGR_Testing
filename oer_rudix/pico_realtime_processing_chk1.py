@@ -322,7 +322,7 @@ data_dic.pop(2)
 
 ### vertically grid data to evenly space gridspoints
 interval = 0.25
-press_grid = np.arange(0,30,interval) #1m
+press_grid = np.arange(0,35,interval) #1m
 
 mesh_grid_s, mesh_grid_t, mesh_grid_o, mesh_grid_chl = [], [], [], []
 mesh_grid_sig, mesh_grid_turb, mesh_grid_osat, mesh_grid_stats = [], [], [], []
