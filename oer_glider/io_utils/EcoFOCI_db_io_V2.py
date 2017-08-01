@@ -53,6 +53,7 @@ class EcoFOCI_db_oculus(object):
             
         # prepare a cursor object using cursor() method
         self.cursor = self.db.cursor(dictionary=True)
+        self.prepcursor = self.db.cursor(prepared=True)
         return(self.db,self.cursor)
 
     def manual_connect_to_DB(self, host='localhost', user='viewer', 
@@ -150,18 +151,14 @@ class EcoFOCI_db_oculus(object):
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         """    
-        sql = "INSERT INTO ? (?) VALUES (?)".format(table=table,columns=','.join(kwargs.keys()),values="','".join(map(str,kwargs.values())))
+        sql = "INSERT INTO ? (?) VALUES (?)"
         try:
            # Execute the SQL command
-           self.prepcursor.execute(sql, table, ','.join(kwargs.keys()), "','".join(map(str,kwargs.values())))
-           # Commit your changes in the database
-           self.db.commit()
+           self.prepcursor.execute(sql, (table, ','.join(kwargs.keys()), "','".join(map(str,kwargs.values()))))
         except:
            # Rollback in case there is any error
            print "No Bueno"
            print "Failed insert ###" + sql + "###"
-
-           self.db.rollback()
 
     def position2geojson(self, table=None, verbose=False):
         sql = ("SELECT latitude,longitude,divenum FROM `{table}` group by `divenum`").format(table=table)
@@ -180,5 +177,7 @@ class EcoFOCI_db_oculus(object):
 
     def close(self):
         """close database"""
+        self.prepcursor.close()
+        self.cursor.close()
         self.db.close()
 
