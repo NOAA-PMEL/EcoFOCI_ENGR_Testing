@@ -32,8 +32,8 @@ import matplotlib.pyplot as plt
 
 def castdirection(depth):
     """determin index of upcast and downcast"""
-    downcast = [0,np.argmax(np.diff(depth)<0)+1]
-    upcast = [np.argmax(np.diff(depth)<0)+1,len(depth)]
+    downcast = [0,np.argmax(depth)+1]
+    upcast = [np.argmax(depth)+1,len(depth)]
 
     return (downcast,upcast)
 
