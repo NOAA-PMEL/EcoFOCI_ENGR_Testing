@@ -105,14 +105,14 @@ EcoFOCI_db = EcoFOCI_db_oculus()
 (db,cursor) = EcoFOCI_db.connect_to_DB(db_config_file=config_file)
 
 depth_array = np.arange(0,args.maxdepth+1,0.5) 
-num_cycles = EcoFOCI_db.count(table='2017_beringsea', start=startcycle, end=endcycle)
+num_cycles = EcoFOCI_db.count(table='2017_Fall_SG401', start=startcycle, end=endcycle)
 temparray = np.ones((num_cycles,len(depth_array)))*np.nan
 ProfileTime = []
 cycle_col=0
 
 if args.param in ['temperature']:
 	cmap = cmocean.cm.thermal
-elif args.param in ['salinity']:
+elif args.param in ['salinity','salinity_raw']:
 	cmap = cmocean.cm.haline
 elif args.param in ['do_sat']:
 	cmap = cmocean.cm.delta_r
@@ -123,7 +123,7 @@ fig = plt.figure(1, figsize=(12, 3), facecolor='w', edgecolor='w')
 ax1 = fig.add_subplot(111)		
 for cycle in range(startcycle,endcycle+1,1):
 	#get db meta information for mooring
-	Profile = EcoFOCI_db.read_profile(table='2017_beringsea', divenum=cycle, castdirection=args.castdirection, verbose=True)
+	Profile = EcoFOCI_db.read_profile(table='2017_Fall_SG401', divenum=cycle, castdirection=args.castdirection, verbose=True)
 
 	try:
 		temp_time =  Profile[sorted(Profile.keys())[0]]['time']
