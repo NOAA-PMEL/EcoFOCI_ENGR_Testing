@@ -12,21 +12,45 @@
  
  History:
  --------
-
+ 2017-07-28 S.Bell - replace pymsyql with mysql.connector -> provides purepython connection and prepared statements
 
 """
 
-import pymysql
+import mysql.connector
 import ConfigParserLocal 
 import datetime
+import numpy as np
 
 __author__   = 'Shaun Bell'
 __email__    = 'shaun.bell@noaa.gov'
-__created__  = datetime.datetime(2014, 01, 29)
-__modified__ = datetime.datetime(2016, 8, 10)
-__version__  = "0.1.0"
+__created__  = datetime.datetime(2017, 7, 28)
+__modified__ = datetime.datetime(2017, 7, 28)
+__version__  = "0.2.0"
 __status__   = "Development"
 __keywords__ = 'netCDF','meta','header','pymysql'
+
+class NumpyMySQLConverter(mysql.connector.conversion.MySQLConverter):
+    """ A mysql.connector Converter that handles Numpy types """
+
+    def _float32_to_mysql(self, value):
+        if np.isnan(value):
+            return None
+        return float(value)
+
+    def _float64_to_mysql(self, value):
+        if np.isnan(value):
+            return None
+        return float(value)
+
+    def _int32_to_mysql(self, value):
+        if np.isnan(value):
+            return None
+        return int(value)
+
+    def _int64_to_mysql(self, value):
+        if np.isnan(value):
+            return None
+        return int(value)
 
 class EcoFOCI_db_oculus(object):
     """Class definitions to access EcoFOCI Mooring Database"""
@@ -40,18 +64,22 @@ class EcoFOCI_db_oculus(object):
             full path to json formatted database config file    
 
         """
-        self.db_config = ConfigParserLocal.get_config(db_config_file)
+        db_config = ConfigParserLocal.get_config(db_config_file)
         try:
-            self.db = pymysql.connect(self.db_config['host'], 
-                                      self.db_config['user'],
-                                      self.db_config['password'], 
-                                      self.db_config['database'], 
-                                      self.db_config['port'])
-        except:
-            print "db error"
-            
+            self.db = mysql.connector.connect(**db_config)
+        except mysql.connector.Error as err:
+          if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+          elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+          else:
+            print(err)
+        
+        self.db.set_converter_class(NumpyMySQLConverter)
+
         # prepare a cursor object using cursor() method
-        self.cursor = self.db.cursor(pymysql.cursors.DictCursor)
+        self.cursor = self.db.cursor(dictionary=True)
+        self.prepcursor = self.db.cursor(prepared=True)
         return(self.db,self.cursor)
 
     def manual_connect_to_DB(self, host='localhost', user='viewer', 
@@ -72,23 +100,20 @@ class EcoFOCI_db_oculus(object):
             database port
 
         """     
-        self.db_config['host'] = host
-        self.db_config['user'] = user
-        self.db_config['password'] = password
-        self.db_config['database'] = database
-        self.db_config['port'] = port
+        db_config['host'] = host
+        db_config['user'] = user
+        db_config['password'] = password
+        db_config['database'] = database
+        db_config['port'] = port
 
         try:
-            self.db = pymysql.connect(self.db_config['host'], 
-                                      self.db_config['user'],
-                                      self.db_config['password'], 
-                                      self.db_config['database'], 
-                                      self.db_config['port'])
+            self.db = pymysql.connect(**db_config)
         except:
             print "db error"
             
         # prepare a cursor object using cursor() method
-        self.cursor = self.db.cursor(pymysql.cursors.DictCursor)
+        self.cursor = self.db.cursor(Dictionary=True)
+        self.prepcursor = self.db.cursor(prepared=True)
         return(self.db,self.cursor)
 
     def read_profile(self, table=None, divenum=None, castdirection=None, verbose=False):
@@ -100,18 +125,8 @@ class EcoFOCI_db_oculus(object):
 
         result_dic = {}
         try:
-            # Execute the SQL command
             self.cursor.execute(sql)
-            # Get column names
-            rowid = {}
-            counter = 0
-            for i in self.cursor.description:
-                rowid[i[0]] = counter
-                counter = counter +1 
-            #print rowid
-            # Fetch all the rows in a list of lists.
-            results = self.cursor.fetchall()
-            for row in results:
+            for row in self.cursor:
                 result_dic[row['depth']] ={keys: row[keys] for val, keys in enumerate(row.keys())} 
             return (result_dic)
         except:
@@ -161,19 +176,22 @@ class EcoFOCI_db_oculus(object):
           `divenum` int(11) DEFAULT NULL,
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-        """    
-        sql = ("INSERT INTO `{table}` ({columns}) VALUES ('{values}')").format(table=table,columns=','.join(kwargs.keys()),values="','".join(map(str,kwargs.values())))
+        """
+        insert_stmt = "INSERT INTO {table} ({columns}) VALUES ({datapts})".format(
+            table=table,
+            columns= ','.join(kwargs.keys()),
+            datapts=','.join(['?']*len(kwargs.keys())))
+        data = (kwargs.values())
         try:
            # Execute the SQL command
-           self.cursor.execute(sql)
-           # Commit your changes in the database
+           self.prepcursor.execute(insert_stmt,tuple(data))
            self.db.commit()
-        except:
+        except mysql.connector.Error as err:
+           print err
            # Rollback in case there is any error
            print "No Bueno"
-           print "Failed insert ###" + sql + "###"
-
-           self.db.rollback()
+           print "Failed insert ###" + insert_stmt + "###"
+           print tuple(data)
 
     def position2geojson(self, table=None, verbose=False):
         sql = ("SELECT latitude,longitude,divenum FROM `{table}` group by `divenum`").format(table=table)
@@ -183,18 +201,8 @@ class EcoFOCI_db_oculus(object):
 
         result_dic = {}
         try:
-            # Execute the SQL command
-            self.cursor.execute(sql)
-            # Get column names
-            rowid = {}
-            counter = 0
-            for i in self.cursor.description:
-                rowid[i[0]] = counter
-                counter = counter +1 
-            #print rowid
-            # Fetch all the rows in a list of lists.
-            results = self.cursor.fetchall()
-            for row in results:
+            self.prepcursor.execute(sql)
+            for row in self.cursor:
                 result_dic[row['divenum']] ={keys: row[keys] for val, keys in enumerate(row.keys())} 
             return (result_dic)
         except:
@@ -202,5 +210,7 @@ class EcoFOCI_db_oculus(object):
 
     def close(self):
         """close database"""
+        self.prepcursor.close()
+        self.cursor.close()
         self.db.close()
 
