@@ -72,6 +72,7 @@ Wetlabs_CHL  = ncdata['wlbb2fl_sig695nm_adjusted']
 Wetlabs_NTU  = ncdata['wlbb2fl_sig700nm_adjusted']
 
 Aand_Temp = ncdata['eng_aa4330_Temp']
+Aand_Temp[Aand_Temp > 20] = np.nan
 Aand_O2_corr = ncdata['aanderaa4330_dissolved_oxygen']
 Aand_O2_corr[Aand_O2_corr >= 1000] = np.nan
 Aand_DO_Sat  = ncdata['eng_aa4330_AirSat']

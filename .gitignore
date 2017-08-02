@@ -1,6 +1,7 @@
 # ignore data and images folders
 **/data
 **/images
+**/EcoFOCI_config/sftp_config
 
 #data types
 *.nc

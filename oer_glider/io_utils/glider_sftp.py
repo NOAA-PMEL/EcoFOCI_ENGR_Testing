@@ -37,7 +37,7 @@ __keywords__ = 'sftp','get data'
 base_id = 'p401'
 ncfile_list = [base_id + str(item).zfill(4) for item in range(1,1000,1)]
 
-sftp_config_file = '/Users/bell/Programs/Python/EcoFOCI_ENGR_Testing/oer_glider/EcoFOCI_config/sftp_config/apl_sftp_oculus.pyini'
+sftp_config_file = '../oer_glider/EcoFOCI_config/sftp_config/apl_sftp_oculus.pyini'
 sftp_config = ConfigParserLocal.get_config(sftp_config_file)
 
 with pysftp.Connection(sftp_config['host'], username=sftp_config['user'], password=sftp_config['password']) as sftp:
@@ -51,5 +51,5 @@ with pysftp.Connection(sftp_config['host'], username=sftp_config['user'], passwo
             print("File {0}.nc does not exist".format(ncfile))
             badfile +=1
 
-        if badfile > 2:
+        if badfile > 5:
             break
