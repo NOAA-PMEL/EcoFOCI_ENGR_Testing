@@ -64,6 +64,7 @@ df.close()
 pressure = ncdata['ctd_pressure']
 SBE_Temperature = ncdata['temperature']
 SBE_Salinity = ncdata['salinity']
+
 SBE_Salinity_raw = ncdata['salinity_raw']
 SBE_Salinity_raw_qc = ncdata['salinity_raw_qc']
 
@@ -72,7 +73,7 @@ Wetlabs_CHL  = ncdata['wlbb2fl_sig695nm_adjusted']
 Wetlabs_NTU  = ncdata['wlbb2fl_sig700nm_adjusted']
 
 Aand_Temp = ncdata['eng_aa4330_Temp']
-Aand_O2_corr = ncdata['aanderaa4330_dissolved_oxygen']
+Aand_O2_corr = ncdata['aanderaa4330_dissolved_oxygen'].data
 Aand_DO_Sat  = ncdata['eng_aa4330_AirSat']
 Aand_DO_Sat_calc = optode_O2_corr.O2PercentSat(oxygen_conc=Aand_O2_corr, 
                                      salinity=SBE_Salinity,
@@ -90,6 +91,9 @@ castdir = np.chararray((np.shape(pressure)[0]+1))
 castdir[downInd[0]:downInd[1]] = 'd'
 castdir[upInd[0]:upInd[1]] = 'u'
 
+SBE_Salinity = np.where(np.isnan(SBE_Salinity), None, SBE_Salinity)
+PAR_satu = np.where(np.isnan(PAR_satu), None, PAR_satu)
+Aand_O2_corr = np.where(np.isnan(Aand_O2_corr), None, Aand_O2_corr)
 
 ###
 #
@@ -99,14 +103,6 @@ EcoFOCI_db = EcoFOCI_db_oculus()
 (db,cursor) = EcoFOCI_db.connect_to_DB(db_config_file=config_file)
 
 for i,inst_time in enumerate(data_time):
-  if np.isnan(SBE_Salinity[i]):
-    EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
-    latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection=castdir[i],
-    temperature=SBE_Temperature[i],
-    do_sat=Aand_DO_Sat[i],
-    sig470nm=Wetlabs_CDOM[i],sig695nm=Wetlabs_CHL[i],sig700nm=Wetlabs_NTU[i],
-    up_par=PAR_satu[i],down_par=PAR_satd[i])
-  else:
     EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
     latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection=castdir[i],
     salinity=SBE_Salinity[i],salinity_raw=SBE_Salinity_raw[i],temperature=SBE_Temperature[i],

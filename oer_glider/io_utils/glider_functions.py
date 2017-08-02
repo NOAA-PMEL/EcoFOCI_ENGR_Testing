@@ -118,7 +118,6 @@ class oculus_rawdata(object):
 
     def castdirection(self):
         """determin index of upcast and downcast - based on reaching max depth"""
-        print np.argmax(self.rawdata['depth'])
         downcast = [0,np.argmax(self.rawdata['depth'])+1]
         upcast = [np.argmax(self.rawdata['depth']),len(self.rawdata['depth'])]
 
