@@ -201,7 +201,7 @@ class EcoFOCI_db_oculus(object):
 
         result_dic = {}
         try:
-            self.prepcursor.execute(sql)
+            self.cursor.execute(sql)
             for row in self.cursor:
                 result_dic[row['divenum']] ={keys: row[keys] for val, keys in enumerate(row.keys())} 
             return (result_dic)
