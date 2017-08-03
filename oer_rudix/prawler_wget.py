@@ -36,7 +36,9 @@ parser.add_argument("-ad",'--all_daily', action="store_true", help='grabs all 20
 parser.add_argument("-t",'--today', action="store_true", help='grabs todays prawler day and places it in a file')
 parser.add_argument("-ud",'--userday', type=str, help='choose day to retrieve -- format yyyy-mm-dd')
 parser.add_argument("-met",'--met', action="store_true", 
-	help='retrieve all met data')
+	help ='retrieve all met data')
+parser.add_argument("-loc",'--loc', action="store_true", 
+	help='retrieve all loc data')
           
 args = parser.parse_args()
 
@@ -53,6 +55,13 @@ if args.met:
 	url = 'http://ketch.pmel.noaa.gov/tao-bin/show_spurs2prawl?prawloption=met&progid=pico&platid='+args.PlatformID+ \
 		    '&start=2017-04-25&end=&selectall=true&output=text&zgrid=0&background=white&colormap=ocean_r&ncol=6'
 	wget.download(url, filename, bar=wget.bar_thermometer)
+
+if args.loc:
+	filename = args.Project+'_all.loc.download'
+	url = 'http://ketch.pmel.noaa.gov/tao-bin/show_spurs2prawl?prawloption=gps&progid=pico&platid='+args.PlatformID+ \
+		    '&start=2017-04-01&end=&output=text'
+	wget.download(url, filename, bar=wget.bar_thermometer)
+
 
 # retrieve all data - multiple files
 if args.all_daily:

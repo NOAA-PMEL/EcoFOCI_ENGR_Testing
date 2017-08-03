@@ -160,8 +160,8 @@ class KetchMetData(object):
         -------
         a file-like object from which to read the data
         """
-        url = ('http://ketch.pmel.noaa.gov/tao-bin/show_spurs2prawl?prawloption=met'
-               '&progid=pico&platid=CHK1&start={time:%Y}-{time:%m}-{time:%d}&end=&output=text&sensor=all').format(time=time)
+        url = ('http://ketch.pmel.noaa.gov/tao-bin/show_spurs2prawl?prawloption=met&progid=pico&'
+                'platid=CHK1&start={time:%Y}-{time:%m}-{time:%d}&end=&output=text&sensor=all').format(time=time)
         fobj = urlopen(url)
         data = fobj.read()
 
@@ -198,6 +198,10 @@ class KetchMetData(object):
         kdatetime = [datetime.datetime.strptime(a+'  '+c,'%Y-%m-%d %H:%M:%S') for a,c in zip(data['GMTDate'],data['GMTTime'])]
         return dict(datetime=(kdatetime, 'datetime'), AT=(data['AT'], 'DegC'), RH=(data['RH'], '%'),
                     wind=(data['Spd'], 'm/s'))
+
+
+
+
 
 """-------------------------------------- Main ----------------------------------------------"""
 
