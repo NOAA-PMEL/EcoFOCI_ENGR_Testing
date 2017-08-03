@@ -69,8 +69,14 @@ SBE_Salinity_raw = ncdata['salinity_raw']
 SBE_Salinity_raw_qc = ncdata['salinity_raw_qc']
 
 Wetlabs_CDOM = ncdata['wlbb2fl_sig470nm_adjusted']
+if Wetlabs_CDOM is np.ma.masked:
+  Wetlabs_CDOM = Wetlabs_CDOM.data
 Wetlabs_CHL  = ncdata['wlbb2fl_sig695nm_adjusted']
+if Wetlabs_CHL is np.ma.masked:
+  Wetlabs_CHL = Wetlabs_CHL.data
 Wetlabs_NTU  = ncdata['wlbb2fl_sig700nm_adjusted']
+if Wetlabs_NTU is np.ma.masked:
+  Wetlabs_NTU = Wetlabs_NTU.data
 
 Aand_Temp = ncdata['eng_aa4330_Temp']
 Aand_O2_corr = ncdata['aanderaa4330_dissolved_oxygen'].data
@@ -94,6 +100,9 @@ castdir[upInd[0]:upInd[1]] = 'u'
 SBE_Salinity = np.where(np.isnan(SBE_Salinity), None, SBE_Salinity)
 PAR_satu = np.where(np.isnan(PAR_satu), None, PAR_satu)
 Aand_O2_corr = np.where(np.isnan(Aand_O2_corr), None, Aand_O2_corr)
+Wetlabs_CDOM = np.where(np.isnan(Wetlabs_CDOM), None, Wetlabs_CDOM)
+Wetlabs_CHL = np.where(np.isnan(Wetlabs_CHL), None, Wetlabs_CHL)
+Wetlabs_NTU = np.where(np.isnan(Wetlabs_NTU), None, Wetlabs_NTU)
 
 ###
 #
