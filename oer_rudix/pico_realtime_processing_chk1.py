@@ -161,7 +161,7 @@ class KetchMetData(object):
         a file-like object from which to read the data
         """
         url = ('http://ketch.pmel.noaa.gov/tao-bin/show_spurs2prawl?prawloption=met'
-               '&progid=pico&platid=SP03&start={time:%Y}-{time:%m}-{time:%d}&end=&output=text&sensor=all').format(time=time)
+               '&progid=pico&platid=CHK1&start={time:%Y}-{time:%m}-{time:%d}&end=&output=text&sensor=all').format(time=time)
         fobj = urlopen(url)
         data = fobj.read()
 
@@ -474,7 +474,6 @@ if args.image:
 
     fig = plt.figure()
     ax = plt.subplot2grid((9,100), (0, 0), colspan=98)
-    """
     plt.plot(date2num(tw_time,'days since 1-1-1'), tw_wind,'k')
     ax.annotate('Wind Speed (m/s)', xy=(0, 1), xycoords='axes fraction', fontsize=6,
                 xytext=(1, -5), textcoords='offset points',
@@ -499,7 +498,6 @@ if args.image:
     ax2.set_xlim([extent[0],extent[1]])
     for tl in ax2.get_yticklabels():
         tl.set_color('r')
-    """
     ax = plt.subplot2grid((9,100), (1, 0), colspan=100)
     cs = plt.imshow(np.transpose(mesh_grid_t), extent=extent, cmap=cmocean.cm.thermal, vmin=0.0, vmax=10.0, aspect='auto', alpha=0.85)
     cs.cmap.set_under('w')
@@ -514,7 +512,7 @@ if args.image:
     cbar.update_ticks()
     cbar.set_label('Temperature (C)',rotation=0, labelpad=90,horizontalalignment='right')
     ax = plt.subplot2grid((9,100), (2, 0), colspan=100)
-    cs = plt.imshow(np.transpose(mesh_grid_s), extent=extent, cmap=cmocean.cm.haline, vmin=31.30, vmax=32.3, aspect='auto')
+    cs = plt.imshow(np.transpose(mesh_grid_s), extent=extent, cmap=cmocean.cm.haline, vmin=31.30, vmax=32.6, aspect='auto')
     cs.cmap.set_under('w')
     ax.xaxis.set_major_locator(DayLocator(bymonthday=15))
     ax.xaxis.set_minor_locator(DayLocator(bymonthday=[5,10,15,20,25,30]))
