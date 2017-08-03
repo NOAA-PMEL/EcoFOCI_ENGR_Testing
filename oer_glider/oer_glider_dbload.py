@@ -68,6 +68,8 @@ SBE_Salinity = ncdata['salinity']
 SBE_Salinity_raw = ncdata['salinity_raw']
 SBE_Salinity_raw_qc = ncdata['salinity_raw_qc']
 
+density_insitu = ncdata['density_insitu']
+
 Wetlabs_CDOM = ncdata['wlbb2fl_sig470nm_adjusted']
 if Wetlabs_CDOM is np.ma.masked:
   Wetlabs_CDOM = Wetlabs_CDOM.data
@@ -100,9 +102,12 @@ castdir[upInd[0]:upInd[1]] = 'u'
 SBE_Salinity = np.where(np.isnan(SBE_Salinity), None, SBE_Salinity)
 PAR_satu = np.where(np.isnan(PAR_satu), None, PAR_satu)
 Aand_O2_corr = np.where(np.isnan(Aand_O2_corr), None, Aand_O2_corr)
+Aand_DO_Sat = np.where(Aand_DO_Sat<0, None, Aand_DO_Sat)
+Aand_DO_Sat = np.where(Aand_DO_Sat>200, None, Aand_DO_Sat)
 Wetlabs_CDOM = np.where(np.isnan(Wetlabs_CDOM), None, Wetlabs_CDOM)
 Wetlabs_CHL = np.where(np.isnan(Wetlabs_CHL), None, Wetlabs_CHL)
 Wetlabs_NTU = np.where(np.isnan(Wetlabs_NTU), None, Wetlabs_NTU)
+density_insitu = np.where(np.isnan(density_insitu), None, density_insitu)
 
 ###
 #
@@ -117,6 +122,6 @@ for i,inst_time in enumerate(data_time):
     salinity=SBE_Salinity[i],salinity_raw=SBE_Salinity_raw[i],temperature=SBE_Temperature[i],
     do_sat=Aand_DO_Sat[i],do_conc=Aand_O2_corr[i],
     sig470nm=Wetlabs_CDOM[i],sig695nm=Wetlabs_CHL[i],sig700nm=Wetlabs_NTU[i],
-    up_par=PAR_satu[i],down_par=PAR_satd[i])
+    up_par=PAR_satu[i],down_par=PAR_satd[i],density_insitu=density_insitu[i])
 
 EcoFOCI_db.close()

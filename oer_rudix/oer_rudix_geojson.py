@@ -102,7 +102,10 @@ parser.add_argument('-DataPath','--DataPath', type=str,
                help='full path to file')
 parser.add_argument('-rudix','--rudix', action="store_true",
                help='flag to auto download rudix loc data')
-
+parser.add_argument('-sid','--stationid', type=str, default='SP03',
+               help='rudix station id (defaults to 2017 M2 deployment')
+parser.add_argument('-sd','--start_date', type=str, default='2017-04-28',
+               help='rudix station startdate (defaults to 2017 M2 deployment. Use yyyy-mm-dd')
 args = parser.parse_args()
 
 ###
@@ -110,7 +113,7 @@ args = parser.parse_args()
 
 if args.rudix:
 
-    kid = KetchMetData.get_data(datetime.datetime(2017,4,28),'SP03')
+    kid = KetchMetData.get_data(datetime.datetime.strptime(args.start_date,'%Y-%m-%d'),args.stationid)
     data = KetchMetData.parse(kid)
 
     header = '{"type": "FeatureCollection","features": ['
