@@ -71,6 +71,7 @@ SBE_Salinity_raw = ncdata['salinity_raw']
 SBE_Salinity_raw_qc = ncdata['salinity_raw_qc']
 
 density_insitu = ncdata['density_insitu']
+sigma_t = ncdata['sigma_t']
 
 Wetlabs_CDOM = ncdata['wlbb2fl_sig470nm_adjusted']
 if Wetlabs_CDOM is np.ma.masked:
@@ -104,13 +105,16 @@ castdir[upInd[0]:upInd[1]] = 'u'
 SBE_Salinity = np.where(np.isnan(SBE_Salinity), None, SBE_Salinity)
 SBE_Conductivity_raw = np.where(np.isnan(SBE_Conductivity_raw), None, SBE_Conductivity_raw)
 PAR_satu = np.where(np.isnan(PAR_satu), None, PAR_satu)
+PAR_satd = np.where(np.isnan(PAR_satd), None, PAR_satd)
 Aand_O2_corr = np.where(np.isnan(Aand_O2_corr), None, Aand_O2_corr)
-Aand_DO_Sat = np.where(Aand_DO_Sat<0, None, Aand_DO_Sat)
-Aand_DO_Sat = np.where(Aand_DO_Sat>200, None, Aand_DO_Sat)
+Aand_DO_Sat = np.where(Aand_DO_Sat<0, np.nan, Aand_DO_Sat)
+Aand_DO_Sat = np.where(Aand_DO_Sat>200, np.nan, Aand_DO_Sat)
+Aand_DO_Sat = np.where(np.isnan(Aand_DO_Sat), None, Aand_DO_Sat)
 Wetlabs_CDOM = np.where(np.isnan(Wetlabs_CDOM), None, Wetlabs_CDOM)
 Wetlabs_CHL = np.where(np.isnan(Wetlabs_CHL), None, Wetlabs_CHL)
 Wetlabs_NTU = np.where(np.isnan(Wetlabs_NTU), None, Wetlabs_NTU)
 density_insitu = np.where(np.isnan(density_insitu), None, density_insitu)
+sigma_t = np.where(np.isnan(sigma_t), None, sigma_t)
 
 ###
 #
@@ -120,10 +124,14 @@ EcoFOCI_db = EcoFOCI_db_oculus()
 (db,cursor) = EcoFOCI_db.connect_to_DB(db_config_file=config_file)
 
 for i,inst_time in enumerate(data_time):
+  if (pressure[i] < 0):
+    EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
+    latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection='sfc',temperature=SBE_Temperature[i])
+  else:
     EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
     latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection=castdir[i], conductivity_raw=SBE_Conductivity_raw[i],
     salinity=SBE_Salinity[i],salinity_raw=SBE_Salinity_raw[i],temperature=SBE_Temperature[i],
-    do_sat=Aand_DO_Sat[i],do_conc=Aand_O2_corr[i],
+    sigma_t=sigma_t[i], do_sat=Aand_DO_Sat[i],do_conc=Aand_O2_corr[i],
     sig470nm=Wetlabs_CDOM[i],sig695nm=Wetlabs_CHL[i],sig700nm=Wetlabs_NTU[i],
     up_par=PAR_satu[i],down_par=PAR_satd[i],density_insitu=density_insitu[i])
 
