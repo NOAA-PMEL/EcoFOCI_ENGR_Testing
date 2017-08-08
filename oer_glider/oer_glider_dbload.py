@@ -65,6 +65,8 @@ pressure = ncdata['ctd_pressure']
 SBE_Temperature = ncdata['temperature']
 SBE_Salinity = ncdata['salinity']
 
+SBE_Conductivity_raw = ncdata['conductivity_raw']
+
 SBE_Salinity_raw = ncdata['salinity_raw']
 SBE_Salinity_raw_qc = ncdata['salinity_raw_qc']
 
@@ -100,6 +102,7 @@ castdir[downInd[0]:downInd[1]] = 'd'
 castdir[upInd[0]:upInd[1]] = 'u'
 
 SBE_Salinity = np.where(np.isnan(SBE_Salinity), None, SBE_Salinity)
+SBE_Conductivity_raw = np.where(np.isnan(SBE_Conductivity_raw), None, SBE_Conductivity_raw)
 PAR_satu = np.where(np.isnan(PAR_satu), None, PAR_satu)
 Aand_O2_corr = np.where(np.isnan(Aand_O2_corr), None, Aand_O2_corr)
 Aand_DO_Sat = np.where(Aand_DO_Sat<0, None, Aand_DO_Sat)
@@ -118,7 +121,7 @@ EcoFOCI_db = EcoFOCI_db_oculus()
 
 for i,inst_time in enumerate(data_time):
     EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
-    latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection=castdir[i],
+    latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection=castdir[i], conductivity_raw=SBE_Conductivity_raw[i],
     salinity=SBE_Salinity[i],salinity_raw=SBE_Salinity_raw[i],temperature=SBE_Temperature[i],
     do_sat=Aand_DO_Sat[i],do_conc=Aand_O2_corr[i],
     sig470nm=Wetlabs_CDOM[i],sig695nm=Wetlabs_CHL[i],sig700nm=Wetlabs_NTU[i],

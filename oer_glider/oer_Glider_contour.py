@@ -112,12 +112,14 @@ cycle_col=0
 
 if args.param in ['temperature']:
 	cmap = cmocean.cm.thermal
-elif args.param in ['salinity','salinity_raw']:
+elif args.param in ['salinity','salinity_raw','conductivity_raw']:
 	cmap = cmocean.cm.haline
 elif args.param in ['do_sat']:
 	cmap = cmocean.cm.delta_r
 elif args.param in ['sig695nm','chl','chla','chlorophyl']:
 	cmap = cmocean.cm.algae
+elif args.param in ['density_insitu','sigma_t','sigma_theta']:
+	cmap = cmocean.cm.dense
 
 fig = plt.figure(1, figsize=(12, 3), facecolor='w', edgecolor='w')
 ax1 = fig.add_subplot(111)		

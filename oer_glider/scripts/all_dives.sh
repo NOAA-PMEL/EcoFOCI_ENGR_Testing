@@ -2,7 +2,7 @@
 
 : '
 #Spring 2017 Deployment
-data_dir="/Volumes/WDC_internal/Users/bell/in_and_outbox/2017/Oculus_Glider/bering_sea/p4010[3]*.nc"
+data_dir="/Volumes/WDC_internal/Users/bell/in_and_outbox/2017/Oculus_Glider/bering_sea/p40106[456]*.nc"
 prog_dir="/Volumes/WDC_internal/Users/bell/Programs/Python/EcoFOCI_ENGR_Testing/oer_glider/"
 cal_file="/Volumes/WDC_internal/Users/bell/Programs/Python/EcoFOCI_ENGR_Testing/oer_glider/inst_config/spring_test_2017.yaml"
 
@@ -14,9 +14,9 @@ done
 '
 
 #Fall 2017 Deployment
-data_dir="/Users/bell/ecoraid/2017/Profilers/OculusGliders/bering_sea_fall17/sg401/p40104*.nc"
-prog_dir="/Users/bell/Programs/Python/EcoFOCI_ENGR_Testing/oer_glider/"
-cal_file="/Users/bell/Programs/Python/EcoFOCI_ENGR_Testing/oer_glider/inst_config/spring_test_2017.yaml"
+data_dir="/Volumes/WDC_internal/Users/bell/ecoraid/2017/Profilers/OculusGliders/bering_sea_fall17/sg401/p40106[456]*.nc"
+prog_dir="/Volumes/WDC_internal/Users/bell/Programs/Python/EcoFOCI_ENGR_Testing/oer_glider/"
+cal_file="/Volumes/WDC_internal/Users/bell/Programs/Python/EcoFOCI_ENGR_Testing/oer_glider/inst_config/spring_test_2017.yaml"
 
 for data_file in $data_dir
 do
