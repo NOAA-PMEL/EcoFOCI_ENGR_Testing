@@ -444,10 +444,7 @@ if args.Gridded:
     #fill known bad data points with missing values
     ### may3 - missing instrument
     bad_times = [
-    [datetime.datetime(2017, 4, 28).toordinal() + 5./24. , datetime.datetime(2017, 4, 28).toordinal() + 17./24.],
-    [datetime.datetime(2017, 5, 6).toordinal() + 1./24. , datetime.datetime(2017, 5, 6).toordinal() + 10./24.],
-    [datetime.datetime(2017, 5, 11).toordinal() + 19./24. , datetime.datetime(2017, 5, 12).toordinal() + 19./24.],
-    [datetime.datetime(2017, 5, 3).toordinal() + 19./24. , datetime.datetime(2017, 5, 4).toordinal() + 20./24.]]
+    [datetime.datetime(2017, 8, 7).toordinal() + 13./24. , datetime.datetime(2017, 8, 7).toordinal() + 20./24.],]
     
     for bad_time in bad_times:
         time_range =  np.where((time_grid >= bad_time[0]) & (time_grid <= bad_time[1]))
