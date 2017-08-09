@@ -120,12 +120,18 @@ elif args.param in ['sig695nm','chl','chla','chlorophyl']:
 	cmap = cmocean.cm.algae
 elif args.param in ['density_insitu','sigma_t','sigma_theta']:
 	cmap = cmocean.cm.dense
+elif args.param in ['up_par','down_par']:
+	cmap = cmocean.cm.solar
 
 fig = plt.figure(1, figsize=(12, 3), facecolor='w', edgecolor='w')
 ax1 = fig.add_subplot(111)		
 for cycle in range(startcycle,endcycle+1,1):
 	#get db meta information for mooring
-	Profile = EcoFOCI_db.read_profile(table='2017_Fall_SG401', divenum=cycle, castdirection=args.castdirection, verbose=True)
+	Profile = EcoFOCI_db.read_profile(table='2017_Fall_SG401', 
+									  divenum=cycle, 
+									  castdirection=args.castdirection, 
+									  param=args.param,
+									  verbose=True)
 
 	try:
 		temp_time =  Profile[sorted(Profile.keys())[0]]['time']

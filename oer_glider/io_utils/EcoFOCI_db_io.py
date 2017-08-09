@@ -116,9 +116,12 @@ class EcoFOCI_db_oculus(object):
         self.prepcursor = self.db.cursor(prepared=True)
         return(self.db,self.cursor)
 
-    def read_profile(self, table=None, divenum=None, castdirection=None, verbose=False):
+    def read_profile(self, table=None, divenum=None, castdirection=None, param=None, verbose=False):
         
-        sql = ("SELECT * from `{0}` WHERE `divenum`= '{1}' and `castdirection`='{2}' ORDER BY `id` DESC ").format(table, divenum, castdirection)
+        sql = ("SELECT {parameter},depth,time from `{table}` WHERE `divenum`= '{divenum}' and `castdirection`='{cast_dir}' ORDER BY `id` DESC ").format(table=table, 
+                                                                                                                                             divenum=divenum,
+                                                                                                                                             parameter=param,
+                                                                                                                                             cast_dir=castdirection)
 
         if verbose:
             print sql
