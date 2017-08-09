@@ -36,7 +36,8 @@ def castdirection(depth):
     upcast = [np.argmax(depth)+1,len(depth)]
 
     return (downcast,upcast)
-
+def nan2none(var):
+    return np.where(np.isnan(var), None, var)
 """-------------------------------- Main -----------------------------------------------"""
 
 parser = argparse.ArgumentParser(description='Load Glider NetCDF data into MySQL database')
@@ -96,25 +97,31 @@ PAR_satd = ncdata['eng_satd_PARuV']
 
 lat = ncdata['latitude']
 lon = ncdata['longitude']
+speed_gsm = ncdata['speed_gsm']
+vert_speed_gsm = ncdata['vert_speed_gsm']
+horz_speed_gsm = ncdata['horz_speed_gsm']
 
 downInd,upInd = castdirection(pressure)
 castdir = np.chararray((np.shape(pressure)[0]+1))
 castdir[downInd[0]:downInd[1]] = 'd'
 castdir[upInd[0]:upInd[1]] = 'u'
 
-SBE_Salinity = np.where(np.isnan(SBE_Salinity), None, SBE_Salinity)
-SBE_Conductivity_raw = np.where(np.isnan(SBE_Conductivity_raw), None, SBE_Conductivity_raw)
-PAR_satu = np.where(np.isnan(PAR_satu), None, PAR_satu)
-PAR_satd = np.where(np.isnan(PAR_satd), None, PAR_satd)
-Aand_O2_corr = np.where(np.isnan(Aand_O2_corr), None, Aand_O2_corr)
+SBE_Salinity = nan2none(SBE_Salinity)
+SBE_Conductivity_raw = nan2none(SBE_Conductivity_raw)
+PAR_satu = nan2none(PAR_satu)
+PAR_satd = nan2none(PAR_satd)
+Aand_O2_corr = nan2none(Aand_O2_corr)
 Aand_DO_Sat = np.where(Aand_DO_Sat<0, np.nan, Aand_DO_Sat)
 Aand_DO_Sat = np.where(Aand_DO_Sat>200, np.nan, Aand_DO_Sat)
-Aand_DO_Sat = np.where(np.isnan(Aand_DO_Sat), None, Aand_DO_Sat)
-Wetlabs_CDOM = np.where(np.isnan(Wetlabs_CDOM), None, Wetlabs_CDOM)
-Wetlabs_CHL = np.where(np.isnan(Wetlabs_CHL), None, Wetlabs_CHL)
-Wetlabs_NTU = np.where(np.isnan(Wetlabs_NTU), None, Wetlabs_NTU)
-density_insitu = np.where(np.isnan(density_insitu), None, density_insitu)
-sigma_t = np.where(np.isnan(sigma_t), None, sigma_t)
+Aand_DO_Sat = nan2none(Aand_DO_Sat)
+Wetlabs_CDOM = nan2none(Wetlabs_CDOM)
+Wetlabs_CHL = nan2none(Wetlabs_CHL)
+Wetlabs_NTU = nan2none(Wetlabs_NTU)
+density_insitu = nan2none(density_insitu)
+sigma_t = nan2none(sigma_t)
+speed_gsm = nan2none(speed_gsm)
+vert_speed_gsm = nan2none(vert_speed_gsm)
+horz_speed_gsm = nan2none(horz_speed_gsm)
 
 ###
 #
@@ -126,13 +133,16 @@ EcoFOCI_db = EcoFOCI_db_oculus()
 for i,inst_time in enumerate(data_time):
   if (pressure[i] < 0):
     EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
-    latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection='sfc',temperature=SBE_Temperature[i])
+    latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection='sfc',temperature=SBE_Temperature[i],
+    speed_gsm=speed_gsm[i],vert_speed_gsm=vert_speed_gsm[i],horz_speed_gsm=horz_speed_gsm[i])
   else:
     EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
     latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection=castdir[i], conductivity_raw=SBE_Conductivity_raw[i],
     salinity=SBE_Salinity[i],salinity_raw=SBE_Salinity_raw[i],temperature=SBE_Temperature[i],
     sigma_t=sigma_t[i], do_sat=Aand_DO_Sat[i],do_conc=Aand_O2_corr[i],
     sig470nm=Wetlabs_CDOM[i],sig695nm=Wetlabs_CHL[i],sig700nm=Wetlabs_NTU[i],
-    up_par=PAR_satu[i],down_par=PAR_satd[i],density_insitu=density_insitu[i])
+    up_par=PAR_satu[i],down_par=PAR_satd[i],density_insitu=density_insitu[i],
+    speed_gsm=speed_gsm[i],vert_speed_gsm=vert_speed_gsm[i],horz_speed_gsm=horz_speed_gsm[i])
+
 
 EcoFOCI_db.close()

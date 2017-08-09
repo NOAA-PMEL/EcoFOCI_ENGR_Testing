@@ -108,17 +108,25 @@ class CTDProfilePlot(object):
       return ptitle
 
     def plot1plot(self, epic_key=None, xdata=None, ydata=None, xlabel=None, 
-      ylabel='Depth (dB)', updown=None, xisdatetime=False, maxdepth=None, plotpoints=True, **kwargs):
+      ylabel='Depth (dB)', updown=None, xisdatetime=False, maxdepth=None, 
+      plotpoints=True, **kwargs):
       fig = plt.figure(1)
       ax1 = fig.add_subplot(111)
       for index,value in enumerate(epic_key):
         if updown[index] == 'u':
-          p1 = ax1.plot(xdata[index], ydata[1])
+          if plotpoints:
+            p1 = ax1.plot(xdata[index], ydata[1],marker='*')
+          else:
+            p1 = ax1.plot(xdata[index], ydata[1])
           plt.setp(p1, **(self.var2format(value)))
           if not ylabel == '':
             ax1.set_ylim(bottom=-5, top=maxdepth)
         elif updown[index] == 'd':
-          p1 = ax1.plot(xdata[index], ydata[0])
+          if plotpoints:
+            p1 = ax1.plot(xdata[index], ydata[0])
+          else:
+            p1 = ax1.plot(xdata[index], ydata[0])
+
           plt.setp(p1, **(self.var2format(value)))
           if not ylabel == '':
             ax1.set_ylim(bottom=-5, top=maxdepth)

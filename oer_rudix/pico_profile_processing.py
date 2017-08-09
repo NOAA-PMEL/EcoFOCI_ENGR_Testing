@@ -169,7 +169,8 @@ for k in sorted(data_dic.keys()):
                      ydata=[depth],
                      xlabel='Temperature (C)',
                      updown=['d','d'],
-                     maxdepth=np.max(depth))
+                     maxdepth=np.max(depth),
+                     plotpoints=True)
 
     ptitle = PrawlerPlot.add_title(cruiseid='',
                       fileid=args.DataPath.split('/')[-1],
