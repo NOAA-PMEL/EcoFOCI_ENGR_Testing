@@ -14,7 +14,7 @@
 
  History:
  --------
-
+ 2017-08-10: Bell - add a state file so that not all data has to be redownloaded
 
 """
 
@@ -33,12 +33,14 @@ __status__   = "Development"
 __keywords__ = 'sftp','get data'
 
 
-## build list of 1000 potential files of form p401xxxx.nc
-base_id = 'p401'
-ncfile_list = [base_id + str(item).zfill(4) for item in range(1,1000,1)]
 
 sftp_config_file = '../EcoFOCI_config/sftp_config/apl_sftp_oculus.pyini'
 sftp_config = ConfigParserLocal.get_config(sftp_config_file)
+state_file = '../EcoFOCI_config/state.yaml'
+state_config = ConfigParserLocal.get_config(state_file)
+
+## build list of potential files of form p401xxxx.nc
+ncfile_list = [state_config['base_id'] + str(item).zfill(4) for item in range(state_config['startnum'],state_config['endnum'],1)]
 
 with pysftp.Connection(sftp_config['host'], username=sftp_config['user'], password=sftp_config['password']) as sftp:
     badfile = 0
