@@ -64,6 +64,7 @@ df.close()
 
 pressure = ncdata['ctd_pressure']
 SBE_Temperature = ncdata['temperature']
+SBE_Temperature_raw = ncdata['temperature_raw']
 SBE_Salinity = ncdata['salinity']
 
 SBE_Conductivity_raw = ncdata['conductivity_raw']
@@ -108,6 +109,7 @@ castdir[upInd[0]:upInd[1]] = 'u'
 
 SBE_Salinity = nan2none(SBE_Salinity)
 SBE_Conductivity_raw = nan2none(SBE_Conductivity_raw)
+SBE_Temperature_raw = nan2none(SBE_Temperature_raw)
 PAR_satu = nan2none(PAR_satu)
 PAR_satd = nan2none(PAR_satd)
 Aand_O2_corr = nan2none(Aand_O2_corr)
@@ -130,19 +132,22 @@ config_file = 'EcoFOCI_config/db_config/db_config_oculus_root.pyini'
 EcoFOCI_db = EcoFOCI_db_oculus()
 (db,cursor) = EcoFOCI_db.connect_to_DB(db_config_file=config_file)
 
-for i,inst_time in enumerate(data_time):
-  if (pressure[i] < 0):
-    EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
-    latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection='sfc',temperature=SBE_Temperature[i],
-    speed_gsm=speed_gsm[i],vert_speed_gsm=vert_speed_gsm[i],horz_speed_gsm=horz_speed_gsm[i])
-  else:
-    EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
-    latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection=castdir[i], conductivity_raw=SBE_Conductivity_raw[i],
-    salinity=SBE_Salinity[i],salinity_raw=SBE_Salinity_raw[i],temperature=SBE_Temperature[i],
-    sigma_t=sigma_t[i], do_sat=Aand_DO_Sat[i],do_conc=Aand_O2_corr[i],
-    sig470nm=Wetlabs_CDOM[i],sig695nm=Wetlabs_CHL[i],sig700nm=Wetlabs_NTU[i],
-    up_par=PAR_satu[i],down_par=PAR_satd[i],density_insitu=density_insitu[i],
-    speed_gsm=speed_gsm[i],vert_speed_gsm=vert_speed_gsm[i],horz_speed_gsm=horz_speed_gsm[i])
+result = EcoFOCI_db.divenum_check(table='2017_Fall_SG401',divenum=diveNum)
 
+if not result:
+  print("{divenum} is being added to database".format(divenum=diveNum))
+  for i,inst_time in enumerate(data_time):
+    if (pressure[i] < 0):
+      EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
+      latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection='sfc',temperature=SBE_Temperature[i],temperature_raw=SBE_Temperature_raw[i],
+      speed_gsm=speed_gsm[i],vert_speed_gsm=vert_speed_gsm[i],horz_speed_gsm=horz_speed_gsm[i])
+    else:
+      EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
+      latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection=castdir[i], conductivity_raw=SBE_Conductivity_raw[i],
+      salinity=SBE_Salinity[i],salinity_raw=SBE_Salinity_raw[i],temperature=SBE_Temperature[i],temperature_raw=SBE_Temperature_raw[i],
+      sigma_t=sigma_t[i], do_sat=Aand_DO_Sat[i],do_conc=Aand_O2_corr[i],
+      sig470nm=Wetlabs_CDOM[i],sig695nm=Wetlabs_CHL[i],sig700nm=Wetlabs_NTU[i],
+      up_par=PAR_satu[i],down_par=PAR_satd[i],density_insitu=density_insitu[i],
+      speed_gsm=speed_gsm[i],vert_speed_gsm=vert_speed_gsm[i],horz_speed_gsm=horz_speed_gsm[i])
 
 EcoFOCI_db.close()

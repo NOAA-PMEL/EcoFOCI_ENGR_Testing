@@ -211,6 +211,18 @@ class EcoFOCI_db_oculus(object):
         except:
             print "Error: unable to fetch data"
 
+    def divenum_check(self,table=None,divenum=None):
+        sql = ("SELECT 1 FROM `{table}` WHERE divenum = {divenum}").format(table=table,divenum=divenum)
+
+        result_dic = {}
+        try:
+            self.cursor.execute(sql)
+            for row in self.cursor:
+                result_dic[row['1']] ={keys: row[keys] for val, keys in enumerate(row.keys())} 
+            return (result_dic)
+        except:
+            print "Error: unable to fetch data"
+
     def close(self):
         """close database"""
         self.prepcursor.close()
