@@ -60,12 +60,12 @@ def get_config_yaml(infile):
         Output - dictionary of file config parameters
     """
     infile = str(infile)
-    
+
     try:
         d = yaml.load(open(infile))
     except:
         raise RuntimeError('{0} not found'.format(infile))
-        
+
     return d
 
 def write_config_yaml(infile, data, default_flow_style=False):
@@ -120,14 +120,14 @@ def main():
                
     args = parser.parse_args()
 
-    print(args.config_file)
+    print args.config_file
 
     if (args.config_file).split('.')[-1] in ['pyini','json']:
-        print(pyini2yaml(args.config_file))
+        print pyini2yaml(args.config_file)
     elif (args.config_file).split('.')[-1] == 'yaml':
-        print(yaml2pyini(args.config_file, sort_keys=True, indent=4))
+        print yaml2pyini(args.config_file, sort_keys=True, indent=4)
     else:
-        print("only pyini and yaml endings are accepted")
+        print "only pyini and yaml endings are accepted"
 
 if __name__ == "__main__":
     main()
