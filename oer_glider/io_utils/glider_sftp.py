@@ -41,7 +41,7 @@ state_config = ConfigParserLocal.get_config_yaml(state_file)
 
 ncfile_list = [state_config['base_id'] + str(item).zfill(4) for item in range(state_config['startnum'],state_config['endnum'],1)]
 
-'''
+
 with pysftp.Connection(sftp_config['host'], username=sftp_config['user'], password=sftp_config['password']) as sftp:
     badfile = 0
     sftp.chdir(sftp_config['path'])       # chdir to path in config file
@@ -55,4 +55,3 @@ with pysftp.Connection(sftp_config['host'], username=sftp_config['user'], passwo
 
         if badfile > 5:
             break
-'''
