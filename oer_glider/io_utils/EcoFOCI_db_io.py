@@ -99,7 +99,8 @@ class EcoFOCI_db_oculus(object):
         port : int
             database port
 
-        """     
+        """
+        db_config = {}     
         db_config['host'] = host
         db_config['user'] = user
         db_config['password'] = password
