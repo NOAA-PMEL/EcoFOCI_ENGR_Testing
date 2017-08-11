@@ -2,6 +2,6 @@
     "database": "pmel_oculus", 
     "host": "localhost", 
     "password": "e43mqS4fusEaGJLE", 
-    "user": "python",
+    "user": "pythonuser",
     "port": 3306
 }
