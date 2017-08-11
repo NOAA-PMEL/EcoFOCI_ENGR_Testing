@@ -113,7 +113,7 @@ class EcoFOCI_db_oculus(object):
             print "db error"
             
         # prepare a cursor object using cursor() method
-        self.cursor = self.db.cursor(Dictionary=True)
+        self.cursor = self.db.cursor(dictionary=True)
         self.prepcursor = self.db.cursor(prepared=True)
         return(self.db,self.cursor)
 
