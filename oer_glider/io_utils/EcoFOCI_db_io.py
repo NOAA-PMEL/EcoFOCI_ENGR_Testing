@@ -68,7 +68,6 @@ class EcoFOCI_db_oculus(object):
         try:
             self.db = mysql.connector.connect(**db_config)
         except mysql.connector.Error as err:
-          print err.errno
           if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             print("Something is wrong with your user name or password")
           elif err.errno == errorcode.ER_BAD_DB_ERROR:

@@ -3,5 +3,5 @@
     "host": "localhost", 
     "password": "e43mqS4fusEaGJLE", 
     "user": "python",
-    "port": 3309
+    "port": 3306
 }
