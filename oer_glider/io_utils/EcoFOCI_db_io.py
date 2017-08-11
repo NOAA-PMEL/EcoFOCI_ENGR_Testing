@@ -108,7 +108,7 @@ class EcoFOCI_db_oculus(object):
         db_config['port'] = port
 
         try:
-            self.db = pymysql.connect(**db_config)
+            self.db = mysql.connector.connect(**db_config)
         except:
             print "db error"
             
