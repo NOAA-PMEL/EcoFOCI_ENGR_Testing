@@ -53,7 +53,7 @@ args = parser.parse_args()
 
 
 filein = args.sourcefile
-diveNum = filein.split('/')[-1].split('.nc')[0].split('p4010')[-1]
+diveNum = filein.split('/')[-1].split('.nc')[0].split('p401')[-1]
 
 df = eFOCI_ncread.EcoFOCI_netCDF(file_name=filein)
 vars_dic = df.get_vars()
