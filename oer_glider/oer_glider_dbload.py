@@ -66,6 +66,7 @@ pressure = ncdata['ctd_pressure']
 SBE_Temperature = ncdata['temperature']
 SBE_Temperature_raw = ncdata['temperature_raw']
 SBE_Salinity = ncdata['salinity']
+SBE_Salinity_qc = ncdata['salinity_qc']
 
 SBE_Conductivity_raw = ncdata['conductivity_raw']
 
@@ -138,11 +139,11 @@ if not result:
   print("{divenum} is being added to database".format(divenum=diveNum))
   for i,inst_time in enumerate(data_time):
     if (pressure[i] < 0):
-      EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
+      EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i], salinity_qc=SBE_Salinity_qc[i],
       latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection='sfc',temperature=SBE_Temperature[i],temperature_raw=SBE_Temperature_raw[i],
       speed_gsm=speed_gsm[i],vert_speed_gsm=vert_speed_gsm[i],horz_speed_gsm=horz_speed_gsm[i])
     else:
-      EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i],
+      EcoFOCI_db.add_to_DB(table='2017_Fall_SG401',divenum=diveNum,time=data_time[i], salinity_qc=SBE_Salinity_qc[i],
       latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection=castdir[i], conductivity_raw=SBE_Conductivity_raw[i],
       salinity=SBE_Salinity[i],salinity_raw=SBE_Salinity_raw[i],temperature=SBE_Temperature[i],temperature_raw=SBE_Temperature_raw[i],
       sigma_t=sigma_t[i], do_sat=Aand_DO_Sat[i],do_conc=Aand_O2_corr[i],
