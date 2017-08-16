@@ -167,6 +167,6 @@ ax1.xaxis.set_major_formatter(DateFormatter('%b %y'))
 ax1.xaxis.set_tick_params(which='major', pad=25)
 
 plt.tight_layout()
-plt.savefig(args.filepath + '_' + args.param + args.castdirection + '.svg', transparent=False, dpi = (300))
+#plt.savefig(args.filepath + '_' + args.param + args.castdirection + '.svg', transparent=False, dpi = (300))
 plt.savefig(args.filepath + '_' + args.param + args.castdirection + '.png', transparent=False, dpi = (300))
 plt.close()
