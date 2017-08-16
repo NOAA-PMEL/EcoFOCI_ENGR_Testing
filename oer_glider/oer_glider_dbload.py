@@ -133,7 +133,7 @@ config_file = 'EcoFOCI_config/db_config/db_config_oculus_root.pyini'
 EcoFOCI_db = EcoFOCI_db_oculus()
 (db,cursor) = EcoFOCI_db.connect_to_DB(db_config_file=config_file)
 
-result = EcoFOCI_db.divenum_check(table='2017_Fall_SG401',divenum=diveNum)
+result = EcoFOCI_db.divenum_check(table='2017_Fall_SG401_c0to999',divenum=diveNum)
 
 if not result:
   print("{divenum} is being added to database".format(divenum=diveNum))
