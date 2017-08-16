@@ -49,8 +49,7 @@ args = parser.parse_args()
 #######################
 #
 # Data Ingest and Processing
-state_file = 'EcoFOCI_config/state.yaml'
-state_config = ConfigParserLocal.get_config_yaml(state_file)
+state_config = ConfigParserLocal.get_config_yaml(args.ini_file)
 ncfile_list = [state_config['base_id'] + str(item).zfill(4) for item in range(state_config['startnum'],state_config['endnum'],1)]
 
 for fid in ncfile_list:
@@ -58,7 +57,7 @@ for fid in ncfile_list:
   filein = state_config['path'] + fid + '.nc'
 
   print("Working on file {file}".format(file=filein))
-  
+
   df = eFOCI_ncread.EcoFOCI_netCDF(file_name=filein)
   vars_dic = df.get_vars()
   ncdata = df.ncreadfile_dic()
