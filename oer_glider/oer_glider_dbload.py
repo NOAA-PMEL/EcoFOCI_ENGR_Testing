@@ -133,7 +133,7 @@ config_file = 'EcoFOCI_config/db_config/db_config_oculus_root.pyini'
 EcoFOCI_db = EcoFOCI_db_oculus()
 (db,cursor) = EcoFOCI_db.connect_to_DB(db_config_file=config_file)
 
-db_table = '2017_Fall_SG401_c0to999'
+db_table = '2017_Fall_SG401_c1000plus'
 result = EcoFOCI_db.divenum_check(table=db_table,divenum=diveNum)
 
 if not result:
