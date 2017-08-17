@@ -108,8 +108,8 @@ for fid in ncfile_list:
     speed_gsm = ncdata['speed_gsm']
     vert_speed_gsm = ncdata['vert_speed_gsm']
     horz_speed_gsm = ncdata['horz_speed_gsm']
-  except KeyError as ke:
-    print("Missing Primary Variable: {ke}.  Skipping dive".format(ke))
+  except KeyError:
+    print("Missing Primary Variable:.  Skipping dive")
 
   downInd,upInd = castdirection(pressure)
   castdir = np.chararray((np.shape(pressure)[0]+1))
