@@ -56,7 +56,7 @@ state_config = ConfigParserLocal.get_config_yaml(args.ini_file)
 ncfile_list = [state_config['base_id'] + str(item).zfill(4) for item in range(state_config['startnum'],state_config['endnum'],1)]
 
 for fid in ncfile_list:
-  diveNum = fid
+  diveNum = fid.split(state_config['base_id'])[-1]
   filein = state_config['path'] + fid + '.nc'
 
   print("Working on file {file}".format(file=filein))
