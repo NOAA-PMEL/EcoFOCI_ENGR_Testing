@@ -61,6 +61,11 @@ for fid in ncfile_list:
 
   print("Working on file {file}".format(file=filein))
 
+  df = eFOCI_ncread.EcoFOCI_netCDF(file_name=filein)
+  vars_dic = df.get_vars()
+  ncdata = df.ncreadfile_dic()
+  data_time = df.epochtime2date()
+  df.close()
 
   pressure = ncdata['ctd_pressure']
   SBE_Temperature = ncdata['temperature']
