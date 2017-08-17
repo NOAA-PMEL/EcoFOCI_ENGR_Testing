@@ -55,8 +55,10 @@ class EcoFOCI_netCDF(object):
 
     def epochtime2date(self, datetimevarname='ctd_time'):
         """return epoch time as datetime"""
-        return num2date(self.nchandle.variables[datetimevarname][:],"seconds since 1970-1-1 00:00:00")
-
+        try:
+            return num2date(self.nchandle.variables[datetimevarname][:],"seconds since 1970-1-1 00:00:00")
+        except:
+            pass
 
     def repl_var(self, var_name, val=1e35):
         if len(val) == 1:

@@ -68,6 +68,7 @@ for fid in ncfile_list:
   df.close()
 
   try:
+    ncdata['ctd_time'] #passes error if no parameter exists
     pressure = ncdata['ctd_pressure']
     SBE_Temperature = ncdata['temperature']
     SBE_Temperature_raw = ncdata['temperature_raw']
@@ -111,7 +112,7 @@ for fid in ncfile_list:
   except KeyError:
     print("Missing Primary Variable:.  Skipping dive")
     continue
-    
+
   downInd,upInd = castdirection(pressure)
   castdir = np.chararray((np.shape(pressure)[0]+1))
   castdir[downInd[0]:downInd[1]] = 'd'
