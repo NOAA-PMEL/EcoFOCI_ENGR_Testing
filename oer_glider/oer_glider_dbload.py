@@ -41,8 +41,10 @@ def nan2none(var):
 """-------------------------------- Main -----------------------------------------------"""
 
 parser = argparse.ArgumentParser(description='Load Glider NetCDF data into MySQL database')
-parser.add_argument('sourcefile', metavar='sourcefile', type=str,
-               help='complete path to netcdf file')
+parser.add_argument('-ini','--ini_file', type=str,
+               help='complete path to yaml instrument ini (state) file')
+parser.add_argument('-cf','--cal_file', type=str,
+               help='complete path to yaml instrument calibration file')
 args = parser.parse_args()
 
 
@@ -50,106 +52,104 @@ args = parser.parse_args()
 #######################
 #
 # Data Ingest and Processing
+state_config = ConfigParserLocal.get_config_yaml(args.ini_file)
+ncfile_list = [state_config['base_id'] + str(item).zfill(4) for item in range(state_config['startnum'],state_config['endnum'],1)]
+
+for fid in ncfile_list:
+  diveNum = fid
+  filein = state_config['path'] + fid + '.nc'
+
+  print("Working on file {file}".format(file=filein))
 
 
-filein = args.sourcefile
-diveNum = filein.split('/')[-1].split('.nc')[0].split('p401')[-1]
+  pressure = ncdata['ctd_pressure']
+  SBE_Temperature = ncdata['temperature']
+  SBE_Temperature_raw = ncdata['temperature_raw']
+  SBE_Salinity = ncdata['salinity']
+  SBE_Salinity_qc = ncdata['salinity_qc']
 
-df = eFOCI_ncread.EcoFOCI_netCDF(file_name=filein)
-vars_dic = df.get_vars()
-ncdata = df.ncreadfile_dic()
-data_time = df.epochtime2date()
-df.close()
+  SBE_Conductivity_raw = ncdata['conductivity_raw']
 
+  SBE_Salinity_raw = ncdata['salinity_raw']
+  SBE_Salinity_raw_qc = ncdata['salinity_raw_qc']
 
-pressure = ncdata['ctd_pressure']
-SBE_Temperature = ncdata['temperature']
-SBE_Temperature_raw = ncdata['temperature_raw']
-SBE_Salinity = ncdata['salinity']
-SBE_Salinity_qc = ncdata['salinity_qc']
+  density_insitu = ncdata['density_insitu']
+  sigma_t = ncdata['sigma_t']
 
-SBE_Conductivity_raw = ncdata['conductivity_raw']
+  Wetlabs_CDOM = ncdata['wlbb2fl_sig470nm_adjusted']
+  if Wetlabs_CDOM is np.ma.masked:
+    Wetlabs_CDOM = Wetlabs_CDOM.data
+  Wetlabs_CHL  = ncdata['wlbb2fl_sig695nm_adjusted']
+  if Wetlabs_CHL is np.ma.masked:
+    Wetlabs_CHL = Wetlabs_CHL.data
+  Wetlabs_NTU  = ncdata['wlbb2fl_sig700nm_adjusted']
+  if Wetlabs_NTU is np.ma.masked:
+    Wetlabs_NTU = Wetlabs_NTU.data
 
-SBE_Salinity_raw = ncdata['salinity_raw']
-SBE_Salinity_raw_qc = ncdata['salinity_raw_qc']
+  Aand_Temp = ncdata['eng_aa4330_Temp']
+  Aand_O2_corr = ncdata['aanderaa4330_dissolved_oxygen'].data
+  Aand_DO_Sat  = ncdata['eng_aa4330_AirSat']
+  Aand_DO_Sat_calc = optode_O2_corr.O2PercentSat(oxygen_conc=Aand_O2_corr, 
+                                       salinity=SBE_Salinity,
+                                       temperature=SBE_Temperature,
+                                       pressure=pressure)  
 
-density_insitu = ncdata['density_insitu']
-sigma_t = ncdata['sigma_t']
+  PAR_satu = ncdata['eng_satu_PARuV'] 
+  PAR_satd = ncdata['eng_satd_PARuV'] 
 
-Wetlabs_CDOM = ncdata['wlbb2fl_sig470nm_adjusted']
-if Wetlabs_CDOM is np.ma.masked:
-  Wetlabs_CDOM = Wetlabs_CDOM.data
-Wetlabs_CHL  = ncdata['wlbb2fl_sig695nm_adjusted']
-if Wetlabs_CHL is np.ma.masked:
-  Wetlabs_CHL = Wetlabs_CHL.data
-Wetlabs_NTU  = ncdata['wlbb2fl_sig700nm_adjusted']
-if Wetlabs_NTU is np.ma.masked:
-  Wetlabs_NTU = Wetlabs_NTU.data
+  lat = ncdata['latitude']
+  lon = ncdata['longitude']
+  speed_gsm = ncdata['speed_gsm']
+  vert_speed_gsm = ncdata['vert_speed_gsm']
+  horz_speed_gsm = ncdata['horz_speed_gsm']
 
-Aand_Temp = ncdata['eng_aa4330_Temp']
-Aand_O2_corr = ncdata['aanderaa4330_dissolved_oxygen'].data
-Aand_DO_Sat  = ncdata['eng_aa4330_AirSat']
-Aand_DO_Sat_calc = optode_O2_corr.O2PercentSat(oxygen_conc=Aand_O2_corr, 
-                                     salinity=SBE_Salinity,
-                                     temperature=SBE_Temperature,
-                                     pressure=pressure)  
+  downInd,upInd = castdirection(pressure)
+  castdir = np.chararray((np.shape(pressure)[0]+1))
+  castdir[downInd[0]:downInd[1]] = 'd'
+  castdir[upInd[0]:upInd[1]] = 'u'
 
-PAR_satu = ncdata['eng_satu_PARuV'] 
-PAR_satd = ncdata['eng_satd_PARuV'] 
+  SBE_Salinity = nan2none(SBE_Salinity)
+  SBE_Conductivity_raw = nan2none(SBE_Conductivity_raw)
+  SBE_Temperature_raw = nan2none(SBE_Temperature_raw)
+  PAR_satu = nan2none(PAR_satu)
+  PAR_satd = nan2none(PAR_satd)
+  Aand_O2_corr = nan2none(Aand_O2_corr)
+  Aand_DO_Sat = np.where(Aand_DO_Sat<0, np.nan, Aand_DO_Sat)
+  Aand_DO_Sat = np.where(Aand_DO_Sat>200, np.nan, Aand_DO_Sat)
+  Aand_DO_Sat = nan2none(Aand_DO_Sat)
+  Wetlabs_CDOM = nan2none(Wetlabs_CDOM)
+  Wetlabs_CHL = nan2none(Wetlabs_CHL)
+  Wetlabs_NTU = nan2none(Wetlabs_NTU)
+  density_insitu = nan2none(density_insitu)
+  sigma_t = nan2none(sigma_t)
+  speed_gsm = nan2none(speed_gsm)
+  vert_speed_gsm = nan2none(vert_speed_gsm)
+  horz_speed_gsm = nan2none(horz_speed_gsm)
 
-lat = ncdata['latitude']
-lon = ncdata['longitude']
-speed_gsm = ncdata['speed_gsm']
-vert_speed_gsm = ncdata['vert_speed_gsm']
-horz_speed_gsm = ncdata['horz_speed_gsm']
+  ###
+  #
+  # load database
+  config_file = 'EcoFOCI_config/db_config/db_config_oculus_root.pyini'
+  EcoFOCI_db = EcoFOCI_db_oculus()
+  (db,cursor) = EcoFOCI_db.connect_to_DB(db_config_file=config_file)
 
-downInd,upInd = castdirection(pressure)
-castdir = np.chararray((np.shape(pressure)[0]+1))
-castdir[downInd[0]:downInd[1]] = 'd'
-castdir[upInd[0]:upInd[1]] = 'u'
+  db_table = state_config['db_table']
+  result = EcoFOCI_db.divenum_check(table=db_table,divenum=diveNum)
 
-SBE_Salinity = nan2none(SBE_Salinity)
-SBE_Conductivity_raw = nan2none(SBE_Conductivity_raw)
-SBE_Temperature_raw = nan2none(SBE_Temperature_raw)
-PAR_satu = nan2none(PAR_satu)
-PAR_satd = nan2none(PAR_satd)
-Aand_O2_corr = nan2none(Aand_O2_corr)
-Aand_DO_Sat = np.where(Aand_DO_Sat<0, np.nan, Aand_DO_Sat)
-Aand_DO_Sat = np.where(Aand_DO_Sat>200, np.nan, Aand_DO_Sat)
-Aand_DO_Sat = nan2none(Aand_DO_Sat)
-Wetlabs_CDOM = nan2none(Wetlabs_CDOM)
-Wetlabs_CHL = nan2none(Wetlabs_CHL)
-Wetlabs_NTU = nan2none(Wetlabs_NTU)
-density_insitu = nan2none(density_insitu)
-sigma_t = nan2none(sigma_t)
-speed_gsm = nan2none(speed_gsm)
-vert_speed_gsm = nan2none(vert_speed_gsm)
-horz_speed_gsm = nan2none(horz_speed_gsm)
+  if not result:
+    print("{divenum} is being added to database".format(divenum=diveNum))
+    for i,inst_time in enumerate(data_time):
+      if (pressure[i] < 0):
+        EcoFOCI_db.add_to_DB(table=db_table,divenum=diveNum,time=data_time[i], salinity_qc=SBE_Salinity_qc[i],
+        latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection='sfc',temperature=SBE_Temperature[i],temperature_raw=SBE_Temperature_raw[i],
+        speed_gsm=speed_gsm[i],vert_speed_gsm=vert_speed_gsm[i],horz_speed_gsm=horz_speed_gsm[i])
+      else:
+        EcoFOCI_db.add_to_DB(table=db_table,divenum=diveNum,time=data_time[i], salinity_qc=SBE_Salinity_qc[i],
+        latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection=castdir[i], conductivity_raw=SBE_Conductivity_raw[i],
+        salinity=SBE_Salinity[i],salinity_raw=SBE_Salinity_raw[i],temperature=SBE_Temperature[i],temperature_raw=SBE_Temperature_raw[i],
+        sigma_t=sigma_t[i], do_sat=Aand_DO_Sat[i],do_conc=Aand_O2_corr[i],
+        sig470nm=Wetlabs_CDOM[i],sig695nm=Wetlabs_CHL[i],sig700nm=Wetlabs_NTU[i],
+        up_par=PAR_satu[i],down_par=PAR_satd[i],density_insitu=density_insitu[i],
+        speed_gsm=speed_gsm[i],vert_speed_gsm=vert_speed_gsm[i],horz_speed_gsm=horz_speed_gsm[i])
 
-###
-#
-# load database
-config_file = 'EcoFOCI_config/db_config/db_config_oculus_root.pyini'
-EcoFOCI_db = EcoFOCI_db_oculus()
-(db,cursor) = EcoFOCI_db.connect_to_DB(db_config_file=config_file)
-
-db_table = '2017_Fall_SG401_c1000plus'
-result = EcoFOCI_db.divenum_check(table=db_table,divenum=diveNum)
-
-if not result:
-  print("{divenum} is being added to database".format(divenum=diveNum))
-  for i,inst_time in enumerate(data_time):
-    if (pressure[i] < 0):
-      EcoFOCI_db.add_to_DB(table=db_table,divenum=diveNum,time=data_time[i], salinity_qc=SBE_Salinity_qc[i],
-      latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection='sfc',temperature=SBE_Temperature[i],temperature_raw=SBE_Temperature_raw[i],
-      speed_gsm=speed_gsm[i],vert_speed_gsm=vert_speed_gsm[i],horz_speed_gsm=horz_speed_gsm[i])
-    else:
-      EcoFOCI_db.add_to_DB(table=db_table,divenum=diveNum,time=data_time[i], salinity_qc=SBE_Salinity_qc[i],
-      latitude=lat[i],longitude=lon[i],depth=pressure[i],castdirection=castdir[i], conductivity_raw=SBE_Conductivity_raw[i],
-      salinity=SBE_Salinity[i],salinity_raw=SBE_Salinity_raw[i],temperature=SBE_Temperature[i],temperature_raw=SBE_Temperature_raw[i],
-      sigma_t=sigma_t[i], do_sat=Aand_DO_Sat[i],do_conc=Aand_O2_corr[i],
-      sig470nm=Wetlabs_CDOM[i],sig695nm=Wetlabs_CHL[i],sig700nm=Wetlabs_NTU[i],
-      up_par=PAR_satu[i],down_par=PAR_satd[i],density_insitu=density_insitu[i],
-      speed_gsm=speed_gsm[i],vert_speed_gsm=vert_speed_gsm[i],horz_speed_gsm=horz_speed_gsm[i])
-
-EcoFOCI_db.close()
+  EcoFOCI_db.close()
