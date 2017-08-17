@@ -67,46 +67,49 @@ for fid in ncfile_list:
   data_time = df.epochtime2date()
   df.close()
 
-  pressure = ncdata['ctd_pressure']
-  SBE_Temperature = ncdata['temperature']
-  SBE_Temperature_raw = ncdata['temperature_raw']
-  SBE_Salinity = ncdata['salinity']
-  SBE_Salinity_qc = ncdata['salinity_qc']
+  try:
+    pressure = ncdata['ctd_pressure']
+    SBE_Temperature = ncdata['temperature']
+    SBE_Temperature_raw = ncdata['temperature_raw']
+    SBE_Salinity = ncdata['salinity']
+    SBE_Salinity_qc = ncdata['salinity_qc']
 
-  SBE_Conductivity_raw = ncdata['conductivity_raw']
+    SBE_Conductivity_raw = ncdata['conductivity_raw']
 
-  SBE_Salinity_raw = ncdata['salinity_raw']
-  SBE_Salinity_raw_qc = ncdata['salinity_raw_qc']
+    SBE_Salinity_raw = ncdata['salinity_raw']
+    SBE_Salinity_raw_qc = ncdata['salinity_raw_qc']
 
-  density_insitu = ncdata['density_insitu']
-  sigma_t = ncdata['sigma_t']
+    density_insitu = ncdata['density_insitu']
+    sigma_t = ncdata['sigma_t']
 
-  Wetlabs_CDOM = ncdata['wlbb2fl_sig470nm_adjusted']
-  if Wetlabs_CDOM is np.ma.masked:
-    Wetlabs_CDOM = Wetlabs_CDOM.data
-  Wetlabs_CHL  = ncdata['wlbb2fl_sig695nm_adjusted']
-  if Wetlabs_CHL is np.ma.masked:
-    Wetlabs_CHL = Wetlabs_CHL.data
-  Wetlabs_NTU  = ncdata['wlbb2fl_sig700nm_adjusted']
-  if Wetlabs_NTU is np.ma.masked:
-    Wetlabs_NTU = Wetlabs_NTU.data
+    Wetlabs_CDOM = ncdata['wlbb2fl_sig470nm_adjusted']
+    if Wetlabs_CDOM is np.ma.masked:
+      Wetlabs_CDOM = Wetlabs_CDOM.data
+    Wetlabs_CHL  = ncdata['wlbb2fl_sig695nm_adjusted']
+    if Wetlabs_CHL is np.ma.masked:
+      Wetlabs_CHL = Wetlabs_CHL.data
+    Wetlabs_NTU  = ncdata['wlbb2fl_sig700nm_adjusted']
+    if Wetlabs_NTU is np.ma.masked:
+      Wetlabs_NTU = Wetlabs_NTU.data
 
-  Aand_Temp = ncdata['eng_aa4330_Temp']
-  Aand_O2_corr = ncdata['aanderaa4330_dissolved_oxygen'].data
-  Aand_DO_Sat  = ncdata['eng_aa4330_AirSat']
-  Aand_DO_Sat_calc = optode_O2_corr.O2PercentSat(oxygen_conc=Aand_O2_corr, 
-                                       salinity=SBE_Salinity,
-                                       temperature=SBE_Temperature,
-                                       pressure=pressure)  
+    Aand_Temp = ncdata['eng_aa4330_Temp']
+    Aand_O2_corr = ncdata['aanderaa4330_dissolved_oxygen'].data
+    Aand_DO_Sat  = ncdata['eng_aa4330_AirSat']
+    Aand_DO_Sat_calc = optode_O2_corr.O2PercentSat(oxygen_conc=Aand_O2_corr, 
+                                         salinity=SBE_Salinity,
+                                         temperature=SBE_Temperature,
+                                         pressure=pressure)  
 
-  PAR_satu = ncdata['eng_satu_PARuV'] 
-  PAR_satd = ncdata['eng_satd_PARuV'] 
+    PAR_satu = ncdata['eng_satu_PARuV'] 
+    PAR_satd = ncdata['eng_satd_PARuV'] 
 
-  lat = ncdata['latitude']
-  lon = ncdata['longitude']
-  speed_gsm = ncdata['speed_gsm']
-  vert_speed_gsm = ncdata['vert_speed_gsm']
-  horz_speed_gsm = ncdata['horz_speed_gsm']
+    lat = ncdata['latitude']
+    lon = ncdata['longitude']
+    speed_gsm = ncdata['speed_gsm']
+    vert_speed_gsm = ncdata['vert_speed_gsm']
+    horz_speed_gsm = ncdata['horz_speed_gsm']
+  except KeyError as ke:
+    print("Missing Primary Variable: {ke}.  Skipping dive".format(ke))
 
   downInd,upInd = castdirection(pressure)
   castdir = np.chararray((np.shape(pressure)[0]+1))
