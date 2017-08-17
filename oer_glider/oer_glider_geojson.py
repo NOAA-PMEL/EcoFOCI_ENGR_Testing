@@ -25,7 +25,7 @@ config_file = 'EcoFOCI_config/db_config/db_config_oculus_root.pyini'
 EcoFOCI_db = EcoFOCI_db_oculus()
 (db,cursor) = EcoFOCI_db.connect_to_DB(db_config_file=config_file)
 
-data = EcoFOCI_db.position2geojson(table='2017_Fall_SG401',verbose=False)
+data = EcoFOCI_db.position2geojson(table='2017_fall_sg401_northward',verbose=False)
 
 header = '{"type": "FeatureCollection","features": ['
 geojson = []
