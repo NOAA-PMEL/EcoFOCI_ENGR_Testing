@@ -44,7 +44,7 @@ data = EcoFOCI_db.position2geojson(table=state_config['db_table'],verbose=False)
 header = '{"type": "FeatureCollection","features": ['
 geojson = []
 for value in data.values():
-	geojson =geojson + ['{{"type": "Feature","geometry": {{"type": "Point", "coordinates":  [ {lon},{lat} ]}},"properties": {{"divenum":"{dive}"}}}}'.format(lat=value['latitude'],lon=value['longitude'],dive=str(value['divenum']).zfill(3))]
+	geojson =geojson + ['{{"type": "Feature","geometry": {{"type": "Point", "coordinates":  [ {lon},{lat} ]}},"properties": {{"divenum":"{dive}"}}}}'.format(lat=value['latitude'],lon=value['longitude'],dive=str(value['divenum']).zfill(4))]
 
 geojson = ",".join(geojson)
 geojson = header + geojson + ']}'
