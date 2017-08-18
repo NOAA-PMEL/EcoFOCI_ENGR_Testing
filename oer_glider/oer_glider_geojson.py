@@ -18,6 +18,7 @@
 import argparse, os
 
 from io_utils.EcoFOCI_db_io import EcoFOCI_db_oculus
+from io_utils import ConfigParserLocal
 
 parser = argparse.ArgumentParser(description='Load Glider NetCDF data into MySQL database')
 parser.add_argument('-ini','--ini_file', type=str,
