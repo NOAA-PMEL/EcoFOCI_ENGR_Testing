@@ -90,6 +90,8 @@ parser.add_argument('--param', type=str,
 	help='plot parameter (temperature, salinity, do_sat, sig695nm')
 parser.add_argument('--castdirection', type=str,
 	help='cast direction (u or d)')
+parser.add_argument('--reverse_x', action="store_true",
+	help='plot axis in reverse')
 
 args = parser.parse_args()
 
@@ -99,13 +101,13 @@ endcycle=args.divenum[1]
 
 #get information from local config file - a json formatted file
 config_file = 'EcoFOCI_config/db_config/db_config_oculus.pyini'
-
+db_table = '2017_fall_sg401_southward'
 
 EcoFOCI_db = EcoFOCI_db_oculus()
 (db,cursor) = EcoFOCI_db.connect_to_DB(db_config_file=config_file)
 
 depth_array = np.arange(0,args.maxdepth+1,0.5) 
-num_cycles = EcoFOCI_db.count(table='2017_Fall_SG401', start=startcycle, end=endcycle)
+num_cycles = EcoFOCI_db.count(table=db_table, start=startcycle, end=endcycle)
 temparray = np.ones((num_cycles,len(depth_array)))*np.nan
 ProfileTime = []
 cycle_col=0
@@ -127,7 +129,7 @@ fig = plt.figure(1, figsize=(12, 3), facecolor='w', edgecolor='w')
 ax1 = fig.add_subplot(111)		
 for cycle in range(startcycle,endcycle+1,1):
 	#get db meta information for mooring
-	Profile = EcoFOCI_db.read_profile(table='2017_Fall_SG401', 
+	Profile = EcoFOCI_db.read_profile(table=db_table, 
 									  divenum=cycle, 
 									  castdirection=args.castdirection, 
 									  param=args.param,
@@ -159,6 +161,8 @@ plt.contourf(ProfileTime,depth_array,temparray.T,
 	extend='both', cmap=cmap, levels=np.arange(args.paramspan[0],args.paramspan[1],0.05), alpha=1.0)
 
 ax1.invert_yaxis()
+if args.reverse_x:
+	ax1.invert_xaxis()
 ax1.xaxis.set_major_locator(DayLocator(bymonthday=15))
 ax1.xaxis.set_minor_locator(DayLocator(bymonthday=range(1,32,1)))
 ax1.xaxis.set_major_formatter(ticker.NullFormatter())
