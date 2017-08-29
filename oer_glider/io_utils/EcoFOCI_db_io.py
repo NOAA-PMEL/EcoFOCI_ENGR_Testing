@@ -139,9 +139,11 @@ class EcoFOCI_db_oculus(object):
         except:
             print "Error: unable to fetch data"
 
-    def read_location(self, table=None, param=None, verbose=False):
+    def read_location(self, table=None, param=None, dive_range=None, verbose=False):
         
-        sql = ("SELECT divenum,{parameter},time from `{table}` GROUP BY '{divenum}' ").format(table=table,
+        sql = ("SELECT divenum,{parameter},time from `{table}` WHERE divenum BETWEEN {dive_start} AND {dive_end} GROUP BY divenum ").format(table=table,
+                                                                                              dive_start=dive_range[0],
+                                                                                              dive_end=dive_range[1],
                                                                                               parameter=",".join(param))
 
         if verbose:

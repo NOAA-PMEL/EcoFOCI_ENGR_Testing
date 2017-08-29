@@ -27,4 +27,4 @@ python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=
 python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=down_par --paramspan 0 200 --divenum 1218 2000 --castdirection=u --reverse_x --extend_plot 23
 python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=down_par --paramspan 0 200 --divenum 1218 2000 --castdirection=d --reverse_x --extend_plot 23
 
-python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --latlon_vs_time=down_par --paramspan 0 200 --divenum 1218 2000 --reverse_x --extend_plot 23
+python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=latlon --latlon_vs_time --paramspan 0 200 --divenum 1218 2000 --reverse_x --extend_plot 23
