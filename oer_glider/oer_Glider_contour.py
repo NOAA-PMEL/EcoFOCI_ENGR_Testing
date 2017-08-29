@@ -106,6 +106,7 @@ endcycle=args.divenum[1]
 #get information from local config file - a json formatted file
 config_file = 'EcoFOCI_config/db_config/db_config_oculus.pyini'
 db_table = '2017_fall_sg401_southward'
+db_table2 = '2017_fall_sg401_northward'
 
 EcoFOCI_db = EcoFOCI_db_oculus()
 (db,cursor) = EcoFOCI_db.connect_to_DB(db_config_file=config_file)
@@ -133,18 +134,32 @@ else:
 
 ### plot a single parameter as a function of time gouping by divenum (good for lat/lon)
 if args.latlon_vs_time:
-	Profile = EcoFOCI_db.read_location(table=db_table, 
+	Profile_sb = EcoFOCI_db.read_location(table=db_table, 
 									  param=['latitude,longitude'],
 									  dive_range=[startcycle,endcycle],
 									  verbose=True)	
+	
+	Profile_nb = EcoFOCI_db.read_location(table=db_table2, 
+									  param=['latitude,longitude'],
+									  dive_range=[startcycle,endcycle],
+									  verbose=True)
+
 	fig = plt.figure(1, figsize=(12, 3), facecolor='w', edgecolor='w')
 	ax1 = fig.add_subplot(111)
 
-	xtime = Profile[sorted(Profile.keys())[0]]['time']
-	ydata = Profile[sorted(Profile.keys())[0]]['latitude']		
-	plt.scatter(x=xtime, y=ydata,s=1,marker='.') 
+	xtime = np.array([Profile_sb[v]['time'] for k,v in enumerate(Profile_sb.keys())])
+	ydata = np.array([Profile_sb[v]['latitude'] for k,v in enumerate(Profile_sb.keys())])
+	plt.scatter(x=xtime, y=ydata,s=1,marker='.',color='#849B00') 
+	xtime_nb = np.array([Profile_nb[v]['time'] for k,v in enumerate(Profile_nb.keys())])
+	ydata_nb = np.array([Profile_nb[v]['latitude'] for k,v in enumerate(Profile_nb.keys())])
+	plt.scatter(x=xtime_nb, y=ydata_nb,s=1,marker='.',color='#B6D800') 
+
+
+	ax1.set_ylim([59,63])
 	if args.extend_plot:
 		ax1.set_xlim([xtime[0],xtime[0]+datetime.timedelta(days=args.extend_plot)])
+	if args.reverse_x:
+		ax1.invert_xaxis()
 
 	ax1.xaxis.set_major_locator(DayLocator(bymonthday=15))
 	ax1.xaxis.set_minor_locator(DayLocator(bymonthday=range(1,32,1)))
@@ -212,3 +227,4 @@ else:
 	plt.savefig(args.filepath + '_' + args.param + args.castdirection + '.png', transparent=False, dpi = (300))
 	plt.close()
 
+EcoFOCI_db.close()
