@@ -92,7 +92,8 @@ parser.add_argument('--castdirection', type=str,
 	help='cast direction (u or d)')
 parser.add_argument('--reverse_x', action="store_true",
 	help='plot axis in reverse')
-
+parser.add_argument('--extend_plot', type=int,
+	help='days to prefil plot with blanks')
 args = parser.parse_args()
 
 
@@ -161,8 +162,11 @@ plt.contourf(ProfileTime,depth_array,temparray.T,
 	extend='both', cmap=cmap, levels=np.arange(args.paramspan[0],args.paramspan[1],0.05), alpha=1.0)
 
 ax1.invert_yaxis()
+if args.extend_plot:
+	ax1.set_xlim([ProfileTime[0],ProfileTime[0]+datetime.timedelta(days=args.extend_plot)])
 if args.reverse_x:
 	ax1.invert_xaxis()
+
 ax1.xaxis.set_major_locator(DayLocator(bymonthday=15))
 ax1.xaxis.set_minor_locator(DayLocator(bymonthday=range(1,32,1)))
 ax1.xaxis.set_major_formatter(ticker.NullFormatter())

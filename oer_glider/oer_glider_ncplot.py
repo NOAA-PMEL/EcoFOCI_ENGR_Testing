@@ -68,8 +68,10 @@ for fid in ncfile_list:
   pressure = ncdata['ctd_pressure']
   SBE_Temperature = ncdata['temperature']
   SBE_Temperature[SBE_Temperature > 20] = np.nan
-  SBE_Salinity = ncdata['salinity_raw']
-  SBE_Salinity[SBE_Salinity < 30] = np.nan
+  SBE_Salinity = ncdata['salinity']
+  SBE_Salinity[SBE_Salinity < 28] = np.nan
+  SBE_Salinity_raw = ncdata['salinity_raw']
+  SBE_Salinity_raw[SBE_Salinity_raw < 28] = np.nan
 
   Wetlabs_CDOM = ncdata['wlbb2fl_sig470nm_adjusted']
   Wetlabs_CHL  = ncdata['wlbb2fl_sig695nm_adjusted']
@@ -83,7 +85,7 @@ for fid in ncfile_list:
   Aand_DO_Sat[Aand_DO_Sat <= 0] = np.nan
   Aand_DO_Sat[Aand_DO_Sat > 200] = np.nan
   Aand_DO_Sat_calc = optode_O2_corr.O2PercentSat(oxygen_conc=Aand_O2_corr, 
-                                       salinity=SBE_Salinity,
+                                       salinity=SBE_Salinity_raw,
                                        temperature=SBE_Temperature,
                                        pressure=pressure)  
 
@@ -100,8 +102,8 @@ for fid in ncfile_list:
       SBE_Temperature = data_obj.sbe_temp(cal_file['SBE_Temp_Coeffs'])
       SBE_Conductivity = data_obj.sbe_cond(cal_file['SBE_Cond_Coeffs'])
 
-      SBE_Salinity = glider.cond2salinity(SBE_Conductivity,SBE_Temperature,pressure)
-      SBE_Salinity[np.where(SBE_Salinity<20)] = np.nan
+      SBE_Salinity_raw = glider.cond2salinity(SBE_Conductivity,SBE_Temperature,pressure)
+      SBE_Salinity_raw[np.where(SBE_Salinity_raw<20)] = np.nan
 
       Wetlabs_CDOM = data_obj.wetlabs_cdom(cal_file['Wetlabs_470nm_Coeffs'],varname='wlbb2fl.sig470nm')
       Wetlabs_CHL  = data_obj.wetlabs_chl(cal_file['Wetlabs_CHL_Coeffs'],varname='wlbb2fl.sig695nm')
@@ -111,14 +113,14 @@ for fid in ncfile_list:
       Aand_O2_corr = optode_O2_corr.O2_dep_comp(oxygen_conc=rawdata['aa4330.O2'],
                                          depth=rawdata['depth']/100)
       Aand_O2_corr = optode_O2_corr.O2_sal_comp(oxygen_conc=Aand_O2_corr,
-                                         salinity=SBE_Salinity,
+                                         salinity=SBE_Salinity_raw,
                                          temperature=SBE_Temperature)
       Aand_DO = optode_O2_corr.O2_molar2umkg(oxygen_conc=Aand_O2_corr,
-                                         salinity=SBE_Salinity,
+                                         salinity=SBE_Salinity_raw,
                                          temperature=SBE_Temperature,
                                          pressure=pressure)              
       Aand_DO_Sat = optode_O2_corr.O2PercentSat(oxygen_conc=Aand_O2_corr, 
-                                         salinity=SBE_Salinity,
+                                         salinity=SBE_Salinity_raw,
                                          temperature=SBE_Temperature,
                                          pressure=pressure)  
 
@@ -160,11 +162,12 @@ for fid in ncfile_list:
   plt.close()
 
   ###salinity
-  (plt, fig) = GliderPlot.plot1plot(epic_key=['S_41','S_41u'],
-                   xdata=[SBE_Salinity[downInd[0]:downInd[1]],SBE_Salinity[upInd[0]:upInd[1]]],
+  (plt, fig) = GliderPlot.plot1plot(epic_key=['S_41','S_41u','S_42','S_42u'],
+                   xdata=[SBE_Salinity_raw[downInd[0]:downInd[1]],SBE_Salinity_raw[upInd[0]:upInd[1]],
+                        SBE_Salinity[downInd[0]:downInd[1]],SBE_Salinity[upInd[0]:upInd[1]]],
                    ydata=[pressure[downInd[0]:downInd[1]],pressure[upInd[0]:upInd[1]]],
                    xlabel='Salinity (PSU)',
-                   updown=['d','u'],
+                   updown=['d','u','d','u'],
                    maxdepth=np.max(pressure))
 
   ptitle = GliderPlot.add_title(cruiseid='',
