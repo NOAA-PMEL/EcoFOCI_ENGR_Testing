@@ -153,7 +153,7 @@ class EcoFOCI_db_oculus(object):
         try:
             self.cursor.execute(sql)
             for row in self.cursor:
-                result_dic[row['depth']] ={keys: row[keys] for val, keys in enumerate(row.keys())} 
+                result_dic[row['divenum']] ={keys: row[keys] for val, keys in enumerate(row.keys())} 
             return (result_dic)
         except:
             print "Error: unable to fetch data"
