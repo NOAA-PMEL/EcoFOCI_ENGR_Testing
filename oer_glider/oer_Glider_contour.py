@@ -105,7 +105,7 @@ endcycle=args.divenum[1]
 
 #get information from local config file - a json formatted file
 config_file = 'EcoFOCI_config/db_config/db_config_oculus.pyini'
-db_table = '2017_fall_sg401_northward'
+db_table = '2017_fall_sg401_southward'
 db_table2 = '2017_fall_sg401_northward'
 
 EcoFOCI_db = EcoFOCI_db_oculus()
