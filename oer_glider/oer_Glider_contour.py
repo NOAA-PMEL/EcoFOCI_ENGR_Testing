@@ -144,7 +144,7 @@ if args.latlon_vs_time:
 	ydata = Profile[sorted(Profile.keys())[0]]['latitude']		
 	plt.scatter(x=xtime, y=ydata,s=1,marker='.') 
 	if args.extend_plot:
-		ax1.set_xlim([ProfileTime[0],ProfileTime[0]+datetime.timedelta(days=args.extend_plot)])
+		ax1.set_xlim([xtime[0],xtime[0]+datetime.timedelta(days=args.extend_plot)])
 
 	ax1.xaxis.set_major_locator(DayLocator(bymonthday=15))
 	ax1.xaxis.set_minor_locator(DayLocator(bymonthday=range(1,32,1)))
