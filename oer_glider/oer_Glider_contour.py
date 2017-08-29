@@ -77,7 +77,7 @@ class MidpointNormalize(colors.Normalize):
 
 """----------------------------- Main -------------------------------------"""
 
-parser = argparse.ArgumentParser(description='ArcticHeat ctd datafile parser ')
+parser = argparse.ArgumentParser(description='Oculus Glider datafile parser ')
 parser.add_argument('filepath', metavar='filepath', type=str,
 			   help='full path to file')
 parser.add_argument('--maxdepth', type=float, 
@@ -94,6 +94,9 @@ parser.add_argument('--reverse_x', action="store_true",
 	help='plot axis in reverse')
 parser.add_argument('--extend_plot', type=int,
 	help='days to prefil plot with blanks')
+parser.add_argument('--latlon_vs_time', action="store_true",
+	help='plot lat/lon as a function of time')
+
 args = parser.parse_args()
 
 
@@ -125,6 +128,8 @@ elif args.param in ['density_insitu','sigma_t','sigma_theta']:
 	cmap = cmocean.cm.dense
 elif args.param in ['up_par','down_par']:
 	cmap = cmocean.cm.solar
+else:
+	cmap = cmocean.cm.gray
 
 fig = plt.figure(1, figsize=(12, 3), facecolor='w', edgecolor='w')
 ax1 = fig.add_subplot(111)		
@@ -178,3 +183,9 @@ plt.tight_layout()
 #plt.savefig(args.filepath + '_' + args.param + args.castdirection + '.svg', transparent=False, dpi = (300))
 plt.savefig(args.filepath + '_' + args.param + args.castdirection + '.png', transparent=False, dpi = (300))
 plt.close()
+
+### plot a single parameter as a function of time gouping by divenum (good for lat/lon)
+if args.latlon_vs_time:
+	Profile = EcoFOCI_db.read_location(table=db_table, 
+									  param=['latitude,longitude'],
+									  verbose=True)	
