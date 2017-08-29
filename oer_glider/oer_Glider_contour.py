@@ -125,6 +125,8 @@ elif args.param in ['do_sat']:
 	cmap = cmocean.cm.delta_r
 elif args.param in ['sig695nm','chl','chla','chlorophyl']:
 	cmap = cmocean.cm.algae
+elif args.param in ['sig700nm','turb','turbidity']:
+	cmap = cmocean.cm.turbid
 elif args.param in ['density_insitu','sigma_t','sigma_theta']:
 	cmap = cmocean.cm.dense
 elif args.param in ['up_par','down_par']:
