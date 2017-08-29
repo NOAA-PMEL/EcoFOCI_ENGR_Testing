@@ -12,8 +12,8 @@ python oer_Glider_contour.py 2017July_BeringSea_Occulus_n --maxdepth=70 --param=
 python oer_Glider_contour.py 2017July_BeringSea_Occulus_n --maxdepth=70 --param=sig695nm --paramspan 0 12 --divenum 0 1218 --castdirection=u
 python oer_Glider_contour.py 2017July_BeringSea_Occulus_n --maxdepth=70 --param=sig695nm --paramspan 0 12 --divenum 0 1218 --castdirection=d
 
-python oer_Glider_contour.py 2017July_BeringSea_Occulus_n --maxdepth=70 --param=sig700nm --paramspan 0 0.05 --divenum 0 1218 --castdirection=u 
-python oer_Glider_contour.py 2017July_BeringSea_Occulus_n --maxdepth=70 --param=sig700nm --paramspan 0 0.05 --divenum 0 1218 --castdirection=d 
+python oer_Glider_contour.py 2017July_BeringSea_Occulus_n --maxdepth=70 --param=sig700nm --paramspan 0 0.01 --divenum 0 1218 --castdirection=u 
+python oer_Glider_contour.py 2017July_BeringSea_Occulus_n --maxdepth=70 --param=sig700nm --paramspan 0 0.01 --divenum 0 1218 --castdirection=d 
 
 python oer_Glider_contour.py 2017July_BeringSea_Occulus_n --maxdepth=70 --param=do_sat --paramspan 60 130 --divenum 0 1218 --castdirection=u
 python oer_Glider_contour.py 2017July_BeringSea_Occulus_n --maxdepth=70 --param=do_sat --paramspan 60 130 --divenum 0 1218 --castdirection=d
