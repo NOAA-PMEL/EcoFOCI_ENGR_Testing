@@ -105,7 +105,7 @@ endcycle=args.divenum[1]
 
 #get information from local config file - a json formatted file
 config_file = 'EcoFOCI_config/db_config/db_config_oculus.pyini'
-db_table = '2017_fall_sg401_southward'
+db_table = '2017_fall_sg401_northward'
 db_table2 = '2017_fall_sg401_northward'
 
 EcoFOCI_db = EcoFOCI_db_oculus()
@@ -208,8 +208,12 @@ else:
 
 	cbar = plt.colorbar()
 	#cbar.set_label('Temperature (C)',rotation=0, labelpad=90)
+	if args.param in ['sig700nm','turb','turbidity']:
+		interval=0.005
+	else:
+		interval=0.5
 	plt.contourf(ProfileTime,depth_array,temparray.T, 
-		extend='both', cmap=cmap, levels=np.arange(args.paramspan[0],args.paramspan[1],0.05), alpha=1.0)
+		extend='both', cmap=cmap, levels=np.arange(args.paramspan[0],args.paramspan[1],interval), alpha=1.0)
 
 	ax1.invert_yaxis()
 	if args.extend_plot:

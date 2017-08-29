@@ -12,8 +12,8 @@ python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=
 python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=sig695nm --paramspan 0 12 --divenum 1218 2000 --castdirection=u --reverse_x --extend_plot 23
 python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=sig695nm --paramspan 0 12 --divenum 1218 2000 --castdirection=d --reverse_x --extend_plot 23
 
-python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=sig700nm --paramspan 0 12 --divenum 1218 2000 --castdirection=u --reverse_x --extend_plot 23
-python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=sig700nm --paramspan 0 12 --divenum 1218 2000 --castdirection=d --reverse_x --extend_plot 23
+python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=sig700nm --paramspan 0 0.05 --divenum 1218 2000 --castdirection=u --reverse_x --extend_plot 23
+python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=sig700nm --paramspan 0 0.05 --divenum 1218 2000 --castdirection=d --reverse_x --extend_plot 23
 
 python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=do_sat --paramspan 60 130 --divenum 1218 2000 --castdirection=u --reverse_x --extend_plot 23
 python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=do_sat --paramspan 60 130 --divenum 1218 2000 --castdirection=d --reverse_x --extend_plot 23
