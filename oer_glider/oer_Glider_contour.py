@@ -158,10 +158,10 @@ if args.latlon_vs_time:
 
 
 	ax1.set_ylim([59,63])
-	if args.extend_plot:
+	"""	if args.extend_plot:
 		ax1.set_xlim([xtime[0],xtime[0]+datetime.timedelta(days=args.extend_plot)])
 	if args.reverse_x:
-		ax1.invert_xaxis()
+		ax1.invert_xaxis()"""
 
 	ax1.xaxis.set_major_locator(DayLocator(bymonthday=15))
 	ax1.xaxis.set_minor_locator(DayLocator(bymonthday=range(1,32,1)))
@@ -211,7 +211,7 @@ else:
 	if args.param in ['sig700nm','turb','turbidity']:
 		interval=0.005
 	else:
-		interval=0.5
+		interval=0.05
 	plt.contourf(ProfileTime,depth_array,temparray.T, 
 		extend='both', cmap=cmap, levels=np.arange(args.paramspan[0],args.paramspan[1],interval), alpha=1.0)
 
