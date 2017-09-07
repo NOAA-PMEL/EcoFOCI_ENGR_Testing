@@ -94,6 +94,10 @@ parser.add_argument('--reverse_x', action="store_true",
 	help='plot axis in reverse')
 parser.add_argument('--extend_plot', type=int,
 	help='days to prefil plot with blanks')
+parser.add_argument('--bydivenum', action="store_true",
+	help='plot x as a function of divenum and time')
+parser.add_argument('--bylat', action="store_true",
+	help='plot x as a function of lat')
 parser.add_argument('--latlon_vs_time', action="store_true",
 	help='plot lat/lon as a function of time')
 
@@ -114,7 +118,7 @@ EcoFOCI_db = EcoFOCI_db_oculus()
 depth_array = np.arange(0,args.maxdepth+1,0.5) 
 num_cycles = EcoFOCI_db.count(table=db_table, start=startcycle, end=endcycle)
 temparray = np.ones((num_cycles,len(depth_array)))*np.nan
-ProfileTime = []
+ProfileTime, ProfileLat = [],[]
 cycle_col=0
 
 if args.param in ['temperature']:
@@ -175,7 +179,7 @@ if args.latlon_vs_time:
 	plt.savefig(args.filepath + '_' + args.param + '.png', transparent=False, dpi = (300))
 	plt.close()
 
-else:
+if args.bydivenum:
 	fig = plt.figure(1, figsize=(12, 3), facecolor='w', edgecolor='w')
 	ax1 = fig.add_subplot(111)		
 	for cycle in range(startcycle,endcycle+1,1):
@@ -231,6 +235,64 @@ else:
 	plt.tight_layout()
 	#plt.savefig(args.filepath + '_' + args.param + args.castdirection + '.svg', transparent=False, dpi = (300))
 	plt.savefig(args.filepath + '_' + args.param + args.castdirection + '.png', transparent=False, dpi = (300))
+	plt.close()
+
+if args.bylat:
+	fig = plt.figure(1, figsize=(12, 3), facecolor='w', edgecolor='w')
+	ax1 = fig.add_subplot(111)		
+	for cycle in range(startcycle,endcycle+1,1):
+		#get db meta information for mooring
+		Profile = EcoFOCI_db.read_ave_lat(table=db_table, 
+										  divenum=cycle, 
+										  castdirection=args.castdirection, 
+										  param=args.param,
+										  verbose=True)
+
+		try:
+			temp_lat =  Profile[sorted(Profile.keys())[0]]['latitude']
+			ProfileLat = ProfileLat + [temp_lat]
+			Pressure = np.array(sorted(Profile.keys()))
+			Temperature = np.array([Profile[x][args.param] for x in sorted(Profile.keys()) ], dtype=np.float)
+
+			temparray[cycle_col,:] = np.interp(depth_array,Pressure,Temperature,left=np.nan,right=np.nan)
+			cycle_col +=1
+
+			xtime = np.ones_like(np.array(sorted(Profile.keys()))) * temp_lat
+			#turn off below and set zorder to 1 for no scatter plot colored by points
+			plt.scatter(x=xtime, y=np.array(sorted(Profile.keys())),s=1,marker='.', edgecolors='none', c='k', zorder=3, alpha=1) 
+			
+			plt.scatter(x=xtime, y=np.array(sorted(Profile.keys())),s=15,marker='.', edgecolors='none', c=Temperature, 
+			vmin=args.paramspan[0], vmax=args.paramspan[1], 
+			cmap=cmap, zorder=1)
+		except IndexError:
+			pass
+
+
+	cbar = plt.colorbar()
+	#cbar.set_label('Temperature (C)',rotation=0, labelpad=90)
+	if args.param in ['sig700nm','turb','turbidity']:
+		interval=0.005
+	else:
+		interval=0.05
+	plt.contourf(ProfileLat,depth_array,temparray.T, 
+		extend='both', cmap=cmap, levels=np.arange(args.paramspan[0],args.paramspan[1],interval), alpha=1.0)
+
+	ax1.invert_yaxis()
+	if args.extend_plot:
+		pass
+	if args.reverse_x:
+		ax1.invert_xaxis()
+
+	#ax1.xaxis.set_major_locator(DayLocator(bymonthday=15))
+	#ax1.xaxis.set_minor_locator(DayLocator(bymonthday=range(1,32,1)))
+	#ax1.xaxis.set_major_formatter(ticker.NullFormatter())
+	#ax1.xaxis.set_minor_formatter(DateFormatter('%d'))
+	#ax1.xaxis.set_major_formatter(DateFormatter('%b %y'))
+	#ax1.xaxis.set_tick_params(which='major', pad=25)
+
+	plt.tight_layout()
+	#plt.savefig(args.filepath + '_' + args.param + args.castdirection + '.svg', transparent=False, dpi = (300))
+	plt.savefig(args.filepath + '_' + args.param + args.castdirection + '_lat.png', transparent=False, dpi = (300))
 	plt.close()
 
 EcoFOCI_db.close()
