@@ -158,6 +158,31 @@ class EcoFOCI_db_oculus(object):
         except:
             print "Error: unable to fetch data"
 
+    def read_ave_lat(self, table=None, divenum=None, castdirection=None, param=None, verbose=False):
+        
+        sql = ("SELECT {parameter},depth,time,latitude from `{table}` WHERE `divenum`= '{divenum}' and `castdirection`='{cast_dir}' ORDER BY `id` DESC ").format(table=table, 
+                                                                                                                                             divenum=divenum,
+                                                                                                                                             parameter=param,
+                                                                                                                                             cast_dir=castdirection)
+               
+        """
+        sql = ("SELECT FORMAT(latitude, 3) AS latitude ,{parameter} from `{table}` WHERE divenum BETWEEN {dive_start} AND {dive_end} GROUP BY 1 ").format(table=table,
+                                                                                              dive_start=dive_range[0],
+                                                                                              dive_end=dive_range[1],
+                                                                                              parameter=",".join("avg({param}) AS {param}".format(param=param)))
+        """
+        if verbose:
+            print sql
+
+        result_dic = {}
+        try:
+            self.cursor.execute(sql)
+            for row in self.cursor:
+                result_dic[row['depth']] ={keys: row[keys] for val, keys in enumerate(row.keys())} 
+            return (result_dic)
+        except:
+            print "Error: unable to fetch data"
+
     def count(self, table=None, start=None, end=None, verbose=False):
         sql = ("SELECT count(*) FROM (SELECT * FROM `{table}` where `divenum` between"
                " {start} and {end} group by `divenum`) as temp").format(table=table, start=start, end=end)
