@@ -98,6 +98,8 @@ parser.add_argument('--bydivenum', action="store_true",
 	help='plot x as a function of divenum and time')
 parser.add_argument('--bylat', action="store_true",
 	help='plot x as a function of lat')
+parser.add_argument('--scatter', action="store_true",
+	help='plot sample scatter points')
 parser.add_argument('--latlon_vs_time', action="store_true",
 	help='plot lat/lon as a function of time')
 
@@ -135,6 +137,8 @@ elif args.param in ['density_insitu','sigma_t','sigma_theta']:
 	cmap = cmocean.cm.dense
 elif args.param in ['up_par','down_par']:
 	cmap = cmocean.cm.solar
+elif args.param in ['dtemp_dpress','ddens_dpress']:
+	cmap = cmocean.cm.delta
 else:
 	cmap = cmocean.cm.gray
 
@@ -201,7 +205,8 @@ if args.bydivenum:
 
 			xtime = np.ones_like(np.array(sorted(Profile.keys()))) * mpl.dates.date2num(temp_time)
 			#turn off below and set zorder to 1 for no scatter plot colored by points
-			plt.scatter(x=xtime, y=np.array(sorted(Profile.keys())),s=1,marker='.', edgecolors='none', c='k', zorder=3, alpha=1) 
+			if args.scatter:
+				plt.scatter(x=xtime, y=np.array(sorted(Profile.keys())),s=1,marker='.', edgecolors='none', c='k', zorder=3, alpha=1) 
 			
 			plt.scatter(x=xtime, y=np.array(sorted(Profile.keys())),s=15,marker='.', edgecolors='none', c=Temperature, 
 			vmin=args.paramspan[0], vmax=args.paramspan[1], 
@@ -212,7 +217,7 @@ if args.bydivenum:
 
 	cbar = plt.colorbar()
 	#cbar.set_label('Temperature (C)',rotation=0, labelpad=90)
-	if args.param in ['sig700nm','turb','turbidity']:
+	if args.param in ['sig700nm','turb','turbidity','dtemp_dpress','ddens_dpress']:
 		interval=0.005
 	else:
 		interval=0.05
