@@ -120,9 +120,9 @@ class EcoFOCI_db_oculus(object):
         self.prepcursor = self.db.cursor(prepared=True)
         return(self.db,self.cursor)
 
-    def read_profile(self, table=None, divenum=None, castdirection=None, param=None, verbose=False):
+    def read_profile(self, table=None, divenum=None, castdirection='None', param=None, result_index='depth', verbose=False):
         
-        sql = ("SELECT {parameter},depth,time from `{table}` WHERE `divenum`= '{divenum}' and `castdirection`='{cast_dir}' ORDER BY `id` DESC ").format(table=table, 
+        sql = ("SELECT id,{parameter},depth,time from `{table}` WHERE `divenum`= '{divenum}' and `castdirection` LIKE '%{cast_dir}%' ORDER BY `id` DESC ").format(table=table, 
                                                                                                                                              divenum=divenum,
                                                                                                                                              parameter=param,
                                                                                                                                              cast_dir=castdirection)
@@ -134,7 +134,7 @@ class EcoFOCI_db_oculus(object):
         try:
             self.cursor.execute(sql)
             for row in self.cursor:
-                result_dic[row['depth']] ={keys: row[keys] for val, keys in enumerate(row.keys())} 
+                result_dic[row[result_index]] ={keys: row[keys] for val, keys in enumerate(row.keys())} 
             return (result_dic)
         except:
             print "Error: unable to fetch data"
@@ -270,6 +270,17 @@ class EcoFOCI_db_oculus(object):
             return (result_dic)
         except:
             print "Error: unable to fetch data"
+
+    def to_sql(self,sql=None):
+        try:
+           # Execute the SQL command
+           self.prepcursor.execute(sql)
+           self.db.commit()
+        except mysql.connector.Error as err:
+           print err
+           # Rollback in case there is any error
+           print "No Bueno"
+           print "Failed update ###" + sql + "###"
 
     def close(self):
         """close database"""

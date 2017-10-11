@@ -1,7 +1,7 @@
 {
     "database": "pmel_oculus", 
-    "host": "localhost", 
+    "host": "pavlof.pmel.noaa.gov", 
     "password": "", 
     "user": "viewer",
-    "port": 8889
+    "port": 3306
 }

@@ -38,3 +38,6 @@ python oer_Glider_contour.py 2017July_BeringSea_Occulus_n --maxdepth=70 --param=
 
 python oer_Glider_contour.py 2017July_BeringSea_Occulus_n --maxdepth=70 --param=ddens_dpress --paramspan -2 2 --divenum 0 1218 --castdirection=u --bydivenum
 python oer_Glider_contour.py 2017July_BeringSea_Occulus_n --maxdepth=70 --param=ddens_dpress --paramspan -2 2 --divenum 0 1218 --castdirection=d --bydivenum
+
+python oer_Glider_contour.py 2017July_BeringSea_Occulus_n --maxdepth=70 --param=dtemp_dpress --paramspan 0 1 --divenum 0 1218 --castdirection=u --bydivenum --boundary
+python oer_Glider_contour.py 2017July_BeringSea_Occulus_n --maxdepth=70 --param=dtemp_dpress --paramspan 0 1 --divenum 0 1218 --castdirection=d --bydivenum --boundary

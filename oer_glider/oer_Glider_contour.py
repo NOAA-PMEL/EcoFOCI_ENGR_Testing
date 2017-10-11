@@ -100,6 +100,8 @@ parser.add_argument('--bylat', action="store_true",
 	help='plot x as a function of lat')
 parser.add_argument('--scatter', action="store_true",
 	help='plot sample scatter points')
+parser.add_argument('--boundary', action="store_true",
+	help='plot boundary depth')
 parser.add_argument('--latlon_vs_time', action="store_true",
 	help='plot lat/lon as a function of time')
 
@@ -118,7 +120,7 @@ EcoFOCI_db = EcoFOCI_db_oculus()
 (db,cursor) = EcoFOCI_db.connect_to_DB(db_config_file=config_file)
 
 depth_array = np.arange(0,args.maxdepth+1,0.5) 
-num_cycles = EcoFOCI_db.count(table=db_table, start=startcycle, end=endcycle)
+num_cycles = EcoFOCI_db.count(table=db_table2, start=startcycle, end=endcycle)
 temparray = np.ones((num_cycles,len(depth_array)))*np.nan
 ProfileTime, ProfileLat = [],[]
 cycle_col=0
@@ -138,7 +140,11 @@ elif args.param in ['density_insitu','sigma_t','sigma_theta']:
 elif args.param in ['up_par','down_par']:
 	cmap = cmocean.cm.solar
 elif args.param in ['dtemp_dpress','ddens_dpress']:
-	cmap = cmocean.cm.delta
+	if args.boundary:
+		cmap = cmocean.cm.gray_r
+	else:
+		cmap = cmocean.cm.delta
+
 else:
 	cmap = cmocean.cm.gray
 
@@ -188,7 +194,7 @@ if args.bydivenum:
 	ax1 = fig.add_subplot(111)		
 	for cycle in range(startcycle,endcycle+1,1):
 		#get db meta information for mooring
-		Profile = EcoFOCI_db.read_profile(table=db_table, 
+		Profile = EcoFOCI_db.read_profile(table=db_table2, 
 										  divenum=cycle, 
 										  castdirection=args.castdirection, 
 										  param=args.param,
@@ -198,7 +204,13 @@ if args.bydivenum:
 			temp_time =  Profile[sorted(Profile.keys())[0]]['time']
 			ProfileTime = ProfileTime + [temp_time]
 			Pressure = np.array(sorted(Profile.keys()))
-			Temperature = np.array([Profile[x][args.param] for x in sorted(Profile.keys()) ], dtype=np.float)
+			if args.boundary:
+				Temperature = np.array([Profile[x][args.param] for x in sorted(Profile.keys()) ], dtype=np.float)
+				dtdz_max = np.where(Temperature == np.min(Temperature))
+				Temperature = np.zeros_like(Temperature)
+				Temperature[dtdz_max] = 1
+			else:
+				Temperature = np.array([Profile[x][args.param] for x in sorted(Profile.keys()) ], dtype=np.float)
 
 			temparray[cycle_col,:] = np.interp(depth_array,Pressure,Temperature,left=np.nan,right=np.nan)
 			cycle_col +=1
@@ -211,7 +223,7 @@ if args.bydivenum:
 			plt.scatter(x=xtime, y=np.array(sorted(Profile.keys())),s=15,marker='.', edgecolors='none', c=Temperature, 
 			vmin=args.paramspan[0], vmax=args.paramspan[1], 
 			cmap=cmap, zorder=1)
-		except IndexError:
+		except:
 			pass
 
 
