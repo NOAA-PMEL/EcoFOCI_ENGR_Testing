@@ -66,36 +66,39 @@ for fid in ncfile_list:
     df.close()
   except IOError:
     continue
-    
-  pressure = ncdata['ctd_pressure']
-  SBE_Temperature = ncdata['temperature']
-  SBE_Temperature[SBE_Temperature > 20] = np.nan
-  SBE_Salinity = ncdata['salinity']
-  SBE_Salinity[SBE_Salinity < 28] = np.nan
-  SBE_Salinity_raw = ncdata['salinity_raw']
-  SBE_Salinity_raw[SBE_Salinity_raw < 28] = np.nan
+  
+  try:  
+    pressure = ncdata['ctd_pressure']
+    SBE_Temperature = ncdata['temperature']
+    SBE_Temperature[SBE_Temperature > 20] = np.nan
+    SBE_Salinity = ncdata['salinity']
+    SBE_Salinity[SBE_Salinity < 28] = np.nan
+    SBE_Salinity_raw = ncdata['salinity_raw']
+    SBE_Salinity_raw[SBE_Salinity_raw < 28] = np.nan
 
-  Wetlabs_CDOM = ncdata['wlbb2fl_sig470nm_adjusted']
-  Wetlabs_CHL  = ncdata['wlbb2fl_sig695nm_adjusted']
-  Wetlabs_NTU  = ncdata['wlbb2fl_sig700nm_adjusted']
+    Wetlabs_CDOM = ncdata['wlbb2fl_sig470nm_adjusted']
+    Wetlabs_CHL  = ncdata['wlbb2fl_sig695nm_adjusted']
+    Wetlabs_NTU  = ncdata['wlbb2fl_sig700nm_adjusted']
 
-  Aand_Temp = ncdata['eng_aa4330_Temp']
-  Aand_Temp[Aand_Temp > 20] = np.nan
-  Aand_O2_corr = ncdata['aanderaa4330_dissolved_oxygen']
-  Aand_O2_corr[Aand_O2_corr >= 1000] = np.nan
-  Aand_DO_Sat  = ncdata['eng_aa4330_AirSat']
-  Aand_DO_Sat[Aand_DO_Sat <= 0] = np.nan
-  Aand_DO_Sat[Aand_DO_Sat > 200] = np.nan
-  Aand_DO_Sat_calc = optode_O2_corr.O2PercentSat(oxygen_conc=Aand_O2_corr, 
-                                       salinity=SBE_Salinity_raw,
-                                       temperature=SBE_Temperature,
-                                       pressure=pressure)  
+    Aand_Temp = ncdata['eng_aa4330_Temp']
+    Aand_Temp[Aand_Temp > 20] = np.nan
+    Aand_O2_corr = ncdata['aanderaa4330_dissolved_oxygen']
+    Aand_O2_corr[Aand_O2_corr >= 1000] = np.nan
+    Aand_DO_Sat  = ncdata['eng_aa4330_AirSat']
+    Aand_DO_Sat[Aand_DO_Sat <= 0] = np.nan
+    Aand_DO_Sat[Aand_DO_Sat > 200] = np.nan
+    Aand_DO_Sat_calc = optode_O2_corr.O2PercentSat(oxygen_conc=Aand_O2_corr, 
+                                         salinity=SBE_Salinity_raw,
+                                         temperature=SBE_Temperature,
+                                         pressure=pressure)  
 
-  PAR_satu = ncdata['eng_satu_PARuV'] * 1000
-  PAR_satd = ncdata['eng_satd_PARuV'] * 1000
+    PAR_satu = ncdata['eng_satu_PARuV'] * 1000
+    PAR_satd = ncdata['eng_satd_PARuV'] * 1000
 
-  lat = ncdata['log_gps_lat'][0]
-  lon = ncdata['log_gps_lon'][0]
+    lat = ncdata['log_gps_lat'][0]
+    lon = ncdata['log_gps_lon'][0]
+  except KeyError:
+    continue
 
   ### look for engineering values if qc'd science values look off
   if args.cal_file:

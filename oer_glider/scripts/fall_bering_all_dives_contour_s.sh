@@ -34,8 +34,8 @@ python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --latlon_vs_time --max
 
 
 ## User built parameters
-python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=dtemp_dpress --paramspan -12 12 --divenum 1218 3500 --castdirection=u --bydivenum
-python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=dtemp_dpress --paramspan -12 12 --divenum 1218 3500 --castdirection=d --bydivenum
+python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=dtemp_dpress --paramspan -12 12 --divenum 1218 3500 --castdirection=u --reverse_x --bydivenum
+python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=dtemp_dpress --paramspan -12 12 --divenum 1218 3500 --castdirection=d --reverse_x --bydivenum
 
-python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=ddens_dpress --paramspan -2 2 --divenum 1218 3500 --castdirection=u --bydivenum
-python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=ddens_dpress --paramspan -2 2 --divenum 1218 3500 --castdirection=d --bydivenum
+python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=ddens_dpress --paramspan -2 2 --divenum 1218 3500 --castdirection=u --reverse_x --bydivenum
+python oer_Glider_contour.py 2017July_BeringSea_Occulus_s --maxdepth=70 --param=ddens_dpress --paramspan -2 2 --divenum 1218 3500 --castdirection=d --reverse_x --bydivenum
