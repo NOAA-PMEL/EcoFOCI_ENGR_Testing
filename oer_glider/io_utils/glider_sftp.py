@@ -41,17 +41,20 @@ state_config = ConfigParserLocal.get_config(state_file,ftype='yaml')
 
 ncfile_list = [state_config['base_id'] + str(item).zfill(4) for item in range(state_config['startnum'],state_config['endnum'],1)]
 
+if sftp_config['RetrieveAll']:
+    with pysftp.Connection(sftp_config['host'], username=sftp_config['user'], password=sftp_config['password']) as sftp:
+        sftp.get_d(sftp_config['ftppath'],sftp_config['localpath']) 
+else:
+    with pysftp.Connection(sftp_config['host'], username=sftp_config['user'], password=sftp_config['password']) as sftp:
+        badfile = 0
+        sftp.chdir(sftp_config['ftppath'])       # chdir to path in config file
+        for ncfile in ncfile_list:
+            if sftp.exists('{0}.nc'.format(ncfile)):
+                print("Grabbing {0}.nc".format(ncfile)) 
+                sftp.get('{0}.nc'.format(ncfile))         # get a remote file
+            else:
+                print("File {0}.nc does not exist".format(ncfile))
+                badfile +=1
 
-with pysftp.Connection(sftp_config['host'], username=sftp_config['user'], password=sftp_config['password']) as sftp:
-    badfile = 0
-    sftp.chdir(sftp_config['path'])       # chdir to path in config file
-    for ncfile in ncfile_list:
-        if sftp.exists('{0}.nc'.format(ncfile)):
-            print("Grabbing {0}.nc".format(ncfile)) 
-            sftp.get('{0}.nc'.format(ncfile))         # get a remote file
-        else:
-            print("File {0}.nc does not exist".format(ncfile))
-            badfile +=1
-
-        if badfile > 5:
-            break
+            if badfile > 5:
+                break
