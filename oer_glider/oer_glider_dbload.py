@@ -145,7 +145,7 @@ for fid in ncfile_list:
   # load database
   config_file = 'EcoFOCI_config/db_config/db_config_oculus_root.pyini'
   EcoFOCI_db = EcoFOCI_db_oculus()
-  (db,cursor) = EcoFOCI_db.connect_to_DB(db_config_file=config_file)
+  (db,cursor) = EcoFOCI_db.connect_to_DB(db_config_file=config_file,ftype='json')
 
   db_table = state_config['db_table']
   result = EcoFOCI_db.divenum_check(table=db_table,divenum=diveNum)
