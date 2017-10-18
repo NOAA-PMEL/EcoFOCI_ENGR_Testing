@@ -52,7 +52,7 @@ args = parser.parse_args()
 #######################
 #
 # Data Ingest and Processing
-state_config = ConfigParserLocal.get_config_yaml(args.ini_file)
+state_config = ConfigParserLocal.get_config(args.ini_file,ftype='yaml')
 ncfile_list = [state_config['base_id'] + str(item).zfill(4) for item in range(state_config['startnum'],state_config['endnum'],1)]
 
 for fid in ncfile_list:

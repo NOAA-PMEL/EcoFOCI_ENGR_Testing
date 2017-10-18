@@ -48,7 +48,7 @@ args = parser.parse_args()
 #######################
 #
 # Data Ingest and Processing
-state_config = ConfigParserLocal.get_config_yaml(args.ini_file)
+state_config = ConfigParserLocal.get_config(args.ini_file,ftype='yaml')
 #get information from local config file - a json formatted file
 config_file = 'EcoFOCI_config/db_config/db_config_oculus.pyini'
 db_table = '2017_fall_sg401_southward'

@@ -49,7 +49,7 @@ args = parser.parse_args()
 #######################
 #
 # Data Ingest and Processing
-state_config = ConfigParserLocal.get_config_yaml(args.ini_file)
+state_config = ConfigParserLocal.get_config(args.ini_file,ftype='yaml')
 ncfile_list = [state_config['base_id'] + str(item).zfill(4) for item in range(state_config['startnum'],state_config['endnum'],1)]
 
 for fid in ncfile_list:
@@ -102,7 +102,7 @@ for fid in ncfile_list:
 
   ### look for engineering values if qc'd science values look off
   if args.cal_file:
-      cal_file = ConfigParserLocal.get_config_yaml(args.cal_file)
+      cal_file = ConfigParserLocal.get_config(args.cal_file,ftype='yaml'))
       #eng_sbect_tempFreq
       SBE_Temperature = data_obj.sbe_temp(cal_file['SBE_Temp_Coeffs'])
       SBE_Conductivity = data_obj.sbe_cond(cal_file['SBE_Cond_Coeffs'])

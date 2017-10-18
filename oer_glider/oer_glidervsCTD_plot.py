@@ -16,7 +16,6 @@
 """
 import argparse, os
 
-from io_utils import ConfigParserLocal
 import numpy as np
 
 import calc.aanderaa_corrO2_sal as optode_O2_corr

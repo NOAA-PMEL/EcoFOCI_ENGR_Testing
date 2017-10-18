@@ -54,7 +54,7 @@ data_time = data_obj.elapsedtime2date()
 
 pressure = data_obj.depth2press()
 
-cal_file = ConfigParserLocal.get_config_yaml(args.cal_file)
+cal_file = ConfigParserLocal.get_config(args.cal_file,ftype='yaml')
 
 SBE_Temperature = data_obj.sbe_temp(cal_file['SBE_Temp_Coeffs'])
 

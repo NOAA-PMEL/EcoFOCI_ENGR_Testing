@@ -49,7 +49,7 @@ data_time = data_obj.elapsedtime2date()
 
 pressure = data_obj.depth2press()
 
-cal_file = ConfigParserLocal.get_config_yaml(args.cal_file)
+cal_file = ConfigParserLocal.get_config(args.cal_file,ftype='yaml')
 
 SBE_Temperature = data_obj.sbe_temp(cal_file['SBE_Temp_Coeffs'])
 
@@ -98,7 +98,7 @@ xaData = xa.Dataset({'pressure': (['time'], pressure),
 # Data Archive
 ### Update NetCDF attributes (global/variable)
 ncatts_file_path = '/Volumes/WDC_internal/Users/bell/Programs/Python/EcoFOCI_AcrobatProcessing/inst_config/spring_test_oculus_nc_atts.yaml'
-netcdf_attrs = ConfigParserLocal.get_config_yaml(ncatts_file_path)
+netcdf_attrs = ConfigParserLocal.get_config(ncatts_file_path,ftype='yaml')
 
 for variable_name in xaData.keys():
     try:

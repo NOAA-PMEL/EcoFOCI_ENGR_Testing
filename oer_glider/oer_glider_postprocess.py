@@ -38,7 +38,7 @@ args = parser.parse_args()
 #######################
 #
 # Data Ingest and Processing
-state_config = ConfigParserLocal.get_config_yaml(args.ini_file)
+state_config = ConfigParserLocal.get_config(args.ini_file,ftype='yaml')
 
 ###
 #
@@ -76,7 +76,7 @@ if args.dtdz_max:
 				castdirection = '{castdirection}' ORDER BY dtemp_dpress ASC LIMIT 1""".format(table=state_config['db_table'],divenum=divenum,castdirection=castdirection),db)
 			
 			print_boundary = True
-			update_db = False
+			update_db = True
 			if not upper_boundary.empty and print_boundary:
 				print upper_boundary
 
