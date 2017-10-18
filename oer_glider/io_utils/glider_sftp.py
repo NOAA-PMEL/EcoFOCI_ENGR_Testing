@@ -35,7 +35,7 @@ __keywords__ = 'sftp','get data'
 
 
 sftp_config_file = '../EcoFOCI_config/sftp_config/apl_sftp_oculus.pyini'
-sftp_config = ConfigParserLocal.get_config(sftp_config_file,ftype='json')
+sftp_config = ConfigParserLocal.get_config(sftp_config_file,ftype='yaml')
 state_file = '../EcoFOCI_config/2017_sg401_south.yaml'
 state_config = ConfigParserLocal.get_config(state_file,ftype='yaml')
 
