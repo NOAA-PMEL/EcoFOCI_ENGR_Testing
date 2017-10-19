@@ -120,7 +120,7 @@ EcoFOCI_db = EcoFOCI_db_oculus()
 (db,cursor) = EcoFOCI_db.connect_to_DB(db_config_file=config_file)
 
 depth_array = np.arange(0,args.maxdepth+1,0.5) 
-num_cycles = EcoFOCI_db.count(table=db_table1, start=startcycle, end=endcycle)
+num_cycles = EcoFOCI_db.count(table=db_table, start=startcycle, end=endcycle)
 temparray = np.ones((num_cycles,len(depth_array)))*np.nan
 ProfileTime, ProfileLat = [],[]
 cycle_col=0
