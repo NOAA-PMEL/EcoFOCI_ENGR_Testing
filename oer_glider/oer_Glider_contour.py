@@ -194,7 +194,7 @@ if args.bydivenum:
 	ax1 = fig.add_subplot(111)		
 	for cycle in range(startcycle,endcycle+1,1):
 		#get db meta information for mooring
-		Profile = EcoFOCI_db.read_profile(table=db_table2, 
+		Profile = EcoFOCI_db.read_profile(table=db_table, 
 										  divenum=cycle, 
 										  castdirection=args.castdirection, 
 										  param=args.param,
