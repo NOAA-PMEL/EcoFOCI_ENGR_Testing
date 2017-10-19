@@ -102,7 +102,7 @@ for fid in ncfile_list:
 
   ### look for engineering values if qc'd science values look off
   if args.cal_file:
-      cal_file = ConfigParserLocal.get_config(args.cal_file,ftype='yaml'))
+      cal_file = ConfigParserLocal.get_config(args.cal_file,ftype='yaml')
       #eng_sbect_tempFreq
       SBE_Temperature = data_obj.sbe_temp(cal_file['SBE_Temp_Coeffs'])
       SBE_Conductivity = data_obj.sbe_cond(cal_file['SBE_Cond_Coeffs'])
