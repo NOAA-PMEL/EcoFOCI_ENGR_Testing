@@ -35,10 +35,13 @@ mpl.rcParams['lines.linewidth'] = 0.5
 mpl.rcParams['lines.markersize'] = 2
 
 ### Load Data
-path='/Volumes/WDC_internal/Users/bell/ecoraid/2017/Profilers/OculusGliders/bering_sea_fall17/sg401/'
+path='/Users/bell/ecoraid/2017/Profilers/OculusGliders/bering_sea_fall17/erddap/sg401/'
 #'0085','0230','0400','0490','0500','0510','1000','1100','1500'
 dives=['0085','0230','0400','0490','0500','0510','1000','1100','1500']
-for divenum in dives:
+
+keep_plots = True
+
+for divenum in dives[:]:
     fn = 'p401'+divenum+'.nc'
     print fn
     
@@ -51,8 +54,8 @@ for divenum in dives:
         # lower bound to downcast
         # bottom of profile
         # upper bound of upcast
-        dtdz_down_thresh = -1.0
-        dtdz_up_thresh = -1.0
+        dtdz_down_thresh = -1
+        dtdz_up_thresh = -1
         dtdz = np.gradient(xdf.temperature,xdf.depth)
         
         upper_depth = xdf.depth[dtdz<dtdz_down_thresh][0]
@@ -68,62 +71,87 @@ for divenum in dives:
         downcast_trans = np.hstack((downcast_trans,[downcast_trans.max()+1]))
         
         ### Basic Plot with identified points
-        fig = plt.figure(3, figsize=(4.5,9), facecolor='w', edgecolor='w')
-        ax1 = fig.add_subplot(121)
-        plt.plot(xdf.temperature,xdf.depth,'r.-')
-        plt.plot([xdf.temperature[upper_depth_index],xdf.temperature[bottom_depth_index],xdf.temperature[lower_depth_index]]
+        if keep_plots:
+            fig = plt.figure(3, figsize=(4.5,9), facecolor='w', edgecolor='w')
+            ax1 = fig.add_subplot(121)
+            plt.plot(xdf.temperature,xdf.depth,'r.-')
+            plt.plot([xdf.temperature[upper_depth_index],xdf.temperature[bottom_depth_index],xdf.temperature[lower_depth_index]]
+                ,[xdf.depth[upper_depth_index],xdf.depth[bottom_depth_index],xdf.depth[lower_depth_index]],'k+')
+            ax1.set_ylim([0,np.nanmax(xdf.depth)])
+            ax1.invert_yaxis()
+            ax1 = fig.add_subplot(122)
+            plt.plot(xdf.salinity,xdf.depth,'b.-')
+            plt.plot([xdf.salinity[upper_depth_index],xdf.salinity[bottom_depth_index],xdf.salinity[lower_depth_index]]
             ,[xdf.depth[upper_depth_index],xdf.depth[bottom_depth_index],xdf.depth[lower_depth_index]],'k+')
-        ax1.invert_yaxis()
-        ax1 = fig.add_subplot(122)
-        plt.plot(xdf.salinity,xdf.depth,'b.-')
-        plt.plot([xdf.salinity[upper_depth_index],xdf.salinity[bottom_depth_index],xdf.salinity[lower_depth_index]]
-        ,[xdf.depth[upper_depth_index],xdf.depth[bottom_depth_index],xdf.depth[lower_depth_index]],'k+')
-        ax1.invert_yaxis()
-        t = fig.suptitle('pre correction profile ' + divenum)
-        plt.savefig('images/pre_profile_corr_'+divenum+'.png', bbox_inches='tight', dpi = (300))
-        plt.close()
+            ax1.set_ylim([0,np.nanmax(xdf.depth)])
+            ax1.invert_yaxis()
+            t = fig.suptitle('pre correction profile ' + divenum)
+            plt.savefig('images/pre_profile_corr_'+divenum+'.png', bbox_inches='tight', dpi = (300))
+            plt.close()
         
         """-----------------------------------------------------------------"""
         ### Fill Profile
         # Scale both temperature and salinty to 0->1
         
-        def norm(x):
+        def scale(x):
            return (x-min(x)) / (max(x) - min(x))
         
-        def re_norm(x,y):
+        def rescale(x,y):
             return (1-x)*(y[1] - y[0]) + y[0]
         
-        tprime = norm(xdf.temperature[downcast_trans])
-        sprime = re_norm(tprime,[xdf.salinity[upper_depth_index][0],xdf.salinity[lower_depth_index][0]])
+        tprime = scale(xdf.temperature[downcast_trans]) # scale
+        sprime = rescale(tprime,[xdf.salinity[upper_depth_index][0],xdf.salinity[lower_depth_index][0]])
         """-----------------------------------------------------------------"""
         
         ### Merged Profile w/filling
-        fig = plt.figure(5, figsize=(4.5,11), facecolor='w', edgecolor='w')
-        ax1 = fig.add_subplot(121)
-        plt.plot(xdf.temperature[0:upper_depth_index[0]+1],xdf.depth[0:upper_depth_index[0]+1],'r.-')
-        plt.plot(xdf.temperature[bottom_depth_index[0]:lower_depth_index[0]+1],xdf.depth[bottom_depth_index[0]:lower_depth_index[0]+1],'m.-')
-        plt.plot(xdf.temperature[downcast_trans],xdf.depth[downcast_trans],'k.--')
-        ax1.invert_yaxis()
-        ax1 = fig.add_subplot(122)
-        plt.plot(xdf.salinity[0:upper_depth_index[0]+1],xdf.depth[0:upper_depth_index[0]+1],'b.-')
-        plt.plot(xdf.salinity[bottom_depth_index[0]:lower_depth_index[0]+1],xdf.depth[bottom_depth_index[0]:lower_depth_index[0]+1],'c.-')
-        plt.plot(sprime,xdf.depth[downcast_trans],'k.--')
-        ax1.set_xlim([np.nanmin(xdf.salinity),np.nanmax(xdf.salinity)])
-        ax1.invert_yaxis()
+        if keep_plots:
+            fig = plt.figure(5, figsize=(4.5,11), facecolor='w', edgecolor='w')
+            ax1 = fig.add_subplot(121)
+            plt.plot(xdf.temperature[0:upper_depth_index[0]+1],xdf.depth[0:upper_depth_index[0]+1],'r.-')
+            plt.plot(xdf.temperature[bottom_depth_index[0]:lower_depth_index[0]+1],xdf.depth[bottom_depth_index[0]:lower_depth_index[0]+1],'m.-')
+            plt.plot(xdf.temperature[downcast_trans],xdf.depth[downcast_trans],'k.--')
+            ax1.set_ylim([0,np.nanmax(xdf.depth)])
+            ax1.invert_yaxis()
+            ax1 = fig.add_subplot(122)
+            plt.plot(xdf.salinity[0:upper_depth_index[0]+1],xdf.depth[0:upper_depth_index[0]+1],'b.-')
+            plt.plot(xdf.salinity[bottom_depth_index[0]:lower_depth_index[0]+1],xdf.depth[bottom_depth_index[0]:lower_depth_index[0]+1],'c.-')
+            plt.plot(sprime,xdf.depth[downcast_trans],'k.--')
+            ax1.set_xlim([np.nanmin(xdf.salinity),np.nanmax(xdf.salinity)])
+            ax1.set_ylim([0,np.nanmax(xdf.depth)])
+            ax1.invert_yaxis()
+            
+            t = fig.suptitle('post correction profile ' + divenum)
+            plt.savefig('images/post_profile_corr_'+divenum+'.png', bbox_inches='tight', dpi = (300))
+            plt.close()
         
-        t = fig.suptitle('post correction profile ' + divenum)
-        plt.savefig('images/post_profile_corr_'+divenum+'.png', bbox_inches='tight', dpi = (300))
-        plt.close()
+        sal_cor = np.hstack((xdf.salinity[0:upper_depth_index[0]+1],sprime,xdf.salinity[bottom_depth_index[0]:lower_depth_index[0]+1]))
+        sal_cor.shape=(1,1,len(sal_cor),1)
+        temp_cor = np.hstack((xdf.temperature[0:upper_depth_index[0]+1],xdf.temperature[downcast_trans],xdf.temperature[bottom_depth_index[0]:lower_depth_index[0]+1]))
+        temp_cor.shape=(1,1,len(temp_cor),1)
+        press_cor = np.hstack((xdf.depth[0:upper_depth_index[0]+1],xdf.depth[downcast_trans],xdf.depth[bottom_depth_index[0]:lower_depth_index[0]+1]))
+        
+        xdfa = xa.Dataset({'salinity': (['lat','lon','dep','t'], sal_cor),
+                           'temperature':(['lat','lon','dep','t'], temp_cor),
+                           'pressure':(['depth'], press_cor)},coords={'latitude':xdf.latitude[0],'longitude':xdf.longitude[0],'depth':press_cor,'time':xdf.time[0]})
+        xdfa.to_netcdf('data/'+fn)
+        print fn + " successfully adjusted"
     except:
         ### Basic Plot
-        fig = plt.figure(1)
-        ax1 = fig.add_subplot(121)
-        plt.plot(xdf.temperature,xdf.depth,'r.-')
-        ax1.invert_yaxis()
-        ax1 = fig.add_subplot(122)
-        plt.plot(xdf.salinity,xdf.depth,'b.-')
-        ax1.set_xlim([np.nanmin(xdf.salinity),np.nanmax(xdf.salinity)])
-        ax1.invert_yaxis()
-        t = fig.suptitle('basic profile ' + divenum)
-        plt.savefig('images/basic_profile_'+divenum+'.png', bbox_inches='tight', dpi = (300))
-        plt.close()        
+        if keep_plots:
+            fig = plt.figure(1, figsize=(4.5,11), facecolor='w', edgecolor='w')
+            ax1 = fig.add_subplot(121)
+            plt.plot(xdf.temperature,xdf.depth,'r.-')
+            ax1.set_ylim([0,np.nanmax(xdf.depth)])
+            ax1.invert_yaxis()
+            ax1 = fig.add_subplot(122)
+            plt.plot(xdf.salinity,xdf.depth,'b.-')
+            ax1.set_xlim([np.nanmin(xdf.salinity),np.nanmax(xdf.salinity)])
+            ax1.set_ylim([0,np.nanmax(xdf.depth)])
+            ax1.invert_yaxis()
+            t = fig.suptitle('basic profile ' + divenum)
+            plt.savefig('images/basic_profile_'+divenum+'.png', bbox_inches='tight', dpi = (300))
+            plt.close()  
+
+        print fn + " not adjusted"
+    
+    xdf.close()
