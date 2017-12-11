@@ -122,7 +122,13 @@ class EcoFOCI_db_oculus(object):
 
     def read_profile(self, table=None, divenum=None, castdirection='None', param=None, result_index='depth', verbose=False):
         
-        sql = ("SELECT id,{parameter},depth,time from `{table}` WHERE `divenum`= '{divenum}' and `castdirection` LIKE '%{cast_dir}%' ORDER BY `id` DESC ").format(table=table, 
+        if castdirection in ['all']:
+          sql = ("SELECT id,{parameter},depth,time from `{table}` WHERE `divenum`= '{divenum}'  ORDER BY `id` DESC ").format(table=table, 
+                                                                                                                             divenum=divenum,
+                                                                                                                             parameter=param,
+                                                                                                                             cast_dir=castdirection)
+        else:
+          sql = ("SELECT id,{parameter},depth,time from `{table}` WHERE `divenum`= '{divenum}' and `castdirection` LIKE '%{cast_dir}%' ORDER BY `id` DESC ").format(table=table, 
                                                                                                                                              divenum=divenum,
                                                                                                                                              parameter=param,
                                                                                                                                              cast_dir=castdirection)
@@ -138,6 +144,8 @@ class EcoFOCI_db_oculus(object):
             return (result_dic)
         except:
             print "Error: unable to fetch data"
+
+
 
     def read_location(self, table=None, param=None, dive_range=None, verbose=False):
         

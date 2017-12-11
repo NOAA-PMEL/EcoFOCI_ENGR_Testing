@@ -43,8 +43,6 @@ def nan2none(var):
 parser = argparse.ArgumentParser(description='Load Glider NetCDF data into MySQL database')
 parser.add_argument('-ini','--ini_file', type=str,
                help='complete path to yaml instrument ini (state) file')
-parser.add_argument('-cf','--cal_file', type=str,
-               help='complete path to yaml instrument calibration file')
 args = parser.parse_args()
 
 

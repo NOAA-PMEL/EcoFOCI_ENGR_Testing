@@ -1,0 +1,8 @@
+---
+path: '/Volumes/WDC_internal/Users/bell/ecoraid/2017/Profilers/OculusGliders/bering_sea_fall17/science_subset/'
+#path: '/home/ecoraid/data/2017/Profilers/OculusGliders/bering_sea_fall17/sg401/'
+db_table: '2017_fall_sg401_sciencesubset'
+base_id: p401
+startnum: 1
+endnum: 4000
+northernmost_profile: 1218

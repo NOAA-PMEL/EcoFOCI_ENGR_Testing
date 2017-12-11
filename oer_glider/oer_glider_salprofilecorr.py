@@ -5,9 +5,10 @@ Created on Fri Dec  8 07:30:11 2017
 
 @author: bell
 """
-
+import os
 import xarray as xa
 import numpy as np
+import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
@@ -35,18 +36,24 @@ mpl.rcParams['lines.linewidth'] = 0.5
 mpl.rcParams['lines.markersize'] = 2
 
 ### Load Data
-path='/Users/bell/ecoraid/2017/Profilers/OculusGliders/bering_sea_fall17/erddap/sg401/'
+path='/Volumes/WDC_internal/Users/bell/ecoraid/2017/Profilers/OculusGliders/bering_sea_fall17/erddap/sg401/'
 #'0085','0230','0400','0490','0500','0510','1000','1100','1500'
 dives=['0085','0230','0400','0490','0500','0510','1000','1100','1500']
+dives = [f for f in os.listdir(path) if f.endswith('.nc')]
 
-keep_plots = True
+keep_plots = False
 
-for divenum in dives[:]:
-    fn = 'p401'+divenum+'.nc'
+for divenum in dives:
+    #fn = 'p401'+divenum+'.nc'
+    fn = divenum
     print fn
     
-    xdf = xa.open_dataset(path+fn,decode_cf=False)
-    xdf.set_coords(['time','depth','latitude','longitude'],inplace=True)
+    try:
+        xdf = xa.open_dataset(path+fn,decode_cf=False)
+        xdf.set_coords(['time','depth','latitude','longitude'],inplace=True)
+    except:
+        print fn + " unloadable - missing key variable"
+        continue
     
     try:
         #%%
@@ -125,14 +132,16 @@ for divenum in dives[:]:
             plt.close()
         
         sal_cor = np.hstack((xdf.salinity[0:upper_depth_index[0]+1],sprime,xdf.salinity[bottom_depth_index[0]:lower_depth_index[0]+1]))
-        sal_cor.shape=(1,1,len(sal_cor),1)
+        #sal_cor.shape=(1,1,len(sal_cor),1)
         temp_cor = np.hstack((xdf.temperature[0:upper_depth_index[0]+1],xdf.temperature[downcast_trans],xdf.temperature[bottom_depth_index[0]:lower_depth_index[0]+1]))
-        temp_cor.shape=(1,1,len(temp_cor),1)
+        #temp_cor.shape=(1,1,len(temp_cor),1)
         press_cor = np.hstack((xdf.depth[0:upper_depth_index[0]+1],xdf.depth[downcast_trans],xdf.depth[bottom_depth_index[0]:lower_depth_index[0]+1]))
+        pdfa = pd.DataFrame(np.stack((sal_cor,temp_cor,press_cor)).T, columns=['Salinity','Temperature','Pressure'])        
+        pdfa.set_index('Pressure', inplace=True)
+        pdfa.sort_index(inplace=True)
         
-        xdfa = xa.Dataset({'salinity': (['lat','lon','dep','t'], sal_cor),
-                           'temperature':(['lat','lon','dep','t'], temp_cor),
-                           'pressure':(['depth'], press_cor)},coords={'latitude':xdf.latitude[0],'longitude':xdf.longitude[0],'depth':press_cor,'time':xdf.time[0]})
+        xdfa = xa.Dataset(pdfa,coords={'latitude':xdf.latitude[0],'longitude':xdf.longitude[0],'time':xdf.time[0]})
+        
         xdfa.to_netcdf('data/'+fn)
         print fn + " successfully adjusted"
     except:
