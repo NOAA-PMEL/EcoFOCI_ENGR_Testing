@@ -89,7 +89,7 @@ parser.add_argument('--divenum','--divenum', type=int, nargs=2,
 parser.add_argument('--param', type=str,
 	help='plot parameter (temperature, salinity, do_sat, sig695nm')
 parser.add_argument('--castdirection', type=str,
-	help='cast direction (u or d)')
+	help='cast direction (u or d or all)')
 parser.add_argument('--reverse_x', action="store_true",
 	help='plot axis in reverse')
 parser.add_argument('--extend_plot', type=int,
@@ -112,8 +112,8 @@ startcycle=args.divenum[0]
 endcycle=args.divenum[1]
 
 #get information from local config file - a json formatted file
-config_file = 'EcoFOCI_config/db_config/db_config_oculus.pyini'
-db_table = '2017_fall_sg401_southward'
+config_file = 'EcoFOCI_config/db_config/db_config_oculus_local.pyini'
+db_table = '2017_fall_sg401_sciencesubset'
 db_table2 = '2017_fall_sg401_northward'
 
 EcoFOCI_db = EcoFOCI_db_oculus()
