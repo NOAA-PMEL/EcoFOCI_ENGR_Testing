@@ -36,16 +36,16 @@ mpl.rcParams['lines.linewidth'] = 0.5
 mpl.rcParams['lines.markersize'] = 2
 
 ### Load Data
-path='/Volumes/WDC_internal/Users/bell/ecoraid/2017/Profilers/OculusGliders/bering_sea_fall17/erddap/sg401/'
+path='/Users/bell/ecoraid/2017/Profilers/OculusGliders/bering_sea_fall17/erddap/sg401/'
 #'0085','0230','0400','0490','0500','0510','1000','1100','1500'
 dives=['0085','0230','0400','0490','0500','0510','1000','1100','1500']
-dives = [f for f in os.listdir(path) if f.endswith('.nc')]
+#dives = [f for f in os.listdir(path) if f.endswith('.nc')]
 
-keep_plots = False
+keep_plots = True
 
 for divenum in dives:
-    #fn = 'p401'+divenum+'.nc'
-    fn = divenum
+    fn = 'p401'+divenum+'.nc'
+    #fn = divenum
     print fn
     
     try:
