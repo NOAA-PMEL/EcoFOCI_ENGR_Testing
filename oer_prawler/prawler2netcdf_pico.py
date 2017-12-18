@@ -1,6 +1,9 @@
 """
  prawler2netcdf_pico.py
  
+ Description:
+    Using text output from Ketch data server (which converts the rudix data), create
+        an archival format for ERDDAP and other dissemination.
   
  2016 ITAE Mooring Realtime Data parsing and archiveing (from pico).
 
@@ -10,20 +13,13 @@
 
 # Standard library.
 import datetime
-from io import BytesIO
-import json
-try:
-    from urllib.request import urlopen
-except ImportError:
-    from urllib2 import urlopen
-    
+
 # System Stack
 import argparse
 
 # Scientific stack.
 import numpy as np
 import seawater as sw
-from scipy import interpolate
 from netCDF4 import date2num, num2date
 
 # User Stack
@@ -46,10 +42,14 @@ parser.add_argument('DataPath', metavar='DataPath', type=str,
                help='full path to file')
 parser.add_argument('ConfigFile', metavar='ConfigFile', type=str,
                help='full path to nc config file')
+parser.add_argument('OutPreFix', metavar='OutPreFix', type=str,
+               help='prefix for output file')
 parser.add_argument('-is1D','--is1D', action="store_true",
                help='1D ragged arrays')
 parser.add_argument('-is2D','--is2D', action="store_true",
                help='1D ragged arrays')
+parser.add_argument('-perdive','--perdive', action="store_true",
+               help='file per downcast')
 args = parser.parse_args()
 
 ### RUDICSead data as copied from the rudix server.
@@ -126,10 +126,16 @@ with open(args.DataPath) as f:
             recnum += 1
 
 # remove first entry for files from html/wget routines with 
-data_dic.pop(1)
-data_dic.pop(2)
-
-EPIC_VARS_dict = ConfigParserLocal.get_config(args.ConfigFile)
+try:
+    data_dic.pop(1)
+except:
+    pass
+try:
+    data_dic.pop(2)
+except:
+    pass
+    
+EPIC_VARS_dict = ConfigParserLocal.get_config(args.ConfigFile,'yaml')
 
 if args.is1D:
     #TODO: Need to make a profile_samplenum id for sequential ordering
@@ -153,7 +159,7 @@ if args.is2D:
     for key in data_dic.keys():
         obs = obs + [len(data_dic[key][0]['sample'])]
     #create new netcdf file
-    ncinstance = EcF_write.NetCDF_Create_Profile_Ragged2D(savefile='prawler_2D' + '.nc')
+    ncinstance = EcF_write.NetCDF_Create_Profile_Ragged2D(savefile='data/' + args.OutPreFix + '.nc')
     ncinstance.file_create()
     ncinstance.sbeglobal_atts(raw_data_file=args.DataPath.split('/')[-1], 
         History='File Created.  Aanderaa Optode Dissolved O2 compensated for Salinity/Depth')
@@ -167,3 +173,25 @@ if args.is2D:
                             data_dic=data_dic[profile_num][0],
                             missing_values=np.nan)
     ncinstance.close()
+
+if args.perdive:
+    #find max obs in a profile to set for all samples
+    for key in data_dic.keys():
+        try:
+            obs = len(data_dic[key][0]['sample'])
+            #create new netcdf file
+            ncinstance = EcF_write.NetCDF_Create_Profile_Ragged1D(savefile='data/' +args.OutPreFix  + str(key).zfill(4) + '.nc')
+            ncinstance.file_create()
+            ncinstance.sbeglobal_atts(raw_data_file=args.DataPath.split('/')[-1], 
+                History='File Created.  Aanderaa Optode Dissolved O2 compensated for Salinity/Depth')
+            ncinstance.dimension_init(recnum_len=obs)
+            ncinstance.variable_init(EPIC_VARS_dict)
+            ncinstance.add_coord_data(range(1,np.max(obs)+1))
+            print "Adding Profile {profile_num}".format(profile_num=key)
+            ncinstance.add_data(EPIC_VARS_dict,
+                                data_dic=data_dic[key][0],
+                                missing_values=np.nan)
+
+            ncinstance.close()
+        except KeyError:
+            pass

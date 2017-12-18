@@ -1172,7 +1172,7 @@ class NetCDF_Create_Profile_Ragged1D(object):
         self.rootgrpID.createDimension( self.dim_vars[0], recnum_len ) #recnumber
         
         
-    def variable_init(self, EPIC_VARS_dict):
+    def variable_init(self, EPIC_VARS_dict, verbose=False):
         """
         EPIC keys:
             passed in as a dictionary (similar syntax as json data file)
@@ -1188,6 +1188,8 @@ class NetCDF_Create_Profile_Ragged1D(object):
 
         #cycle through epic dictionary and create nc parameters
         for evar in EPIC_VARS_dict.keys():
+            if verbose:
+                print("Creating Variable {0}".format(EPIC_VARS_dict[evar]['name']))
             rec_vars.append(evar)
             rec_var_name.append( EPIC_VARS_dict[evar]['name'] )
             rec_var_longname.append( EPIC_VARS_dict[evar]['longname'] )
