@@ -500,7 +500,7 @@ if args.image:
     for tl in ax2.get_yticklabels():
         tl.set_color('r')
     ax = plt.subplot2grid((9,100), (1, 0), colspan=100)
-    cs = plt.imshow(np.transpose(mesh_grid_t), extent=extent, cmap=cmocean.cm.thermal, vmin=0.0, vmax=10.0, aspect='auto', alpha=0.85)
+    cs = plt.imshow(np.transpose(mesh_grid_t), extent=extent, cmap=cmocean.cm.thermal, vmin=-2.0, vmax=10.0, aspect='auto', alpha=0.85)
     cs.cmap.set_under('w')
     ax.xaxis.set_major_locator(DayLocator(bymonthday=15))
     ax.xaxis.set_minor_locator(DayLocator(bymonthday=[5,10,15,20,25,30]))
