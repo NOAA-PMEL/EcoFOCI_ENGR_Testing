@@ -1,7 +1,0 @@
-{
-    "database": "pmel_oculus", 
-    "host": "pavlof.pmel.noaa.gov", 
-    "password": "", 
-    "user": "viewer",
-    "port": 3306
-}
