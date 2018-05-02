@@ -2,8 +2,10 @@
 prawler_wget.py
 
 Purpose:
-	Connect to ketch.pmel.noaa.gov (engineering run system) to retrieve prawler data from 2016 ITAE Bering Sea Mooring
+	Connect to yawl.pmel.noaa.gov (engineering run system) to retrieve prawler data from 2016 ITAE Bering Sea Mooring
 
+ 2018-05-02: S.Bell - with ketch being replaced by yawl (servers http for https)
+ 	make server name an argument
  2017-04-26: Make routines more generic by adding a few more arguments
 """
 #System Stack
@@ -18,18 +20,20 @@ __created__  = datetime.datetime(2016, 6, 01)
 __modified__ = datetime.datetime(2016, 6, 01)
 __version__  = "0.1.0"
 __status__   = "Development"
-__keywords__ = 'CTD', 'SeaWater', 'Cruise', 'derivations','ketch','prawler'
+__keywords__ = 'CTD', 'SeaWater', 'Cruise', 'derivations','yawl','prawler'
 
 """--------------------------------helper Routines---------------------------------------"""
 
 
 """--------------------------------main Routines---------------------------------------"""
 
-parser = argparse.ArgumentParser(description='Ketch Data Retrieval')
+parser = argparse.ArgumentParser(description='yawl Data Retrieval')
 parser.add_argument('Project', metavar='Project', type=str,
                help='project name e.g. 2016_ITAE')
 parser.add_argument('PlatformID', metavar='PlatformID', type=str,
-               help='Ketch platform ID e.g. PITW')
+               help='yawl platform ID e.g. PITW')
+parser.add_argument('ServerName', metavar='ServerName', type=str,
+               help='server name, eg. http://yawl.pmel.noaa.gov')
 parser.add_argument("-a",'--all', action="store_true", help='grabs all 2016 prawler data and places it in to one file')
 parser.add_argument("-as",'--all_since', type=str, help='grabs all 2016 prawler data since specified (yyyy-mm-dd) and places it in to one file')
 parser.add_argument("-ad",'--all_daily', action="store_true", help='grabs all 2016 prawler data and places it in to daily files')
@@ -45,20 +49,20 @@ args = parser.parse_args()
 # retrieve all data - one file
 if args.all:
 	filename = args.Project+'_all.download'
-	url = 'http://ketch.pmel.noaa.gov/tao-bin/show_spurs2prawl?prawloption=ctd&progid=PICO&platid='+args.PlatformID+ \
+	url = args.ServerName+'/tao-bin/show_spurs2prawl?prawloption=ctd&progid=PICO&platid='+args.PlatformID+ \
 		    '&start=2017-04-25&end=&selectall=true&output=text&zgrid=0&background=white&colormap=ocean_r&ncol=6'
 	wget.download(url, filename, bar=wget.bar_thermometer)
 
 # retrieve all data - one file
 if args.met:
 	filename = args.Project+'_all.met.download'
-	url = 'http://ketch.pmel.noaa.gov/tao-bin/show_spurs2prawl?prawloption=met&progid=pico&platid='+args.PlatformID+ \
+	url = args.ServerName+'/tao-bin/show_spurs2prawl?prawloption=met&progid=pico&platid='+args.PlatformID+ \
 		    '&start=2017-04-25&end=&selectall=true&output=text&zgrid=0&background=white&colormap=ocean_r&ncol=6'
 	wget.download(url, filename, bar=wget.bar_thermometer)
 
 if args.loc:
 	filename = args.Project+'_all.loc.download'
-	url = 'http://ketch.pmel.noaa.gov/tao-bin/show_spurs2prawl?prawloption=gps&progid=pico&platid='+args.PlatformID+ \
+	url = args.ServerName+'/tao-bin/show_spurs2prawl?prawloption=gps&progid=pico&platid='+args.PlatformID+ \
 		    '&start=2017-04-01&end=&output=text'
 	wget.download(url, filename, bar=wget.bar_thermometer)
 
@@ -72,7 +76,7 @@ if args.all_daily:
 		if not day > today:
 			print "Retrieving {0}".format(day.strftime('%Y%m%d'))
 			filename = args.Project + '_daily.'+ day.strftime('%Y%m%d')+'.download'
-			url = 'http://ketch.pmel.noaa.gov/tao-bin/show_spurs2prawl?prawloption=ctd&progid=PICO&platid='+args.PlatformID+ \
+			url = args.ServerName+'/tao-bin/show_spurs2prawl?prawloption=ctd&progid=PICO&platid='+args.PlatformID+ \
 				    '&start=' + day.strftime('%Y-%m-%d') + '&end=' + (day + datetime.timedelta(1)).strftime('%Y-%m-%d') + \
 				    '&selectall=true&output=text&zgrid=0&background=white&colormap=ocean_r&ncol=6'
 			wget.download(url, filename, bar=False)
@@ -84,7 +88,7 @@ if args.today:
 	today = datetime.datetime.now()
 	tomorrow = today + datetime.timedelta(1)
 	filename = args.Project+'_daily.'+today.strftime('%Y%m%d')+'.download'
-	url = 'http://ketch.pmel.noaa.gov/tao-bin/show_spurs2prawl?prawloption=ctd&progid=PICO&platid='+args.PlatformID+ \
+	url = args.ServerName+'/tao-bin/show_spurs2prawl?prawloption=ctd&progid=PICO&platid='+args.PlatformID+ \
 		    '&start=' + today.strftime('%Y-%m-%d') + '&end=' + tomorrow.strftime('%Y-%m-%d') + \
 		    '&selectall=true&output=text&zgrid=0&background=white&colormap=ocean_r&ncol=6'
 	wget.download(url, filename, bar=False)
@@ -94,7 +98,7 @@ if args.userday:
 	today = datetime.datetime.strptime(args.userday, "%Y-%m-%d")
 	tomorrow = today + datetime.timedelta(1)
 	filename = args.Project+'_daily.'+today.strftime('%Y%m%d')+'.download'
-	url = 'http://ketch.pmel.noaa.gov/tao-bin/show_spurs2prawl?prawloption=ctd&progid=PICO&platid='+args.PlatformID+ \
+	url = args.ServerName+'/tao-bin/show_spurs2prawl?prawloption=ctd&progid=PICO&platid='+args.PlatformID+ \
 		    '&start=' + today.strftime('%Y-%m-%d') + '&end=' + tomorrow.strftime('%Y-%m-%d') + \
 		    '&selectall=true&output=text&zgrid=0&background=white&colormap=ocean_r&ncol=6'
 	wget.download(url, filename, bar=False)
@@ -102,7 +106,7 @@ if args.userday:
 # retrieve all data - one file , specifying the start date
 if args.all_since:
 	filename = args.Project+'.pt2.download'
-	url = 'http://ketch.pmel.noaa.gov/tao-bin/show_spurs2prawl?prawloption=ctd&progid=PICO&platid='+args.PlatformID+ \
+	url = args.ServerName+'/tao-bin/show_spurs2prawl?prawloption=ctd&progid=PICO&platid='+args.PlatformID+ \
 		    '&start='+args.all_since+'&end=&selectall=true&output=text&zgrid=0&background=white&colormap=ocean_r&ncol=6'
 	wget.download(url, filename, bar=wget.bar_thermometer)
 
