@@ -32,7 +32,8 @@ parser.add_argument('Project', metavar='Project', type=str,
                help='project name e.g. 2016_ITAE')
 parser.add_argument('PlatformID', metavar='PlatformID', type=str,
                help='yawl platform ID e.g. PITW')
-parser.add_argument('ServerName', metavar='ServerName', type=str,
+parser.add_argument("-s",'--ServerName', type=str,
+			   default="http://yawl.pmel.noaa.gov",
                help='server name, eg. http://yawl.pmel.noaa.gov')
 parser.add_argument("-a",'--all', action="store_true", help='grabs all 2016 prawler data and places it in to one file')
 parser.add_argument("-as",'--all_since', type=str, help='grabs all 2016 prawler data since specified (yyyy-mm-dd) and places it in to one file')
