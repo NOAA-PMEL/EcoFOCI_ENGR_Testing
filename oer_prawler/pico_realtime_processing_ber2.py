@@ -327,8 +327,8 @@ try:
     data_dic.pop(1)
     data_dic.pop(2)
 except:
-    continue
-    
+    pass
+
 ### vertically grid data to evenly space gridspoints
 interval = 0.25
 press_grid = np.arange(0,35,interval) #1m
