@@ -44,7 +44,7 @@ class KetchMetData(object):
     r"""Download and parse pico met data from ketch.pmel.noaa.gov"""
 
     @staticmethod
-    def get_data(time,station):
+    def get_data(time,station,server):
         r"""Download data from the PMEL engineering system.
 
         Parameters
@@ -56,8 +56,8 @@ class KetchMetData(object):
         -------
         a file-like object from which to read the data
         """
-        url = ('https://yawl.pmel.noaa.gov/tao-bin/show_spurs2prawl?prawloption=gps&'
-                'progid=pico&platid={station}&start={time:%Y}-{time:%m}-{time:%d}&end=&output=text&sensor=all').format(time=time,station=station)
+        url = ('{server}/tao-bin/show_spurs2prawl?prawloption=gps&'
+                'progid=pico&platid={station}&start={time:%Y}-{time:%m}-{time:%d}&end=&output=text&sensor=all').format(time=time,station=station,server=server)
         fobj = urlopen(url)
         data = fobj.read()
 
@@ -106,6 +106,9 @@ parser.add_argument('-sid','--stationid', type=str, default='SP03',
                help='rudix station id (defaults to 2017 M2 deployment')
 parser.add_argument('-sd','--start_date', type=str, default='2017-04-28',
                help='rudix station startdate (defaults to 2017 M2 deployment. Use yyyy-mm-dd')
+parser.add_argument("-s",'--ServerName', type=str,
+               default="http://yawl.pmel.noaa.gov",
+               help='server name, eg. http://yawl.pmel.noaa.gov')
 args = parser.parse_args()
 
 ###
@@ -113,7 +116,9 @@ args = parser.parse_args()
 
 if args.rudix:
 
-    kid = KetchMetData.get_data(datetime.datetime.strptime(args.start_date,'%Y-%m-%d'),args.stationid)
+    kid = KetchMetData.get_data(time=datetime.datetime.strptime(args.start_date,'%Y-%m-%d'),
+        station=args.stationid,
+        server=args.ServerName)
     data = KetchMetData.parse(kid)
 
     header = '{"type": "FeatureCollection","features": ['
