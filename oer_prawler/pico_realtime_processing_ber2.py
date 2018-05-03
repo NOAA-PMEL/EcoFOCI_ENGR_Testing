@@ -323,9 +323,12 @@ with open(args.DataPath) as f:
                                              pressure=np.float(line.strip().split()[3]))]
 
 # remove first entry for files from html/wget routines with 
-data_dic.pop(1)
-data_dic.pop(2)
-
+try:
+    data_dic.pop(1)
+    data_dic.pop(2)
+except:
+    continue
+    
 ### vertically grid data to evenly space gridspoints
 interval = 0.25
 press_grid = np.arange(0,35,interval) #1m
