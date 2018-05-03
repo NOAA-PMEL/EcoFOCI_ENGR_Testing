@@ -56,7 +56,7 @@ class KetchMetData(object):
         -------
         a file-like object from which to read the data
         """
-        url = ('http://ketch.pmel.noaa.gov/tao-bin/show_spurs2prawl?prawloption=gps&'
+        url = ('https://yawl.pmel.noaa.gov/tao-bin/show_spurs2prawl?prawloption=gps&'
                 'progid=pico&platid={station}&start={time:%Y}-{time:%m}-{time:%d}&end=&output=text&sensor=all').format(time=time,station=station)
         fobj = urlopen(url)
         data = fobj.read()
