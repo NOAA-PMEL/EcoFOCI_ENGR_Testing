@@ -324,14 +324,13 @@ with open(args.DataPath) as f:
 
 # remove first entry for files from html/wget routines with 
 try:
-    data_dic.pop(1)
-    data_dic.pop(2)
+    data_dic.pop(min(data_dic.keys()))
 except:
     pass
 
 ### vertically grid data to evenly space gridspoints
 interval = 0.25
-press_grid = np.arange(0,35,interval) #1m
+press_grid = np.arange(0,50,interval) #1m
 
 mesh_grid_s, mesh_grid_t, mesh_grid_o, mesh_grid_chl = [], [], [], []
 mesh_grid_sig, mesh_grid_turb, mesh_grid_osat, mesh_grid_stats = [], [], [], []
@@ -448,8 +447,7 @@ if args.Gridded:
     #fill known bad data points with missing values
     #fill known bad data points with missing values
     ### may3 - missing instrument
-    bad_times = [
-    [datetime.datetime(2017, 8, 6).toordinal() + 13./24. , datetime.datetime(2017, 8, 7).toordinal() + 20./24.],]
+    bad_times = []
     
     for bad_time in bad_times:
         time_range =  np.where((time_grid >= bad_time[0]) & (time_grid <= bad_time[1]))
@@ -479,6 +477,7 @@ extent = (date_time.min(), date_time.max(), press_grid.max(), press_grid.min()) 
 if args.image:
 
     fig = plt.figure()
+    """
     ax = plt.subplot2grid((9,100), (0, 0), colspan=98)
     plt.plot(date2num(tw_time,'days since 1-1-1'), tw_wind,'k')
     ax.annotate('Wind Speed (m/s)', xy=(0, 1), xycoords='axes fraction', fontsize=6,
@@ -504,6 +503,7 @@ if args.image:
     ax2.set_xlim([extent[0],extent[1]])
     for tl in ax2.get_yticklabels():
         tl.set_color('r')
+    """
     ax = plt.subplot2grid((9,100), (1, 0), colspan=100)
     cs = plt.imshow(np.transpose(mesh_grid_t), extent=extent, cmap=cmocean.cm.thermal, vmin=-2.0, vmax=10.0, aspect='auto', alpha=0.85)
     cs.cmap.set_under('w')

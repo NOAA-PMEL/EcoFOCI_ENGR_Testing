@@ -7,6 +7,11 @@ calculate salinity (and pressure) corrected oxygen concenration due to salinity.
 
 Most relevant for Aanderaa oxygen optodes that have salinity set at 0 (fresh water) for O2 calculations
 
+2018-04-25 S.Bell: CORRECTED.  Use dens insted of pden and dens0 for general corrections.
+    (should be pretty small correction). (maybe potential density is more appropiate but I
+    can't find the reference)
+  Make sure proper variables are being passed into TEOS routines
+
 
 """
 #System Stack
@@ -102,8 +107,7 @@ def O2PercentSat(oxygen_conc=None, temperature=None, salinity=None, pressure=0):
 
 def O2_molar2umkg(oxygen_conc=None,salinity=None,temperature=None,pressure=None):
     """unit conversalinity=Noneion for micromole/liter -> micromole/kg"""
-    
-    sigmatheta_pri = sw.eos80.pden(salinity, temperature, pressure)
+    sigmatheta_pri = sw.eos80.dens(s=salinity, t=temperature, p=pressure)
     density = (sigmatheta_pri / 1000)
     oxygen_conc = oxygen_conc / density
 
