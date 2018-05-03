@@ -615,8 +615,8 @@ if args.image:
 
     DefaultSize = fig.get_size_inches()
     fig.set_size_inches( (DefaultSize[0]*0.5, DefaultSize[1]*1.25) )
-    plt.savefig('2017_ITAE_prawler_image.svg', bbox_inches='tight', dpi = (300))
-    plt.savefig('2017_ITAE_prawler_image.png', bbox_inches='tight', dpi = (300))
+    plt.savefig('2018_BSITAE_prawler_image.svg', bbox_inches='tight', dpi = (300))
+    plt.savefig('2018_BSITAE_prawler_image.png', bbox_inches='tight', dpi = (300))
     plt.close()
 
 if args.csv_out in ['temperature','T_20','temp']:
