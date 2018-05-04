@@ -180,7 +180,7 @@ if args.perdive:
         try:
             obs = len(data_dic[key][0]['sample'])
             #create new netcdf file
-            ncinstance = EcF_write.NetCDF_Create_Profile_Ragged1D(savefile='data/' +args.OutPreFix  + str(key).zfill(4) + '.nc')
+            ncinstance = EcF_write.NetCDF_Create_Profile_Ragged1D(savefile='data/' +args.OutPreFix  + '_p' + str(key).zfill(4) + '.nc')
             ncinstance.file_create()
             ncinstance.sbeglobal_atts(raw_data_file=args.DataPath.split('/')[-1], 
                 History='File Created.  Aanderaa Optode Dissolved O2 compensated for Salinity/Depth')
