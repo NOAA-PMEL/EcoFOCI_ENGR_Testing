@@ -138,13 +138,14 @@ class NetCDF_Create_Timeseries(object):
 
         #cycle through epic dictionary and create nc parameters
         for evar in EPIC_VARS_dict.keys():
-            if verbose:
-                print("Creating Variable {0}".format(EPIC_VARS_dict[evar]['name']))
-            rec_vars.append(evar)
-            rec_var_name.append( EPIC_VARS_dict[evar]['name'] )
-            rec_var_longname.append( EPIC_VARS_dict[evar]['longname'] )
-            rec_var_generic_name.append( EPIC_VARS_dict[evar]['generic_name'] )
-            rec_var_units.append( EPIC_VARS_dict[evar]['units'] )
+            if not evar in ['time']:
+                if verbose:
+                    print("Creating Variable {0}".format(EPIC_VARS_dict[evar]['name']))
+                rec_vars.append(evar)
+                rec_var_name.append( EPIC_VARS_dict[evar]['name'] )
+                rec_var_longname.append( EPIC_VARS_dict[evar]['longname'] )
+                rec_var_generic_name.append( EPIC_VARS_dict[evar]['generic_name'] )
+                rec_var_units.append( EPIC_VARS_dict[evar]['units'] )
         
         
         rec_vars = ['time'] + rec_vars
