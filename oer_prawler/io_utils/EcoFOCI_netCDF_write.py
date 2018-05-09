@@ -36,7 +36,7 @@ __status__   = "Development"
 
 """-------------------------------NCFile Creation--------------------------------------"""
 
-        
+#NOT EPIC Friendly        
 class NetCDF_Create_Timeseries(object):
     """ Class instance to generate a NetCDF file.  
 
@@ -124,25 +124,30 @@ class NetCDF_Create_Timeseries(object):
         
     def variable_init(self, nchandle, udunits_time_str='days since 1900-1-1' ):
         """
-        built from knowledge about previous file
+        EPIC keys:
+            passed in as a dictionary (similar syntax as json data file)
+            The dictionary keys are what defines the variable names.
         """
-        
+        #exit if the variable dictionary is not passed
+        if not bool(EPIC_VARS_dict):
+            raise RuntimeError('Empty EPIC Dictionary is passed to variable_init.')
+
         #build record variable attributes
         rec_vars, rec_var_name, rec_var_longname = [], [], []
-        rec_var_generic_name, rec_var_FORTRAN, rec_var_units, rec_var_epic = [], [], [], []
-        
-        for v_name in nchandle.variables.keys():
-            print v_name
-            if not v_name in ['time']:
-                print "Copying attributes for {0}".format(v_name)
-                rec_vars.append( v_name )
-                rec_var_name.append( nchandle.variables[v_name].name )
-                rec_var_longname.append( nchandle.variables[v_name].long_name )
-                rec_var_generic_name.append( nchandle.variables[v_name].generic_name )
-                rec_var_units.append( nchandle.variables[v_name].units )
+        rec_var_generic_name,, rec_var_units, = [], []
 
+        #cycle through epic dictionary and create nc parameters
+        for evar in EPIC_VARS_dict.keys():
+            if verbose:
+                print("Creating Variable {0}".format(EPIC_VARS_dict[evar]['name']))
+            rec_vars.append(evar)
+            rec_var_name.append( EPIC_VARS_dict[evar]['name'] )
+            rec_var_longname.append( EPIC_VARS_dict[evar]['longname'] )
+            rec_var_generic_name.append( EPIC_VARS_dict[evar]['generic_name'] )
+            rec_var_units.append( EPIC_VARS_dict[evar]['units'] )
         
-        rec_vars = ['time','depth','lat','lon'] + rec_vars
+        
+        rec_vars = ['time'] + rec_vars
 
         rec_var_name = [''] + rec_var_name
         rec_var_longname = [''] + rec_var_longname
