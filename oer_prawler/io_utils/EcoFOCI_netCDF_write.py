@@ -122,7 +122,7 @@ class NetCDF_Create_Timeseries(object):
 
         
         
-    def variable_init(self, nchandle, udunits_time_str='days since 1900-1-1' ):
+    def variable_init(self, EPIC_VARS_dict, udunits_time_str='days since 1900-1-1' ):
         """
         EPIC keys:
             passed in as a dictionary (similar syntax as json data file)
