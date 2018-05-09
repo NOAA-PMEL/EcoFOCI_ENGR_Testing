@@ -67,6 +67,5 @@ latitude:
 longitude:
   name: longitude
   generic_name: longitude
-  units: degrees_north
+  units: degrees_east
   longname: 'longitude'
-  

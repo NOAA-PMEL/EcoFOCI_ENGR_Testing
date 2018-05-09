@@ -4,9 +4,10 @@
  Description:
     Using text output from Ketch data server (which converts the rudix data), create
         an archival format for ERDDAP and other dissemination.
-  
+
  2016 ITAE Mooring Realtime Data parsing and archiveing (from pico).
 
+ 2018-05-09: add ability to save wx data into netcdf from pico format
  2016-12-12: add calculation to correct oxygen optode for salinity (aanderaa optodes
         have internal salinity set to 0 for basic operation... fresh water equivalent)
 """
@@ -44,8 +45,8 @@ parser.add_argument('ConfigFile', metavar='ConfigFile', type=str,
                help='full path to nc config file')
 parser.add_argument('OutPreFix', metavar='OutPreFix', type=str,
                help='prefix for output file')
-parser.add_argument('-is1D','--is1D', action="store_true",
-               help='1D ragged arrays')
+parser.add_argument('-met','--met', action="store_true",
+               help='meteorological data')
 parser.add_argument('-is2D','--is2D', action="store_true",
                help='1D ragged arrays')
 parser.add_argument('-perdive','--perdive', action="store_true",
@@ -60,7 +61,8 @@ data_field = False
 prw_cast_id = 1
 recnum = 0
 with open(args.DataPath) as f:
-    for k, line in enumerate(f.readlines()):
+    if not args.met:
+        for k, line in enumerate(f.readlines()):
         line = line.strip()
 
         if 'Suspect' in line:
@@ -107,7 +109,7 @@ with open(args.DataPath) as f:
             Chl = Chl + [np.float(line.strip().split()[9])]
             Turb = Turb + [np.float(line.strip().split()[10])]
             # calculate sigmaT at 0db gauge pressure (s, t, p=0)
-            SigmaT = SigmaT + [sw.eos80.dens0(np.float(line.strip().split()[6]),np.float(line.strip().split()[4]))-1000.]
+            SigmaT = SigmaT + [sw.eos80.dens0(s=np.float(line.strip().split()[6]),t=np.float(line.strip().split()[4]))-1000.]
 
             # apply salinity and depth corrections to oxygen optode and recalc percentsat
             O2_corr = optode_O2_corr.O2_dep_comp(oxygen_conc=np.float(line.strip().split()[7]),
@@ -125,6 +127,50 @@ with open(args.DataPath) as f:
                                              pressure=np.float(line.strip().split()[3]))]
             recnum += 1
 
+    elif args.met:
+        for k, line in enumerate(f.readlines()):
+        line = line.strip()
+
+        if 'Suspect' in line:
+            continue
+
+        if '<PRE>' in line:
+            data_field = True
+        if '</PRE>' in line:
+            data_field = False
+            line = []
+
+        if '>' in line and data_field:  # get start line of data
+            startrow = k + 1
+            sample, time, uwind, vwind, wspd, wdir, rh, at, bp = [], [], [], [], [], [], [], [], []
+    
+
+        if (len(line) == 0) and (startrow != ''):
+            startrow = ''
+            data_dic[prw_cast_id] = [{
+                                    'time':time,
+                                    'eastward_wind':uwind, 
+                                    'northward_wind':vwind, 
+                                    'wind_speed':wspd, 
+                                    'wind_from_direction':wdir, 
+                                    'relative_humidity':rh, 
+                                    'air_temperature':at, 
+                                    'air_pressure_at_sealevel':bp}]
+            prw_cast_id += 1            
+
+        if (k >= startrow) and (startrow != '') and data_field:
+            time = time + [date2num(datetime.datetime.strptime(line.strip().split()[0]+' '+line.strip().split()[1],
+                    '%Y-%m-%d %H:%M:%S'),
+                    'hours since 1900-01-01T00:00:00Z')]
+            uwind = uwind + [np.float(line.strip().split()[2])]
+            vwind = vwind + [np.float(line.strip().split()[3])]
+            wspd = wspd + [np.float(line.strip().split()[4])]
+            wdir = wdir + [np.float(line.strip().split()[5])]
+            rh = rh + [np.float(line.strip().split()[6])]
+            at = at + [np.float(line.strip().split()[7])]
+            bp = bp + [np.float(line.strip().split()[8])]
+            recnum += 1
+
 # remove first entry for files from html/wget routines with 
 try:
     data_dic.pop(1)
@@ -137,20 +183,18 @@ except:
     
 EPIC_VARS_dict = ConfigParserLocal.get_config(args.ConfigFile,'yaml')
 
-if args.is1D:
+if args.met:
     #TODO: Need to make a profile_samplenum id for sequential ordering
     #create new netcdf file
-    """
-    ncinstance = EcF_write.NetCDF_Create_Profile_Ragged1D(savefile='prawler_1D' + '.nc')
+    ncinstance = EcF_write.NetCDF_Create_Timeseries(savefile='data/' + args.OutPreFix  + '_met' '.nc')
     ncinstance.file_create()
     ncinstance.sbeglobal_atts(raw_data_file=args.DataPath.split('/')[-1], 
-        History='File Created.  Aanderaa Optode Dissolved O2 compensated for Salinity/Depth')
+        History='File Created.')
     ncinstance.dimension_init(recnum_len=recnum)
     ncinstance.variable_init(EPIC_VARS_dict)
     ncinstance.add_coord_data(recnum=range(1,recnum+1))
     #ncinstance.add_data(EPIC_VARS_dict,data_dic=data_dic)
     ncinstance.close()
-    """
 
 if args.is2D:
 
