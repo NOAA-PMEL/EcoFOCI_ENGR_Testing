@@ -190,9 +190,9 @@ if args.met:
     ncinstance.file_create()
     ncinstance.sbeglobal_atts(raw_data_file=args.DataPath.split('/')[-1], 
         History='File Created.')
-    ncinstance.dimension_init(recnum_len=recnum)
+    ncinstance.dimension_init(time_len=recnum)
     ncinstance.variable_init(EPIC_VARS_dict)
-    ncinstance.add_coord_data(recnum=range(1,recnum+1))
+    ncinstance.add_coord_data(time=range(1,recnum+1))
     #ncinstance.add_data(EPIC_VARS_dict,data_dic=data_dic)
     ncinstance.close()
 

@@ -116,58 +116,45 @@ class NetCDF_Create_Timeseries(object):
         User defined dimensions
         """
 
-        self.dim_vars = ['time', 'depth', 'lat', 'lon']
+        self.dim_vars = ['time']
         
         self.rootgrpID.createDimension( self.dim_vars[0], time_len ) #time
-        self.rootgrpID.createDimension( self.dim_vars[1], 1 ) #depth
-        self.rootgrpID.createDimension( self.dim_vars[2], 1 ) #lat
-        self.rootgrpID.createDimension( self.dim_vars[3], 1 ) #lon
-        
-        
-    def variable_init(self, EPIC_VARS_dict):
-        """
-        EPIC keys:
-            passed in as a dictionary (similar syntax as json data file)
-            The dictionary keys are what defines the variable names.
-        """
-        #exit if the variable dictionary is not passed
-        if not bool(EPIC_VARS_dict):
-            raise RuntimeError('Empty EPIC Dictionary is passed to variable_init.')
 
+        
+        
+    def variable_init(self, nchandle, udunits_time_str='days since 1900-1-1' ):
+        """
+        built from knowledge about previous file
+        """
+        
         #build record variable attributes
         rec_vars, rec_var_name, rec_var_longname = [], [], []
         rec_var_generic_name, rec_var_FORTRAN, rec_var_units, rec_var_epic = [], [], [], []
-
-        #cycle through epic dictionary and create nc parameters
-        for evar in EPIC_VARS_dict.keys():
-            rec_vars.append(evar)
-            rec_var_name.append( EPIC_VARS_dict[evar]['name'] )
-            rec_var_longname.append( EPIC_VARS_dict[evar]['longname'] )
-            rec_var_generic_name.append( EPIC_VARS_dict[evar]['generic_name'] )
-            rec_var_units.append( EPIC_VARS_dict[evar]['units'] )
-            rec_var_FORTRAN.append( EPIC_VARS_dict[evar]['fortran'] )
-            rec_var_epic.append( EPIC_VARS_dict[evar]['EPIC_KEY'] )
         
-        rec_vars = ['time','time2','depth','lat','lon'] + rec_vars
+        for v_name in nchandle.variables.keys():
+            print v_name
+            if not v_name in ['time']:
+                print "Copying attributes for {0}".format(v_name)
+                rec_vars.append( v_name )
+                rec_var_name.append( nchandle.variables[v_name].name )
+                rec_var_longname.append( nchandle.variables[v_name].long_name )
+                rec_var_generic_name.append( nchandle.variables[v_name].generic_name )
+                rec_var_units.append( nchandle.variables[v_name].units )
 
-        rec_var_name = ['', '', '', '', ''] + rec_var_name
-        rec_var_longname = ['', '', '', '', ''] + rec_var_longname
-        rec_var_generic_name = ['', '', '', '', ''] + rec_var_generic_name
-        rec_var_FORTRAN = ['', '', '', '', ''] + rec_var_FORTRAN
-        rec_var_units = ['True Julian Day', 'msec since 0:00 GMT','dbar','degree_north','degree_west'] + rec_var_units
-        rec_var_type= ['i4', 'i4'] + ['f4' for spot in rec_vars[2:]]
-        rec_var_strtype= ['EVEN', 'EVEN', 'EVEN', 'EVEN', 'EVEN'] + ['' for spot in rec_vars[5:]]
-        rec_epic_code = [624, 624,1,500,501] + rec_var_epic
+        
+        rec_vars = ['time','depth','lat','lon'] + rec_vars
+
+        rec_var_name = [''] + rec_var_name
+        rec_var_longname = [''] + rec_var_longname
+        rec_var_generic_name = [''] + rec_var_generic_name
+        rec_var_units = [udunits_time_str] + rec_var_units
+        rec_var_type= ['f8'] + ['f4' for spot in rec_vars[1:]]
         
         var_class = []
         var_class.append(self.rootgrpID.createVariable(rec_vars[0], rec_var_type[0], self.dim_vars[0]))#time1
-        var_class.append(self.rootgrpID.createVariable(rec_vars[1], rec_var_type[1], self.dim_vars[0]))#time2
-        var_class.append(self.rootgrpID.createVariable(rec_vars[2], rec_var_type[2], self.dim_vars[1]))#depth
-        var_class.append(self.rootgrpID.createVariable(rec_vars[3], rec_var_type[3], self.dim_vars[2]))#lat
-        var_class.append(self.rootgrpID.createVariable(rec_vars[4], rec_var_type[4], self.dim_vars[3]))#lon
-        
-        for i, v in enumerate(rec_vars[5:]):  #1D coordinate variables
-            var_class.append(self.rootgrpID.createVariable(rec_vars[i+5], rec_var_type[i+5], self.dim_vars))
+
+        for i, v in enumerate(rec_vars[1:]):  #1D coordinate variables
+            var_class.append(self.rootgrpID.createVariable(rec_vars[i+4], rec_var_type[i+4], self.dim_vars))
             
         ### add variable attributes
         for i, v in enumerate(var_class): #4dimensional for all vars
@@ -175,22 +162,16 @@ class NetCDF_Create_Timeseries(object):
             v.setncattr('name',rec_var_name[i])
             v.long_name = rec_var_longname[i]
             v.generic_name = rec_var_generic_name[i]
-            v.FORTRAN_format = rec_var_FORTRAN[i]
             v.units = rec_var_units[i]
-            v.type = rec_var_strtype[i]
-            v.epic_code = rec_epic_code[i]
+            
             
         self.var_class = var_class
         self.rec_vars = rec_vars
 
         
-    def add_coord_data(self, depth=None, latitude=None, longitude=None, time1=None, time2=None, CastLog=False):
+    def add_coord_data(self, time=None):
         """ """
-        self.var_class[0][:] = time1
-        self.var_class[1][:] = time2
-        self.var_class[2][:] = depth
-        self.var_class[3][:] = latitude
-        self.var_class[4][:] = longitude #PMEL standard direction
+        self.var_class[0][:] = time
 
     def add_data(self, EPIC_VARS_dict, data_dic=None, missing_values=1e35):
         """
