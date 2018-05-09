@@ -159,7 +159,7 @@ class NetCDF_Create_Timeseries(object):
         var_class.append(self.rootgrpID.createVariable(rec_vars[0], rec_var_type[0], self.dim_vars[0]))#time1
 
         for i, v in enumerate(rec_vars[1:]):  #1D coordinate variables
-            var_class.append(self.rootgrpID.createVariable(rec_vars[i+4], rec_var_type[i+4], self.dim_vars))
+            var_class.append(self.rootgrpID.createVariable(rec_vars[i+1], rec_var_type[i+1], self.dim_vars))
             
         ### add variable attributes
         for i, v in enumerate(var_class): #4dimensional for all vars
@@ -168,7 +168,6 @@ class NetCDF_Create_Timeseries(object):
             v.long_name = rec_var_longname[i]
             v.generic_name = rec_var_generic_name[i]
             v.units = rec_var_units[i]
-            
             
         self.var_class = var_class
         self.rec_vars = rec_vars
