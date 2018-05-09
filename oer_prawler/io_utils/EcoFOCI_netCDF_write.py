@@ -134,7 +134,7 @@ class NetCDF_Create_Timeseries(object):
 
         #build record variable attributes
         rec_vars, rec_var_name, rec_var_longname = [], [], []
-        rec_var_generic_name,, rec_var_units, = [], []
+        rec_var_generic_name, rec_var_units, = [], []
 
         #cycle through epic dictionary and create nc parameters
         for evar in EPIC_VARS_dict.keys():
