@@ -63,113 +63,113 @@ recnum = 0
 with open(args.DataPath) as f:
     if not args.met:
         for k, line in enumerate(f.readlines()):
-        line = line.strip()
+            line = line.strip()
 
-        if 'Suspect' in line:
-            continue
+            if 'Suspect' in line:
+                continue
 
-        if '<PRE>' in line:
-            data_field = True
-        if '</PRE>' in line:
-            data_field = False
-            line = []
+            if '<PRE>' in line:
+                data_field = True
+            if '</PRE>' in line:
+                data_field = False
+                line = []
 
-        if '>' in line and data_field:  # get start line of data
-            startrow = k + 1
-            sample, time, Depth, Temp, Cond, Salinity, DO, DO_Temp, Chl, Turb, SigmaT, DO_Sat = [], [], [], [], [], [], [], [], [], [], [], []
-    
+            if '>' in line and data_field:  # get start line of data
+                startrow = k + 1
+                sample, time, Depth, Temp, Cond, Salinity, DO, DO_Temp, Chl, Turb, SigmaT, DO_Sat = [], [], [], [], [], [], [], [], [], [], [], []
+        
 
-        if (len(line) == 0) and (startrow != ''):
-            startrow = ''
-            data_dic[prw_cast_id] = [{'sample':sample, 
-                                    'time':time,
-                                    'Depth':Depth, 
-                                    'Temperature':Temp, 
-                                    'Cond':Cond, 
-                                    'Salinity':Salinity, 
-                                    'Oxy_Conc':DO, 
-                                    'Oxy_Temperature':DO_Temp, 
-                                    'Chlorophyll':Chl, 
-                                    'Turbidity':Turb,
-                                    'SigmaT':SigmaT,
-                                    'Oxy_Sat':DO_Sat}]
-            prw_cast_id += 1            
+            if (len(line) == 0) and (startrow != ''):
+                startrow = ''
+                data_dic[prw_cast_id] = [{'sample':sample, 
+                                        'time':time,
+                                        'Depth':Depth, 
+                                        'Temperature':Temp, 
+                                        'Cond':Cond, 
+                                        'Salinity':Salinity, 
+                                        'Oxy_Conc':DO, 
+                                        'Oxy_Temperature':DO_Temp, 
+                                        'Chlorophyll':Chl, 
+                                        'Turbidity':Turb,
+                                        'SigmaT':SigmaT,
+                                        'Oxy_Sat':DO_Sat}]
+                prw_cast_id += 1            
 
-        if (k >= startrow) and (startrow != '') and data_field:
-            sample = sample + [line.strip().split()[0]]
-            time = time + [date2num(datetime.datetime.strptime(line.strip().split()[1]+' '+line.strip().split()[2],
-                    '%Y-%m-%d %H:%M:%S'),
-                    'hours since 1900-01-01T00:00:00Z')]
-            Depth = Depth + [np.float(line.strip().split()[3])]
-            Temp = Temp + [np.float(line.strip().split()[4])]
-            Cond = Cond + [np.float(line.strip().split()[5])]
-            Salinity = Salinity + [np.float(line.strip().split()[6])]
-            #DO = DO + [np.float(line.strip().split()[7])]
-            DO_Temp = DO_Temp + [np.float(line.strip().split()[8])]
-            Chl = Chl + [np.float(line.strip().split()[9])]
-            Turb = Turb + [np.float(line.strip().split()[10])]
-            # calculate sigmaT at 0db gauge pressure (s, t, p=0)
-            SigmaT = SigmaT + [sw.eos80.dens0(s=np.float(line.strip().split()[6]),t=np.float(line.strip().split()[4]))-1000.]
+            if (k >= startrow) and (startrow != '') and data_field:
+                sample = sample + [line.strip().split()[0]]
+                time = time + [date2num(datetime.datetime.strptime(line.strip().split()[1]+' '+line.strip().split()[2],
+                        '%Y-%m-%d %H:%M:%S'),
+                        'hours since 1900-01-01T00:00:00Z')]
+                Depth = Depth + [np.float(line.strip().split()[3])]
+                Temp = Temp + [np.float(line.strip().split()[4])]
+                Cond = Cond + [np.float(line.strip().split()[5])]
+                Salinity = Salinity + [np.float(line.strip().split()[6])]
+                #DO = DO + [np.float(line.strip().split()[7])]
+                DO_Temp = DO_Temp + [np.float(line.strip().split()[8])]
+                Chl = Chl + [np.float(line.strip().split()[9])]
+                Turb = Turb + [np.float(line.strip().split()[10])]
+                # calculate sigmaT at 0db gauge pressure (s, t, p=0)
+                SigmaT = SigmaT + [sw.eos80.dens0(s=np.float(line.strip().split()[6]),t=np.float(line.strip().split()[4]))-1000.]
 
-            # apply salinity and depth corrections to oxygen optode and recalc percentsat
-            O2_corr = optode_O2_corr.O2_dep_comp(oxygen_conc=np.float(line.strip().split()[7]),
-                                                 depth=np.float(line.strip().split()[3]))
-            O2_corr = optode_O2_corr.O2_sal_comp(oxygen_conc=O2_corr,
+                # apply salinity and depth corrections to oxygen optode and recalc percentsat
+                O2_corr = optode_O2_corr.O2_dep_comp(oxygen_conc=np.float(line.strip().split()[7]),
+                                                     depth=np.float(line.strip().split()[3]))
+                O2_corr = optode_O2_corr.O2_sal_comp(oxygen_conc=O2_corr,
+                                                     salinity=np.float(line.strip().split()[6]),
+                                                     temperature=np.float(line.strip().split()[4]))
+                DO = DO + [optode_O2_corr.O2_molar2umkg(oxygen_conc=O2_corr,
                                                  salinity=np.float(line.strip().split()[6]),
-                                                 temperature=np.float(line.strip().split()[4]))
-            DO = DO + [optode_O2_corr.O2_molar2umkg(oxygen_conc=O2_corr,
-                                             salinity=np.float(line.strip().split()[6]),
-                                             temperature=np.float(line.strip().split()[4]),
-                                             pressure=np.float(line.strip().split()[3]))]
-            DO_Sat = DO_Sat + [optode_O2_corr.O2PercentSat(oxygen_conc=O2_corr, 
-                                             temperature=np.float(line.strip().split()[4]),
-                                             salinity=np.float(line.strip().split()[6]),
-                                             pressure=np.float(line.strip().split()[3]))]
-            recnum += 1
+                                                 temperature=np.float(line.strip().split()[4]),
+                                                 pressure=np.float(line.strip().split()[3]))]
+                DO_Sat = DO_Sat + [optode_O2_corr.O2PercentSat(oxygen_conc=O2_corr, 
+                                                 temperature=np.float(line.strip().split()[4]),
+                                                 salinity=np.float(line.strip().split()[6]),
+                                                 pressure=np.float(line.strip().split()[3]))]
+                recnum += 1
 
     elif args.met:
         for k, line in enumerate(f.readlines()):
-        line = line.strip()
+            line = line.strip()
 
-        if 'Suspect' in line:
-            continue
+            if 'Suspect' in line:
+                continue
 
-        if '<PRE>' in line:
-            data_field = True
-        if '</PRE>' in line:
-            data_field = False
-            line = []
+            if '<PRE>' in line:
+                data_field = True
+            if '</PRE>' in line:
+                data_field = False
+                line = []
 
-        if '>' in line and data_field:  # get start line of data
-            startrow = k + 1
-            sample, time, uwind, vwind, wspd, wdir, rh, at, bp = [], [], [], [], [], [], [], [], []
-    
+            if '>' in line and data_field:  # get start line of data
+                startrow = k + 1
+                sample, time, uwind, vwind, wspd, wdir, rh, at, bp = [], [], [], [], [], [], [], [], []
+        
 
-        if (len(line) == 0) and (startrow != ''):
-            startrow = ''
-            data_dic[prw_cast_id] = [{
-                                    'time':time,
-                                    'eastward_wind':uwind, 
-                                    'northward_wind':vwind, 
-                                    'wind_speed':wspd, 
-                                    'wind_from_direction':wdir, 
-                                    'relative_humidity':rh, 
-                                    'air_temperature':at, 
-                                    'air_pressure_at_sealevel':bp}]
-            prw_cast_id += 1            
+            if (len(line) == 0) and (startrow != ''):
+                startrow = ''
+                data_dic[prw_cast_id] = [{
+                                        'time':time,
+                                        'eastward_wind':uwind, 
+                                        'northward_wind':vwind, 
+                                        'wind_speed':wspd, 
+                                        'wind_from_direction':wdir, 
+                                        'relative_humidity':rh, 
+                                        'air_temperature':at, 
+                                        'air_pressure_at_sealevel':bp}]
+                prw_cast_id += 1            
 
-        if (k >= startrow) and (startrow != '') and data_field:
-            time = time + [date2num(datetime.datetime.strptime(line.strip().split()[0]+' '+line.strip().split()[1],
-                    '%Y-%m-%d %H:%M:%S'),
-                    'hours since 1900-01-01T00:00:00Z')]
-            uwind = uwind + [np.float(line.strip().split()[2])]
-            vwind = vwind + [np.float(line.strip().split()[3])]
-            wspd = wspd + [np.float(line.strip().split()[4])]
-            wdir = wdir + [np.float(line.strip().split()[5])]
-            rh = rh + [np.float(line.strip().split()[6])]
-            at = at + [np.float(line.strip().split()[7])]
-            bp = bp + [np.float(line.strip().split()[8])]
-            recnum += 1
+            if (k >= startrow) and (startrow != '') and data_field:
+                time = time + [date2num(datetime.datetime.strptime(line.strip().split()[0]+' '+line.strip().split()[1],
+                        '%Y-%m-%d %H:%M:%S'),
+                        'hours since 1900-01-01T00:00:00Z')]
+                uwind = uwind + [np.float(line.strip().split()[2])]
+                vwind = vwind + [np.float(line.strip().split()[3])]
+                wspd = wspd + [np.float(line.strip().split()[4])]
+                wdir = wdir + [np.float(line.strip().split()[5])]
+                rh = rh + [np.float(line.strip().split()[6])]
+                at = at + [np.float(line.strip().split()[7])]
+                bp = bp + [np.float(line.strip().split()[8])]
+                recnum += 1
 
 # remove first entry for files from html/wget routines with 
 try:
