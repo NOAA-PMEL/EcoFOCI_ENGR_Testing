@@ -130,7 +130,6 @@ with open(args.DataPath) as f:
     elif args.met:
         for k, line in enumerate(f.readlines()):
             line = line.strip()
-            print line
 
             if 'Suspect' in line:
                 continue
