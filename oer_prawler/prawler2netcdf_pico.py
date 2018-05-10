@@ -130,6 +130,7 @@ with open(args.DataPath) as f:
     elif args.met:
         for k, line in enumerate(f.readlines()):
             line = line.strip()
+            print line
 
             if 'Suspect' in line:
                 continue
@@ -140,7 +141,7 @@ with open(args.DataPath) as f:
                 data_field = False
                 line = []
 
-            if '>' in line and data_field:  # get start line of data
+            if '=========' in line and data_field:  # get start line of data
                 startrow = k + 1
                 sample, time, uwind, vwind, wspd, wdir, rh, at, bp = [], [], [], [], [], [], [], [], []
         
