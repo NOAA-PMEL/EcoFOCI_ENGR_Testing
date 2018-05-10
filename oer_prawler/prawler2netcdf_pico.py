@@ -126,6 +126,16 @@ with open(args.DataPath) as f:
                                                  salinity=np.float(line.strip().split()[6]),
                                                  pressure=np.float(line.strip().split()[3]))]
                 recnum += 1
+                
+                # remove first entry for files from html/wget routines with 
+                try:
+                    data_dic.pop(1)
+                except:
+                    pass
+                try:
+                    data_dic.pop(2)
+                except:
+                    pass
 
     elif args.met:
         for k, line in enumerate(f.readlines()):
@@ -147,7 +157,7 @@ with open(args.DataPath) as f:
 
             if (len(line) == 0) and (startrow != ''):
                 startrow = ''
-                data_dic[prw_cast_id] = [{
+                data_dic['met'] = {
                                         'time':time,
                                         'eastward_wind':uwind, 
                                         'northward_wind':vwind, 
@@ -155,7 +165,7 @@ with open(args.DataPath) as f:
                                         'wind_from_direction':wdir, 
                                         'relative_humidity':rh, 
                                         'air_temperature':at, 
-                                        'air_pressure_at_sealevel':bp}]
+                                        'air_pressure_at_sealevel':bp}
                 prw_cast_id += 1            
 
             if (k >= startrow) and (startrow != '') and data_field:
@@ -171,15 +181,7 @@ with open(args.DataPath) as f:
                 bp = bp + [np.float(line.strip().split()[8])]
                 recnum += 1
 
-# remove first entry for files from html/wget routines with 
-try:
-    data_dic.pop(1)
-except:
-    pass
-try:
-    data_dic.pop(2)
-except:
-    pass
+
     
 EPIC_VARS_dict = ConfigParserLocal.get_config(args.ConfigFile,'yaml')
 
@@ -193,7 +195,7 @@ if args.met:
     ncinstance.dimension_init(time_len=recnum)
     ncinstance.variable_init(EPIC_VARS_dict)
     ncinstance.add_coord_data(time=range(1,recnum+1))
-    #ncinstance.add_data(EPIC_VARS_dict,data_dic=data_dic)
+    ncinstance.add_data(EPIC_VARS_dict,data_dic=data_dic['met'],missing_values=np.nan)
     ncinstance.close()
 
 if args.is2D:
