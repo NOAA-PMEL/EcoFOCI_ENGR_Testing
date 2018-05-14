@@ -193,7 +193,7 @@ if args.met:
     ncinstance.sbeglobal_atts(raw_data_file=args.DataPath.split('/')[-1], 
         History='File Created.')
     ncinstance.dimension_init(time_len=recnum)
-    ncinstance.variable_init(EPIC_VARS_dict)
+    ncinstance.variable_init(EPIC_VARS_dict,udunits_time_str='hours since 1900-1-1')
     ncinstance.add_coord_data(time=range(1,recnum+1))
     ncinstance.add_data(EPIC_VARS_dict,data_dic=data_dic['met'],missing_values=np.nan)
     ncinstance.close()
